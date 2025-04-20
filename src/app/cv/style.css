@@ -1,0 +1,162 @@
+/* .yellowQuote {
+    filter: invert(92%) sepia(13%) saturate(3016%) hue-rotate(325deg) brightness(103%) contrast(98%);
+    width: 100px;
+    position: absolute;
+    top: 8vh;
+    left: 16vw;
+} */
+
+ul {
+    font-family: Montserrat;
+    font-size: 24px;
+    font-weight: normal;
+    color: #000000;
+}
+
+h5 {
+    font-family: Montserrat;
+    font-size: 20px;
+    font-weight: bold;
+    color: #000000;
+}
+
+/* Quote Section */
+
+.quote p {
+    font-family: Montserrat;
+    font-size: 32px;
+    font-weight: normal;
+    color: #000000;
+    text-align: center;
+}
+
+.quote {
+    margin: 5vh 20vw;
+}
+
+/* Experiences section */
+
+.XP {
+    padding-top: 5vh !important;
+}
+
+.XP h1 {
+    line-height: 0px;
+    margin-bottom: 12vh;
+}
+
+.contentLeft h4,
+.contentRight h4,
+.contentLeft p,
+.contentRight p {
+    margin: 0;
+}
+
+/* Formation Section */
+
+.contentFormation ul {
+    list-style-type: none;
+}
+
+.formation {
+    background-color: #F7F7F7;
+    margin-top: 15vh;
+    padding: 5vh 20vw;
+}
+
+.formation .singleXP img {
+    width: auto;
+    height: 100px;
+    margin: 0 2vw;
+}
+
+.formation h1 {
+    margin: 0;
+    margin-bottom: 2vh;
+}
+
+.skills {
+    padding-top: 5vh;
+}
+
+/* Interest section */
+
+.interestCard img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100px;
+}
+
+.interestCard {
+    /* height: 300px; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: left;
+    width: 300px;
+    padding: 2vh 1vw;
+    border-radius: 20px;
+    box-shadow: 0 .796841278193901px 2.3905238345817033px -.625px #0000000d,0 2.413677098392273px 7.2410312951768185px -1.25px #0000000d,0 6.3802836426702925px 19.140850928010877px -1.875px #0000000d,0 20px 60px -2.5px #0000000d;}
+
+.interestCard .title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+    gap: 30px;
+}
+
+.interest {
+    margin: 10vh 0;
+    align-items: center;
+    display: flex;
+    flex: none;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 40px;
+    justify-content: center;
+    overflow: visible;
+    padding: 0;
+    position: relative;
+}
+
+/* Download section */
+
+.download {
+    margin: 10vh 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+iframe {
+    height: 40vh;
+}
+@media (max-width:767px) {
+    .skills h1{
+        line-height: normal;
+    }
+    .quote{
+        margin: 3vh 6vw;
+    }
+    .formation {
+        padding: 2rem 1rem;
+    }
+    .contentRight{
+        padding: 0;
+    }
+    .contentFormation ul li{ margin-bottom: 1rem;}
+    .contentFormation ul{
+        padding: 0;
+        line-height: 1.5;
+    }
+    .interest{
+        flex-wrap: wrap;
+    }
+    .interestCard{
+        padding: 1rem;
+        width: 100%;
+        max-width: 320px;   
+    }
+}

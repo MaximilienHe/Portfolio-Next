@@ -1,0 +1,19 @@
+.nr {
+    margin: 0 30vw;
+    text-align: center;
+}
+
+.nr a {
+    color: #888888;
+}
+
+.nr img {
+    max-width: 100%;
+}
+@media screen and (max-width:991px) {
+    .nr{
+        margin: 0 ;
+        padding: 0 2rem;
+    }
+    
+}
