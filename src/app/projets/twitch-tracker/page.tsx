@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import logos from "@/data/logos";
 import ImageOptimize from "@/components/imageOptimization";
 
+import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
 export const metadata: Metadata = {
   title: "Maximilien Herr - Twitch Tracker",
 };
@@ -20,8 +21,28 @@ const {
 } = logos;
 
 export default function Temple() {
+  const breadcrumbTwitchTracker = [
+    { name: "Accueil", url: "https://maximilienherr.fr" },
+    { name: "Projets", url: "https://maximilienherr.fr/projets" },
+    {
+      name: "Twitch Tracker",
+      url: "https://maximilienherr.fr/projets/twitch-tracker",
+    },
+  ];
   return (
     <>
+      <head>
+        <title>Twitch Tracker - Maximilien Herr</title>
+        <meta
+          name="description"
+          content="Découvrez mon projet de Twitch Tracker, réalisé en groupe."
+        />
+        <link
+          rel="canonical"
+          href="https://maximilienherr.fr/projets/twitch-tracker"
+        />
+      </head>
+      <BreadcrumbJsonLd items={breadcrumbTwitchTracker} />
       <section className="content">
         <h1>Développement Web - Twitch Tracker</h1>
         <iframe

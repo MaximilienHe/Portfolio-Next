@@ -5,6 +5,7 @@ import ImageOptimize from "@/components/imageOptimization";
 import images from "@data/images";
 import imagesTwo from "@/data/ImagesTwo";
 import Link from "next/link";
+import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
 
 const {
   droidsoftAppHorizontal,
@@ -40,8 +41,21 @@ const {
 const { graphiqueClairFonce } = imagesTwo;
 
 export default function projets() {
+  const breadcrumbItems = [
+    { name: "Accueil", url: "https://maximilienherr.fr" },
+    { name: "Projets", url: "https://maximilienherr.fr/projets" },
+  ];
   return (
     <>
+      <head>
+        <title>Projets – Portfolio de Maximilien Herr</title>
+        <meta
+          name="description"
+          content="Découvrez mes réalisations techniques, applications et sites open‑source."
+        />
+        <link rel="canonical" href="https://maximilienherr.fr/projets" />
+      </head>
+      <BreadcrumbJsonLd items={breadcrumbItems} />
       <section className="projets">
         <h1 style={{ marginBottom: "1vh" }}>
           Quelques projets réalisés pour monter en compétences

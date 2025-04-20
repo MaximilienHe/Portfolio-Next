@@ -6,6 +6,7 @@ import logos from "@/data/logos";
 import ImageOptimize from "@/components/imageOptimization";
 import imagesTwo from "@/data/ImagesTwo";
 
+import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
 export const metadata: Metadata = {
   title: "Maximilien Herr - Réchauffement climatique",
 };
@@ -14,8 +15,28 @@ const { cppLogo, visualStudioLogo, gitLogo, logoSourcesProjet } = logos;
 const { raiesDeCouleur, graphiqueClairFonce, graphiqueSpirale } = imagesTwo;
 
 export default function Game() {
+  const breadcrumbRechauffement = [
+    { name: "Accueil", url: "https://maximilienherr.fr" },
+    { name: "Projets", url: "https://maximilienherr.fr/projets" },
+    {
+      name: "Graphiques réchauffement climatique",
+      url: "https://maximilienherr.fr/projets/rechauffement-climatique",
+    },
+  ];
   return (
     <>
+      <head>
+        <title>Graphiques réchauffement climatique - Maximilien Herr</title>
+        <meta
+          name="description"
+          content="Découvrez mon projet de graphiques pour la visualisation du réchauffement climatique, réalisé en C++."
+        />
+        <link
+          rel="canonical"
+          href="https://maximilienherr.fr/projets/rechauffement-climatique"
+        />
+      </head>
+      <BreadcrumbJsonLd items={breadcrumbRechauffement} />
       <section className="content">
         <h1>
           Développement Logiciel - Graphiques pour la visualisation du

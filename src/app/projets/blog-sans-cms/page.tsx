@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import images from "@/data/images";
 import logos from "@/data/logos";
 import ImageOptimize from "@/components/imageOptimization";
+import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
 
 export const metadata: Metadata = {
   title: "Maximilien Herr - Blog sans CMS",
@@ -14,8 +15,22 @@ const { vuejsLogo, mysqlLogo, redisLogo, gitLogo, logoSourcesProjet } = logos;
 const { blogSansCMS } = images;
 
 export default function Blog() {
+  const breadcrumbBlogSansCms = [
+    { name: "Accueil", url: "https://maximilienherr.fr" },
+    { name: "Projets", url: "https://maximilienherr.fr/projets" },
+    { name: "Blog sans CMS", url: "https://maximilienherr.fr/projets/blog-sans-cms" },
+  ];
   return (
     <>
+      <head>
+        <title>Blog sans CMS - Maximilien Herr</title>
+        <meta
+          name="description"
+          content="Découvrez mon projet de blog sans CMS, réalisé avec VueJS et KoaJS."
+        />
+        <link rel="canonical" href="https://maximilienherr.fr/projets/blog-sans-cms" />
+      </head>
+      <BreadcrumbJsonLd items={breadcrumbBlogSansCms} />
       <section className="content">
         <h1>Développement Web - Création d&apos;un blog sans CMS</h1>
         <p>

@@ -6,6 +6,7 @@ import images from "@/data/images";
 import logos from "@/data/logos";
 import ImageOptimize from "@/components/imageOptimization";
 
+import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
 export const metadata: Metadata = {
   title: "Maximilien Herr - BDD Game Jam",
 };
@@ -14,8 +15,28 @@ const { xamppLogo, mysqlLogo, gitLogo, logoSourcesProjet } = logos;
 const { baseDeDonneesGameJam } = images;
 
 export default function Game() {
+  const breadcrumbGameJam = [
+    { name: "Accueil", url: "https://maximilienherr.fr" },
+    { name: "Projets", url: "https://maximilienherr.fr/projets" },
+    {
+      name: "Base de données Game Jam",
+      url: "https://maximilienherr.fr/projets/game-jam-bdd",
+    },
+  ];
   return (
     <>
+      <head>
+        <title>Base de données Game Jam - Maximilien Herr</title>
+        <meta
+          name="description"
+          content="Découvrez mon projet de base de données pour une Game Jam, réalisé en groupe."
+        />
+        <link
+          rel="canonical"
+          href="https://maximilienherr.fr/projets/game-jam-bdd"
+        />
+      </head>
+      <BreadcrumbJsonLd items={breadcrumbGameJam} />
       <section className="content">
         <h1>
           Développement Web - Création d&lsquo;une base de données pour Game Jam

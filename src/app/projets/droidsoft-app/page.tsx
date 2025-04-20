@@ -6,6 +6,7 @@ import images from "@/data/images";
 import logos from "@/data/logos";
 import ImageOptimize from "@/components/imageOptimization";
 
+import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
 export const metadata: Metadata = {
   title: "Maximilien Herr - Blog sans CMS",
 };
@@ -26,8 +27,28 @@ const {
 } = images;
 
 export default function Droid() {
+  const breadcrumbDroidSoftApp = [
+    { name: "Accueil", url: "https://maximilienherr.fr" },
+    { name: "Projets", url: "https://maximilienherr.fr/projets" },
+    {
+      name: "Application Mobile - DroidSoft App",
+      url: "https://maximilienherr.fr/projets/droidsoft-app",
+    },
+  ];
   return (
     <>
+      <head>
+        <title>Application Mobile - DroidSoft App</title>
+        <meta
+          name="description"
+          content="Découvrez mon projet d'application mobile, réalisé pour DroidSoft."
+        />
+        <link
+          rel="canonical"
+          href="https://maximilienherr.fr/projets/droidsoft-app"
+        />
+      </head>
+      <BreadcrumbJsonLd items={breadcrumbDroidSoftApp} />
       <section className="content">
         <h1>Application Mobile - DroidSoft App</h1>
         <p>

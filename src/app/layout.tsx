@@ -7,6 +7,18 @@ import Footer from "@/common/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
+// schéma Person statique
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Maximilien Herr",
+  url: "https://maximilienherr.fr",
+  sameAs: [
+    "https://www.linkedin.com/in/maximilienherr",
+    "https://github.com/maximilienherr",
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -45,6 +57,12 @@ export default function RootLayout({
           <link rel="icon" href="/favicon.ico" />
 
           <title>Maximilien Herr</title>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(personSchema),
+            }}
+          />
         </head>
         <body className={inter.className}>
           <Header />

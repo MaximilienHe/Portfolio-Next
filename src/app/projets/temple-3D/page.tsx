@@ -6,6 +6,7 @@ import images from "@/data/images";
 import logos from "@/data/logos";
 import ImageOptimize from "@/components/imageOptimization";
 
+import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
 export const metadata: Metadata = {
   title: "Maximilien Herr - Temple 3D",
 };
@@ -20,8 +21,28 @@ const {
 const { leConfidentSAE3D, gitlab } = images;
 
 export default function Temple() {
+  const breadcrumbTemple = [
+    { name: "Accueil", url: "https://maximilienherr.fr" },
+    { name: "Projets", url: "https://maximilienherr.fr/projets" },
+    {
+      name: "3D et JV - Création d&lsquo;un musée en 3D",
+      url: "https://maximilienherr.fr/projets/temple-3D",
+    },
+  ];
   return (
     <>
+      <head>
+        <title>3D et JV - Création d&lsquo;un musée en 3D</title>
+        <meta
+          name="description"
+          content="Découvrez mon projet de création d'un musée en 3D, réalisé en groupe."
+        />
+        <link
+          rel="canonical"
+          href="https://maximilienherr.fr/projets/temple-3D"
+        />
+      </head>
+      <BreadcrumbJsonLd items={breadcrumbTemple} />
       <section className="content">
         <h1>3D et JV - Création d&lsquo;un musée en 3D</h1>
         <iframe

@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import ImageOptimize from "@/components/imageOptimization";
 import Link from "next/link";
 import images from "@/data/images";
+import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
 
 const { numeriqueResponsable } = images;
 
@@ -11,8 +12,13 @@ export const metadata: Metadata = {
 };
 
 export default function Nr() {
+  const breadcrumbItems = [
+    { name: "Accueil", url: "https://maximilienherr.fr" },
+    { name: "Numérique Responsable", url: "https://maximilienherr.fr/nr" },
+  ];
   return (
     <>
+      <BreadcrumbJsonLd items={breadcrumbItems} />
       <section className="nr">
         <h2>Le numérique responsable : penser performance et efficience</h2>
         <p>

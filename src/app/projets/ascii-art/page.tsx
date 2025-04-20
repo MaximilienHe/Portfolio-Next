@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import ImageOptimize from "@/components/imageOptimization";
 import images from "@/data/images";
 import logos from "@/data/logos";
+import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
 
 export const metadata: Metadata = {
   title: "Maximilien Herr - Numérique Responsable",
@@ -13,8 +14,23 @@ const { asciiArtIllustration, asciiArtResultCats } = images;
 const { cppLogo, visualStudioLogo, gitLogo, logoSourcesProjet } = logos;
 
 export default function AsciiArt() {
+  const breadcrumbItems = [
+    { name: "Accueil", url: "https://maximilienherr.fr" },
+    { name: "Projets", url: "https://maximilienherr.fr/projets" },
+    { name: "Ascii Art", url: "https://maximilienherr.fr/projets/ascii-art" },
+  ];
   return (
     <>
+    <head>
+      <title>Développement Logiciel - ASCII Art</title>
+      <meta
+        name="description"
+        content="Développement d'un logiciel de traitement d'image pour convertir chaque pixel en caractères ASCII."
+      />
+      <link rel="canonical" href="https://maximilienherr.fr/projets/ascii-art" />
+
+    </head>
+      <BreadcrumbJsonLd items={breadcrumbItems} />
       <section className="content">
         <h1>Développement Logiciel - ASCII Art</h1>
         <p>
