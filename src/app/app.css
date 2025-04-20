@@ -202,10 +202,14 @@ a:visited {
 /* 2) La grille 3‑colonnes ne concerne QUE .cards */
 .projets .cards {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    /* 3 colonnes fixes à 22vw */
+    grid-template-columns: repeat(3, 22vw);
     gap: 1vw;
-    width: 100%;            /* ou max‑width:1240px si tu veux limiter */
-}
+    /* centre la grille dans son conteneur */
+    justify-content: center;
+    /* on enlève width:100% s’il est présent */
+  }
+  
 
 /* 3) Le bouton est un bloc centré */
 .projets > .button {
