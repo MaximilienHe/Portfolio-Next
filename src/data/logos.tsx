@@ -1,243 +1,211 @@
-import htmlLogo from "@images/Logos/Dev Web/HTML5.png";
-import cssLogo from "@images/Logos/Dev Web/CSS.png";
-import javascriptLogo from "@images/Logos/Dev Web/JavaScript.png";
-import phpLogo from "@images/Logos/Dev Web/PHP.png";
-import mysqlLogo from "@images/Logos/Dev Web/MySQL.png";
-import nextjsLogo from "@images/Logos/Dev Web/NextJS.png";
-import vuejsLogo from "@images/Logos/Dev Web/VueJS.png";
-import vscodeLogo from "@images/Logos/Dev Web/VSCode.png";
-import xamppLogo from "@images/Logos/Dev Web/XAMPP.png";
-import cLogo from "@images/Logos/Dev Logiciels/C.png";
-import cppLogo from "@images/Logos/Dev Logiciels/CPP.png";
-import csLogo from "@images/Logos/Dev Logiciels/CS.png";
-import pythonLogo from "@images/Logos/Dev Logiciels/Python.png";
-import visualStudioLogo from "@images/Logos/Dev Logiciels/VisualStudio.png";
-import rustLogo from "@images/Logos/Dev Logiciels/Rust.png";
-import javaLogo from "@images/Logos/Dev Logiciels/Java.png";
-import kotlinLogo from "@images/Logos/Dev Logiciels/Kotlin.png";
-import androidStudioLogo from "@images/Logos/Dev Logiciels/AndroidStudio.png";
-import unityLogo from "@images/Logos/3D & JV/Unity.png";
-import unrealLogo from "@images/Logos/3D & JV/UnrealEngine.png";
-import threeDsMaxLogo from "@images/Logos/3D & JV/3DSMax.png";
-import threeDFZephyrLogo from "@images/Logos/3D & JV/3DFZephyr.png";
-import substancePainterLogo from "@images/Logos/3D & JV/Substance.png";
-import gitLogo from "@images/Logos/git.png";
-import droidSoft from "@images/Logos/droidsoft.png";
-import excelLogo from "@images/Logos/Excel-logo.png";
-import wordLogo from "@images/Logos/Word-logo.png";
-import icdg from "@images/Logos/lcdg.webp";
-import redisLogo from "@images/Logos/Dev Web/redis.png";
-import logoSourcesProjet from "@images/Logos/logo-sources-projet.png";
-
 const logos = {
   logoSourcesProjet: {
     id: 1,
-    image: logoSourcesProjet,
+    image: "/images/logos/logo-sources-projet.png",
     width: 512,
     height: 512,
     name: "logoSourcesProjet",
   },
   redisLogo: {
     id: 2,
-    image: redisLogo,
+    image: "/images/logos/redis.png",
     width: 596,
     height: 512,
     name: "redisLogo",
   },
   htmlLogo: {
     id: 3,
-    image: htmlLogo,
+    image: "/images/logos/HTML5.png",
     width: 456,
     height: 640,
     name: "htmlLogo",
   },
   cssLogo: {
     id: 4,
-    image: cssLogo,
+    image: "/images/logos/CSS.png",
     width: 1452,
     height: 2048,
     name: "cssLogo",
   },
   javascriptLogo: {
     id: 5,
-    image: javascriptLogo,
+    image: "/images/logos/JavaScript.png",
     width: 480,
     height: 480,
     name: "javascriptLogo",
   },
   phpLogo: {
     id: 6,
-    image: phpLogo,
+    image: "/images/logos/PHP.png",
     width: 2560,
     height: 1383,
     name: "phpLogo",
   },
   mysqlLogo: {
     id: 7,
-    image: mysqlLogo,
+    image: "/images/logos/MySQL.png",
     width: 1200,
     height: 621,
     name: "mysqlLogo",
   },
   nextjsLogo: {
     id: 8,
-    image: nextjsLogo,
+    image: "/images/logos/NextJS.png",
     width: 800,
     height: 479,
     name: "nextjsLogo",
   },
   vuejsLogo: {
     id: 9,
-    image: vuejsLogo,
+    image: "/images/logos/VueJS.png",
     width: 512,
     height: 512,
     name: "vuejsLogo",
   },
   vscodeLogo: {
     id: 10,
-    image: vscodeLogo,
+    image: "/images/logos/VSCode.png",
     width: 538,
     height: 535,
     name: "vscodeLogo",
   },
   xamppLogo: {
     id: 11,
-    image: xamppLogo,
+    image: "/images/logos/XAMPP.png",
     width: 800,
     height: 209,
     name: "xamppLogo",
   },
   cLogo: {
     id: 12,
-    image: cLogo,
+    image: "/images/logos/C.png",
     width: 300,
     height: 300,
     name: "cLogo",
   },
   cppLogo: {
     id: 13,
-    image: cppLogo,
+    image: "/images/logos/CPP.png",
     width: 1822,
     height: 2048,
     name: "cppLogo",
   },
   csLogo: {
     id: 14,
-    image: csLogo,
+    image: "/images/logos/CS.png",
     width: 267,
     height: 300,
     name: "csLogo",
   },
   pythonLogo: {
     id: 15,
-    image: pythonLogo,
+    image: "/images/logos/Python.png",
     width: 1808,
     height: 1834,
     name: "pythonLogo",
   },
   visualStudioLogo: {
     id: 16,
-    image: visualStudioLogo,
+    image: "/images/logos/VisualStudio.png",
     width: 1285,
     height: 1414,
     name: "visualStudioLogo",
   },
   rustLogo: {
     id: 17,
-    image: rustLogo,
+    image: "/images/logos/Rust.png",
     width: 1024,
     height: 1024,
     name: "rustLogo",
   },
   javaLogo: {
     id: 18,
-    image: javaLogo,
+    image: "/images/logos/Java.png",
     width: 550,
     height: 1024,
     name: "javaLogo",
   },
   kotlinLogo: {
     id: 19,
-    image: kotlinLogo,
+    image: "/images/logos/Kotlin.png",
     width: 2048,
     height: 2048,
     name: "kotlinLogo",
   },
   androidStudioLogo: {
     id: 20,
-    image: androidStudioLogo,
+    image: "/images/logos/AndroidStudio.png",
     width: 1900,
     height: 2052,
     name: "androidStudioLogo",
   },
   unityLogo: {
     id: 21,
-    image: unityLogo,
+    image: "/images/logos/Unity.png",
     width: 3578,
     height: 1328,
     name: "unityLogo",
   },
   unrealLogo: {
     id: 22,
-    image: unrealLogo,
+    image: "/images/logos/UnrealEngine.png",
     name: "unrealLogo",
   },
   threeDsMaxLogo: {
     id: 23,
-    image: threeDsMaxLogo,
+    image: "/images/logos/3DSMax.png",
     width: 1200,
     height: 1308,
     name: "threeDsMaxLogo",
   },
   threeDFZephyrLogo: {
     id: 24,
-    image: threeDFZephyrLogo,
+    image: "/images/logos/3DFZephyr.png",
     width: 583,
     height: 583,
     name: "threeDFZephyrLogo",
   },
   substancePainterLogo: {
     id: 25,
-    image: substancePainterLogo,
+    image: "/images/logos/Substance.png",
     width: 225,
     height: 225,
     name: "substancePainterLogo",
   },
   gitLogo: {
     id: 26,
-    image: gitLogo,
+    image: "/images/logos/git.png",
     width: 383,
     height: 383,
     name: "gitLogo",
   },
   droidSoft: {
     id: 27,
-    image: droidSoft,
+    image: "/images/logos/droidsoft.png",
     width: 3565,
     height: 1738,
     name: "droidSoft",
   },
   excelLogo: {
     id: 28,
-    image: excelLogo,
+    image: "/images/logos/Excel-logo.png",
     width: 1447,
     height: 1340,
     name: "excelLogo",
   },
   wordLogo: {
     id: 29,
-    image: wordLogo,
+    image: "/images/logos/Word-logo.png",
     width: 775,
     height: 720,
     name: "wordLogo",
   },
   icdg: {
     id: 30,
-    image: icdg,
+    image: "/images/logos/lcdg.webp",
     width: 341,
     height: 400,
     name: "icdg",
   },
 };
-
 export default logos;

@@ -1,10 +1,8 @@
 import React from "react";
-import Image from "next/image";
-import { StaticImageData } from "next/image";
 
 type ImageType = {
   id: number;
-  image: StaticImageData;
+  image: string; 
   width?: number;
   height?: number;
   name?: string;
@@ -22,12 +20,14 @@ export default function ImageOptimize({
   className,
 }: Props) {
   return (
-    <Image
+    <img
       className={className}
       src={src.image}
       alt={alt}
       width={src.width}
       height={src.height}
+      loading="lazy"
+      decoding="async"
     />
   );
 }
