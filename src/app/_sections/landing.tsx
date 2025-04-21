@@ -5,7 +5,7 @@ export default function Landing() {
   return (
     <section className="landing">
       <h1>
-        Développeur <br />&<br />
+        Ingénieur Logiciel <br />&<br />
         Rédacteur Tech.
       </h1>
     </section>

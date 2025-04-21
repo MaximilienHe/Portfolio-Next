@@ -15,7 +15,7 @@ export default function Xp() {
               alt="developpeur illustrating image"
             />
             <div className="contentRight">
-              <h2>Développeur</h2>
+              <h2>Ingénieur logiciel</h2>
               <h4>
                 Je me suis lancé à fond dans le dév pour mes études, et ce, à
                 travers différents projets.

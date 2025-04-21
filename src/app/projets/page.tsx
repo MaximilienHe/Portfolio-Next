@@ -64,7 +64,7 @@ export default function projets() {
           style={{
             textAlign: "center",
             marginBottom: "5vh",
-            margin: "0 8vw 5vh 8vw",
+            margin: "0 4vw 5vh 4vw",
           }}
         >
           A travers tous ces projets, il est clair qu&apos;il y a une certaine

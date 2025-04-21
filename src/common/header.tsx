@@ -25,7 +25,7 @@ export default function Header() {
           <Link href="/nr">Numérique Responsable</Link>
           <a href="/#articles">Rédacteur</a>
 
-          <Link href="/projets">Développeur</Link>
+          <Link href="/projets">Projets</Link>
           <Link href="/contact">Contact</Link>
           <Link href="/cv" className="button">
             MON CV

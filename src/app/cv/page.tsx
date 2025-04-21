@@ -1,4 +1,4 @@
-
+// /src/app/cv/page.tsx
 import "./style.css";
 import type { Metadata } from "next";
 import Quote from "./_sections/quote";

@@ -36,7 +36,7 @@ export default function RootLayout({
           />
           <meta
             name="description"
-            content="Je me présente, Maximilien Herr, et sur ce site, vous retrouverez mon portfolio, à travers mes projets, mon CV, et bien plus encore pour découvrir mon profil de développeur et de rédacteur tech"
+            content="Je me présente, Maximilien Herr, et sur ce site, vous retrouverez mon portfolio, à travers mes projets, mon CV, et bien plus encore pour découvrir mon profil d'ingénieur logiciel et de rédacteur tech"
           />
           <meta
             name="image"
