@@ -17,3 +17,11 @@
     }
     
 }
+
+.inner {
+    max-width: 1240px;   /* ou la largeur qui te convient */
+    width: 100%;
+    margin: 0 auto;      /* centre horizontalement */
+    padding: 0 1rem;     /* petit padding latéral */
+    box-sizing: border-box;
+}

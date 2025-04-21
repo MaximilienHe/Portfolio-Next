@@ -282,6 +282,8 @@ a:visited {
 	align-items: center; /* centre horiz. le contenu (cards + bouton) */
 	gap: 5vh; /* espace vertical entre la grille et le bouton */
 	margin-bottom: 12vh; /* espace sous toute la section */
+    
+    padding-bottom: 3vh;
 }
 
 /* 2) La grille 3‑colonnes ne concerne QUE .cards */
