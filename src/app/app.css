@@ -281,8 +281,8 @@ a:visited {
 	flex-direction: column;
 	align-items: center; /* centre horiz. le contenu (cards + bouton) */
 	gap: 5vh; /* espace vertical entre la grille et le bouton */
-	margin-bottom: 6vh; /* espace sous toute la section */
-	}
+	margin-bottom: 12vh; /* espace sous toute la section */
+}
 
 /* 2) La grille 3‑colonnes ne concerne QUE .cards */
 .projets .cards {
