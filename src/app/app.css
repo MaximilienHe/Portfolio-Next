@@ -202,14 +202,13 @@ a:visited {
 /* 2) La grille 3‑colonnes ne concerne QUE .cards */
 .projets .cards {
     display: grid;
-    /* 3 colonnes fixes à 22vw */
-    grid-template-columns: repeat(3, 22vw);
-    gap: 1vw;
-    /* centre la grille dans son conteneur */
-    justify-content: center;
-    /* on enlève width:100% s’il est présent */
-  }
-  
+    /* 3 colonnes "fluides" : min 300px, sinon 1 fraction de la place restante */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;                   /* espace uniforme */
+    width: 100%;                 /* full du conteneur */
+    margin: 0 auto;              /* bien centré */
+    box-sizing: border-box;
+}
 
 /* 3) Le bouton est un bloc centré */
 .projets > .button {
@@ -366,17 +365,23 @@ a:visited {
     margin-bottom: 3vh;
 }
 .multiArticles.two-column {
+    display: flex;
     justify-content: center;
-}
-.multiArticles.two-column .singleArticle{
-    max-width: 320px;
+    gap: 3vw;
+  }
+  
+/* ici on force TOUTES les vignettes à 320px de large */
+.multiArticles.two-column .singleArticle {
+flex: 0 0 320px;      /* pas de flex-grow, pas de flex-shrink, flex-basis = 320px */
+width: 320px;         /* au cas où l’UA n’interprète pas flex-basis seul */
 }
 
+/* Et on garde l’image en width:100% pour qu’elle remplisse son conteneur */
 .article img {
-    border-radius: 10px;
     aspect-ratio: 16/9;
-    width: 100%;
+    border-radius: 10px;
 }
+
 .container{
     max-width: 1240px;
     width: 100%;

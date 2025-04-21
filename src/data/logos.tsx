@@ -1,3 +1,6 @@
+// /src/app/data/logos.tsx
+import images from "./images";
+
 const logos = {
   logoSourcesProjet: {
     id: 1,
@@ -207,5 +210,6 @@ const logos = {
     height: 400,
     name: "icdg",
   },
+  iutIG: images.iutIG,
 };
 export default logos;

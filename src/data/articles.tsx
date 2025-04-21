@@ -1,3 +1,4 @@
+// /src/app/data/articles.tsx
 const articles = {
   S22ultraTest: {
     id: 1,
@@ -45,13 +46,20 @@ const articles = {
     id: 7,
     image: "/images/articles/etudiant-informatique-graphique-puy-en-velay-casque-realite-virtuelle.jpg",
     name: "etudiantInformatiqueGraphiquePuyEnVelayCasqueRealiteVirtuelle",
-    width: 1386,
-    height: 780,
+    width: 700,
+    height: 438,
   },
   Intro: {
     id: 8,
     image: "/images/articles/Intro-700x438.png",
     name: "Intro",
+    width: 700,
+    height: 438,
+  },
+  appDroidsoft: {
+    id: 9,
+    image: "https://ig.iut-clermont.fr/wp-content/uploads/sites/3/2023/06/BUT-Informatique-Graphique-Application-DroidSoft.png",
+    name: "appDroidsoft",
     width: 700,
     height: 438,
   },
