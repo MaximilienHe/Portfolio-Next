@@ -58,7 +58,7 @@ const articles = {
   },
   appDroidsoft: {
     id: 9,
-    image: "https://ig.iut-clermont.fr/wp-content/uploads/sites/3/2023/06/BUT-Informatique-Graphique-Application-DroidSoft.png",
+    image: "/images/articles/appDroidsoft.png",
     name: "appDroidsoft",
     width: 700,
     height: 438,
