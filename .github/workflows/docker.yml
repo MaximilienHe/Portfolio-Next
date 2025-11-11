@@ -1,3 +1,4 @@
+# .github/workflows/docker.yml
 name: build-and-push
 on:
   push:
@@ -17,24 +18,28 @@ jobs:
       - uses: docker/setup-qemu-action@v3
       - uses: docker/setup-buildx-action@v3
 
-      # login GHCR avec le token natif du workflow
+      # Image GHCR en minuscules
+      - name: Compute image URI (lowercase)
+        id: img
+        run: |
+          echo "IMAGE=ghcr.io/$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
       - uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # tags: latest sur branche par defaut, nom de branche, et sha court
+      # Tags: branche, sha court, latest sur branche par defaut
       - id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/${{ github.repository }}
+          images: ${{ env.IMAGE }}
           tags: |
             type=ref,event=branch
             type=sha,format=short
             type=raw,value=latest,enable={{is_default_branch}}
 
-      # build multi arch et push
       - uses: docker/build-push-action@v6
         with:
           context: .
@@ -44,8 +49,7 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache
-          cache-to: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache,mode=max
-          # variables compile-time si tu as des NEXT_PUBLIC_* a figer dans le bundle
+          cache-from: type=registry,ref=${{ env.IMAGE }}:buildcache
+          cache-to: type=registry,ref=${{ env.IMAGE }}:buildcache,mode=max
           build-args: |
             NEXT_PUBLIC_API_BASE=${{ secrets.NEXT_PUBLIC_API_BASE }}
