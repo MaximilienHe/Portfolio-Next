@@ -250,8 +250,7 @@ export async function getAllLatestArticles(opts?: {
   [...ds, ...lc, ...fr].forEach((a) => {
     if (!map.has(a.url)) map.set(a.url, a);
   });
-  const all = [...map.values()].sort(
-    (a, b) => +new Date(b.date) - +new Date(a.date)
-  );
+  const all = Array.from(map.values()).sort((a, b) => +new Date(b.date) - +new Date(a.date));
+
   return all.slice(0, maxTotal);
 }
