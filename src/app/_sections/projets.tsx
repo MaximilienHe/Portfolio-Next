@@ -16,8 +16,8 @@ export default function Projets() {
               <ImageOptimize
                 src={images[proj.imageKey]}
                 alt={proj.alt}
-                width={images[proj.imageKey].width}
-                height={images[proj.imageKey].height}
+                // width={images[proj.imageKey].width}
+                // height={images[proj.imageKey].height}
               />
               <div className="cardDetail">
                 <h3>{proj.title}</h3>

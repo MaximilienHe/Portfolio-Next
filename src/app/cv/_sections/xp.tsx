@@ -41,7 +41,7 @@ export default function Xp() {
               <p>Septembre 2023 - Présent</p>
               <h4>Frandroid (Humanoid)</h4>
               <ul>
-                <li>Articles d'actualité & tests de produits</li>
+                <li>Articles d&apos;actualité & tests de produits</li>
                 <li>Couverture de salons et conférences tech</li>
               </ul>
             </div>
@@ -54,7 +54,7 @@ export default function Xp() {
               <p>Août 2020 - Présent</p>
               <h4>DroidSoft</h4>
               <ul>
-                <li>Rédaction d'articles, guides et tests</li>
+                <li>Rédaction d&apos;articles, guides et tests</li>
                 <li>SEO & intégration HTML/CSS</li>
               </ul>
             </div>
@@ -93,7 +93,7 @@ export default function Xp() {
               <h4>Agence Geek Media</h4>
               <ul>
                 <li>Comparateur de produits pour DroidSoft.fr</li>
-                <li>Génération automatisée d'articles techniques</li>
+                <li>Génération automatisée d&apos;articles techniques</li>
               </ul>
             </div>
           </div>

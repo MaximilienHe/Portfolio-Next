@@ -13,14 +13,14 @@ export default function Formations() {
         <div className="singleXP">
           <ImageOptimize src={isima} alt="ISIMA Logo" />
           <div className="contentFormation">
-            <h2>Diplôme d'ingénieur Informatique</h2>
+            <h2>Diplôme d&apos;ingénieur Informatique</h2>
             <p>Septembre 2023 - Août 2026</p>
             <h4>ISIMA - Clermont Auvergne INP</h4>
             <ul>
               <li>👨‍💻 Conception et implémentation de systèmes complexes en C++ et Python</li>
               <li>🌐 Développement Full Stack avec React, Node.js et gestion PostgreSQL</li>
               <li>🎮 Interfaces interactives pour applications web et mobiles</li>
-              <li>📱 Création et déploiement d'applications Android</li>
+              <li>📱 Création et déploiement d&apos;applications Android</li>
               <li>🗣️ Anglais technique et professionnel, économie, droit et gestion de projet</li>
             </ul>
           </div>

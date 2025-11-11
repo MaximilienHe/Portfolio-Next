@@ -1,5 +1,5 @@
 // /src/data/articleSections.ts
-import type { Article } from "@/data/articles";  // optionnel : pour typer imageKey
+import Article from "@/data/articles"  // optionnel : pour typer imageKey
 export interface SectionConfig {
   sourceName: string;
   logoKey: keyof typeof import("./logos").default;
