@@ -74,7 +74,7 @@ function decodeHtml(input: string): string {
   // nommées courantes
   return s
     .replace(/&quot;/g, '"')
-    .replace(/&apos;|&#39;/g, "'")
+    .replace(/&apos;|&#39;|&rsquo;/g, "'")
     .replace(/&nbsp;/g, " ")
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
