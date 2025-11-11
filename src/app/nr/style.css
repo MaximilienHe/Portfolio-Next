@@ -1,0 +1,27 @@
+.nr {
+    margin: 0 30vw;
+    text-align: center;
+}
+
+.nr a {
+    color: #888888;
+}
+
+.nr img {
+    max-width: 100%;
+}
+@media screen and (max-width:991px) {
+    .nr{
+        margin: 0 ;
+        padding: 0 2rem;
+    }
+    
+}
+
+.inner {
+    max-width: 1240px;   /* ou la largeur qui te convient */
+    width: 100%;
+    margin: 0 auto;      /* centre horizontalement */
+    padding: 0 1rem;     /* petit padding latéral */
+    box-sizing: border-box;
+}
