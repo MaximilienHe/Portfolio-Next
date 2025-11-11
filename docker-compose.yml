@@ -3,7 +3,7 @@ services:
   portfolio:
     image: ghcr.io/maximilienhe/portfolio-next:latest
     ports:
-      - "8082:3000"        # NAS:8082 -> container:3000
+      - "8081:3000"        # NAS:8081 -> container:3000
     environment:
       - NODE_ENV=production
       - TZ=Europe/Paris
