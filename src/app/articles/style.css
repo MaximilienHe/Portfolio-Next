@@ -1,0 +1,300 @@
+/* Polices pour cohérence de page et variantes brand */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"); /* Frandroid-like */
+@import url("https://fonts.googleapis.com/css2?family=Titillium+Web:wght@600;700&family=Open+Sans:wght@400;600&display=swap"); /* DroidSoft-like */
+
+/* Conteneur page */
+.articlesPage .inner {
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+
+.page-title {
+  text-align: center;
+  margin: 5vh 0 0.5rem 0;
+}
+
+.page-sub {
+  text-align: center;
+  color: #666;
+  margin-bottom: 6vh;
+}
+
+/* Section générique */
+.source-section {
+  padding: 2.5rem 0 3.5rem 0;
+}
+
+.source-section .section-head h2 {
+  margin: 0 0 1.25rem 0;
+  font-size: 26px;
+  line-height: 1.2;
+}
+
+/* ===== Carousel: 5 cartes visibles, carte centrale bien centrée ===== */
+.carousel {
+  position: relative;
+  width: 100%;
+  overflow: visible;
+}
+
+/* Définir des variables dimensionnelles liées au viewport */
+.carousel-viewport {
+  position: relative;
+  height: clamp(420px, 56vh, 680px);
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  isolation: isolate;
+
+  /* largeur de la carte centrale */
+  --card-w: min(820px, 80vw);
+
+  /* distances latérales revues pour voir nettement les voisins */
+  --step-x-1: calc(var(--card-w) * 0.58 + 12px);
+  --step-x-2: calc(var(--card-w) * 1.08 + 24px);
+
+  /* échelles et profondeur */
+  --scale-0: 1;
+  --scale-1: 0.88;
+  --scale-2: 0.78;
+  --z0: 5; --z1: 4; --z2: 3;
+}
+
+
+/* Flèches */
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 6;
+  height: 48px;
+  width: 48px;
+  border-radius: 50%;
+  border: 0;
+  font-size: 30px;
+  line-height: 1;
+  cursor: pointer;
+  background: rgba(255,255,255,.95);
+  box-shadow:
+    0 2px 10px rgba(0,0,0,.15),
+    0 12px 28px rgba(0,0,0,.12);
+  transition: transform .15s ease, background-color .15s ease;
+  user-select: none;
+}
+.carousel-arrow:hover { transform: translateY(-50%) scale(1.05); }
+.carousel-arrow.left { left: -2px; }
+.carousel-arrow.right { right: -2px; }
+
+/* Carte de base */
+.source-section .card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--card-w);
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow:
+    0 1px 2px rgba(0,0,0,.06),
+    0 10px 28px rgba(0,0,0,.12);
+  overflow: hidden;
+  text-decoration: none;
+  transition:
+    transform .35s cubic-bezier(.2,.7,.2,1),
+    box-shadow .35s cubic-bezier(.2,.7,.2,1),
+    opacity .35s ease,
+    filter .35s ease;
+  will-change: transform, opacity, filter;
+}
+
+.source-section .card:not(.card-pos-0) {
+  pointer-events: none; /* évite les hovers et focus qui provoquent des reflows */
+}
+
+
+
+/* Vignette */
+.source-section .thumb {
+  position: relative;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+}
+.source-section .thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.source-section .thumb-placeholder {
+  width: 100%;
+  height: 100%;
+  background: #eee;
+}
+
+/* Métadonnées */
+.source-section .meta {
+  padding: 12px 14px 14px 14px;
+}
+.source-section .title {
+  font-size: 18px;
+  line-height: 1.25;
+  color: #111;
+  margin: 0 0 6px 0;
+}
+.source-section .date {
+  font-size: 13px;
+  color: #666;
+  margin: 0;
+}
+
+/* ===== Positionnement 5 cartes autour du centre =====
+   0 = carte centrale (pleine), ±1 = voisines, ±2 = périphériques. */
+.card-pos-0 {
+  z-index: var(--z0);
+  transform: translate(-50%, -50%) translateZ(0) scale(var(--scale-0));
+  opacity: 1;
+  filter: none;
+}
+
+.card-pos-1 {
+  z-index: var(--z1);
+  transform: translate(calc(-50% + var(--step-x-1)), -50%) translateZ(-100px) scale(var(--scale-1));
+  opacity: 0.7;
+  filter: grayscale(.15) brightness(.96);
+}
+.card-pos--1 {
+  z-index: var(--z1);
+  transform: translate(calc(-50% - var(--step-x-1)), -50%) translateZ(-100px) scale(var(--scale-1));
+  opacity: 0.7;
+  filter: grayscale(.15) brightness(.96);
+}
+
+.card-pos-2 {
+  z-index: var(--z2);
+  transform: translate(calc(-50% + var(--step-x-2)), -50%) translateZ(-220px) scale(var(--scale-2));
+  opacity: 0.45;
+  filter: grayscale(.35) brightness(.9);
+}
+.card-pos--2 {
+  z-index: var(--z2);
+  transform: translate(calc(-50% - var(--step-x-2)), -50%) translateZ(-220px) scale(var(--scale-2));
+  opacity: 0.45;
+  filter: grayscale(.35) brightness(.9);
+}
+
+/* Hover plus marqué uniquement sur la carte centrale */
+.card-pos-0:hover {
+  box-shadow:
+    0 6px 22px rgba(0,0,0,.16),
+    0 28px 80px rgba(0,0,0,.20);
+  transform: translate(-50%, -50%) translateZ(0) scale(1.02);
+}
+
+/* Hover plus marqué uniquement sur la carte centrale */
+.card-pos-0:hover {
+  box-shadow:
+    0 6px 22px rgba(0,0,0,.16),
+    0 28px 80px rgba(0,0,0,.20);
+  transform: translate(-50%, -50%) translateZ(0) scale(1.02);
+}
+
+/* ===== Fallback noscript (si besoin) ===== */
+.noscript-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+}
+
+/* ===== Variantes brand ===== */
+
+/* Frandroid: violet/bleu (dégradé doux) + typo nette */
+.source-section.frandroid {
+  --grad-a: #6c4cf6;
+  --grad-b: #2a8cff;
+  background: linear-gradient(180deg, rgba(108,76,246,.08), rgba(42,140,255,.08));
+  border-top: 1px solid rgba(108,76,246,.15);
+  border-bottom: 1px solid rgba(42,140,255,.12);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif;
+}
+.source-section.frandroid .section-head h2 { color: #3f2bd8; }
+.source-section.frandroid .card { border: 1px solid rgba(63,43,216,.08); }
+.source-section.frandroid .thumb::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.20), rgba(0,0,0,0));
+  pointer-events: none;
+}
+.source-section.frandroid .title { font-weight: 700; }
+
+/* DroidSoft: vert clair, fond sombre, Titillium/Open Sans */
+.source-section.droidsoft {
+  --droidsoft-green: #0dba53;
+  background: linear-gradient(180deg, rgba(13,186,83,.10), rgba(13,186,83,.04));
+  border-top: 1px solid rgba(13,186,83,.18);
+  border-bottom: 1px solid rgba(13,186,83,.12);
+  font-family: "Open Sans", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+.source-section.droidsoft .section-head h2 {
+  color: #0a9a45;
+  font-family: "Titillium Web", "Open Sans", sans-serif;
+}
+.source-section.droidsoft .card {
+  background: #171a1c;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.source-section.droidsoft .title,
+.source-section.droidsoft .date { color: #eaeaea; }
+.source-section.droidsoft .card-pos-0:hover {
+  box-shadow:
+    0 6px 16px rgba(0,0,0,.35),
+    0 18px 50px rgba(0,0,0,.5);
+}
+
+/* Le Café du Geek: vert de marque et base sombre */
+.source-section.lcdg {
+  --lcdg-brand: #4cb490;
+  --lcdg-base: #2c2f34;
+  background: linear-gradient(180deg, rgba(44,47,52,1), rgba(44,47,52,.92));
+  border-top: 1px solid rgba(76,180,144,.25);
+  border-bottom: 1px solid rgba(76,180,144,.15);
+  color: #f0f3f2;
+}
+.source-section.lcdg .section-head h2 { color: var(--lcdg-brand); }
+.source-section.lcdg .card {
+  border-radius: 20px;
+  border: 1px solid rgba(76,180,144,.18);
+  background: #1d2024;
+}
+.source-section.lcdg .title { color: #ffffff; font-weight: 700; }
+.source-section.lcdg .date { color: #c9d6d1; }
+
+/* ===== Responsive ===== */
+@media (max-width: 1220px) {
+  .carousel-viewport {
+    --card-w: min(720px, 86vw);
+    --step-x-1: calc(var(--card-w) * 0.60 + 10px);
+    --step-x-2: calc(var(--card-w) * 1.10 + 20px);
+  }
+}
+@media (max-width: 1024px) {
+  .carousel-viewport {
+    --card-w: min(640px, 90vw);
+    --step-x-1: calc(var(--card-w) * 0.62 + 8px);
+    --step-x-2: calc(var(--card-w) * 1.12 + 16px);
+  }
+}
+@media (max-width: 767px) {
+  .carousel-viewport {
+    --card-w: min(95vw, 520px);
+    --step-x-1: calc(var(--card-w) * 0.64 + 6px);
+    --step-x-2: calc(var(--card-w) * 1.15 + 12px);
+  }
+  .card-pos-1,
+  .card-pos--1 { opacity: .55; }
+  .card-pos-2,
+  .card-pos--2 { opacity: .22; }
+}

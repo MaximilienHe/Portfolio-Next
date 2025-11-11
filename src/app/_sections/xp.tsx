@@ -32,7 +32,7 @@ export default function Xp() {
                 Cela fait depuis 2020 que je suis rédacteur tech à côté de mes
                 études
               </h4>
-              <a href="#articles" className="button">
+              <a href="articles" className="button">
                 Lire quelques articles
               </a>
             </div>

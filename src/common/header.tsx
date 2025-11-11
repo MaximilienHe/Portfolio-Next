@@ -23,7 +23,7 @@ export default function Header() {
 
         <div className="nav-links">
           <Link href="/nr">Numérique Responsable</Link>
-          <a href="/#articles">Rédacteur</a>
+          <a href="/articles">Rédacteur</a>
 
           <Link href="/projets">Projets</Link>
           <Link href="/contact">Contact</Link>
