@@ -2,7 +2,7 @@
 // Utilitaires pour récupérer et agréger tes derniers articles
 
 export type Article = {
-  source: "DroidSoft" | "Le Cafe du Geek" | "Frandroid";
+  source: "DroidSoft" | "Le Café du Geek" | "Frandroid";
   id: string;
   title: string;
   url: string;
@@ -131,7 +131,7 @@ async function getWpPostsByAuthor(
   const url = `${base}/wp-json/wp/v2/posts?author=${authorId}&per_page=${perPage}&orderby=date&order=desc&${WP_PARAMS}`;
   const posts = await fetchJson<WpPost[]>(url);
   const source: Article["source"] =
-    base.includes("droidsoft") ? "DroidSoft" : "Le Cafe du Geek";
+    base.includes("droidsoft") ? "DroidSoft" : "Le Café du Geek";
   return posts.map((p) => ({
     source,
     id: `${source}-${p.id}`,

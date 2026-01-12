@@ -67,15 +67,20 @@ export const mdxComponents = {
               alt={img.alt ?? ""}
               width={img.width}
               height={img.height}
+              sizes="(max-width: 768px) 90vw, 320px"
               style={{ width: "100%", height: "auto" }}
             />
           ) : (
-            <img
-              src={img.src}
-              alt={img.alt ?? ""}
-              style={{ width: "100%", height: "auto", display: "block" }}
-              loading="lazy"
-            />
+            <div style={{ position: "relative", width: "100%", aspectRatio: "16 / 9" }}>
+              <Image
+                src={img.src}
+                alt={img.alt ?? ""}
+                fill
+                sizes="(max-width: 768px) 90vw, 320px"
+                style={{ objectFit: "cover" }}
+                loading="lazy"
+              />
+            </div>
           )}
           {img.alt ? (
             <div style={{ padding: "8px", fontSize: "13px", color: "#334155" }}>{img.alt}</div>
@@ -122,7 +127,7 @@ export const mdxComponents = {
             fontFamily: "'Segoe UI','Helvetica Neue',Arial,sans-serif",
           }}
         >
-          Impossible de contacter l'API DroidSoft pour le moment.
+          Impossible de contacter l\u2019API DroidSoft pour le moment.
         </div>
       );
     }

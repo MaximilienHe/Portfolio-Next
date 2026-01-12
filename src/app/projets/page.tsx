@@ -115,9 +115,11 @@ export default function Projets() {
                   </div>
                 ) : null}
                 <div className="languages">
-                  {(project.logos ?? []).map((logoKey) => (
-                    <ImageOptimize key={logoKey} src={logos[logoKey]} alt={logoKey} />
-                  ))}
+                  {(project.logos ?? []).map((logoKey) => {
+                    const logo = logos[logoKey as keyof typeof logos];
+                    if (!logo) return null;
+                    return <ImageOptimize key={logoKey} src={logo} alt={logoKey} />;
+                  })}
                 </div>
                 {project.date ? (
                   <div className="projectMetaRow">

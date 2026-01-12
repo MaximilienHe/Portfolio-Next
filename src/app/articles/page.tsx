@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./style.css";
-import { getAllLatestArticles } from "@/lib/fetchArticles";
+import { getAllLatestArticles, type Article } from "@/lib/fetchArticles";
 import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
 import CarouselSection from "../../components/CarouselSection";
 
@@ -8,7 +8,7 @@ const pageUrl = "https://maximilienherr.fr/articles";
 const pageTitle = "Articles";
 const fullTitle = "Articles | Maximilien Herr";
 const pageDescription =
-  "Derniers articles publies sur Frandroid, DroidSoft et Le Cafe du Geek.";
+  "Derniers articles publies sur Frandroid, DroidSoft et Le Café du Geek.";
 const ogImage = "https://maximilienherr.fr/banniere_dev_redac.png";
 
 export const metadata: Metadata = {
@@ -29,16 +29,7 @@ export const metadata: Metadata = {
     images: [ogImage],
   },
   robots: { index: true, follow: true },
-  keywords: ["articles", "Frandroid", "DroidSoft", "Le Cafe du Geek", "portfolio"],
-};
-
-type Article = {
-  source: "DroidSoft" | "Le Cafe du Geek" | "Frandroid";
-  id: string;
-  title: string;
-  url: string;
-  date: string;
-  cover?: string | null;
+  keywords: ["articles", "Frandroid", "DroidSoft", "Le Café du Geek", "portfolio"],
 };
 
 export default async function ArticlesPage() {
@@ -91,7 +82,7 @@ export default async function ArticlesPage() {
         <div className="inner">
           <h1 className="page-title">Mes derniers articles</h1>
           <p className="page-sub">
-            Agregation automatique depuis Frandroid, DroidSoft et Le Cafe du Geek.
+            Agregation automatique depuis Frandroid, DroidSoft et Le Café du Geek.
           </p>
         </div>
 
@@ -110,7 +101,7 @@ export default async function ArticlesPage() {
         <CarouselSection
           title="Le Cafe du Geek"
           variant="lcdg"
-          items={(bySource["Le Cafe du Geek"] || []).slice(0, 18)}
+          items={(bySource["Le Café du Geek"] || []).slice(0, 18)}
         />
 
         {/* Fallback simple si JS desactive */}
