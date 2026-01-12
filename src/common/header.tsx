@@ -22,9 +22,9 @@ export default function Header() {
         </div>
 
         <div className="nav-links">
-          <Link href="/nr">Numérique Responsable</Link>
-          <a href="/articles">Rédacteur</a>
-
+          <Link href="/nr">Numerique Responsable</Link>
+          <Link href="/articles">Articles</Link>
+          <Link href="/blog">Blog</Link>
           <Link href="/projets">Projets</Link>
           <Link href="/contact">Contact</Link>
           <Link href="/cv" className="button">

@@ -1,0 +1,36 @@
+# Welcome to My Blog
+
+This is a sample MDX file demonstrating how to mix Markdown and JSX.
+
+## Features
+
+- Write content in Markdown
+- Embed React components
+- Use JavaScript expressions
+
+## Interactive Component Example
+
+export const Counter = () => {
+    const [count, setCount] = React.useState(0);
+    return (
+        <button onClick={() => setCount(count + 1)}>
+            Count: {count}
+        </button>
+    );
+};
+
+<Counter />
+
+## Code Example
+
+Here's some sample code:
+
+```jsx
+const greet = (name) => {
+    return `Hello, ${name}!`;
+};
+console.log(greet('World'));
+```
+
+Feel free to explore and modify this MDX file to create your own blog posts!
+    
