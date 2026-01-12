@@ -54,9 +54,9 @@ const siteNavigationSchema = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr">
-      <body>
+      <body className="layout-root">
         <Header />
-        {children}
+        <main className="layout-content">{children}</main>
         <Footer />
         <script
           type="application/ld+json"

@@ -16,6 +16,8 @@ export type EntryMeta = {
   tags?: string[];
   cover?: string;
   canonical?: string;
+  logos?: string[];
+  priority?: number;
   draft?: boolean;
 };
 
@@ -31,6 +33,8 @@ export function getAllEntries(type: ContentType): EntryMeta[] {
     const slug = file.replace(/\.mdx$/, "");
     const raw = fs.readFileSync(path.join(dirFor(type), file), "utf8");
     const { data } = matter(raw);
+    const priority = data.priority !== undefined ? Number(data.priority) : undefined;
+    const logos = Array.isArray(data.logos) ? data.logos.map(String) : undefined;
 
     return {
       slug,
@@ -41,18 +45,34 @@ export function getAllEntries(type: ContentType): EntryMeta[] {
       tags: Array.isArray(data.tags) ? data.tags.map(String) : undefined,
       cover: data.cover ? String(data.cover) : undefined,
       canonical: data.canonical ? String(data.canonical) : undefined,
+      logos,
+      priority: Number.isNaN(priority) ? undefined : priority,
       draft: Boolean(data.draft ?? false),
     } satisfies EntryMeta;
   });
 
   return entries
     .filter((e) => !e.draft)
-    .sort((a, b) => (a.date < b.date ? 1 : -1));
+    .sort((a, b) => {
+      const priorityA = a.priority ?? Number.POSITIVE_INFINITY;
+      const priorityB = b.priority ?? Number.POSITIVE_INFINITY;
+      if (priorityA !== priorityB) return priorityA - priorityB;
+
+      const dateA = a.date ? new Date(a.date).getTime() : 0;
+      const dateB = b.date ? new Date(b.date).getTime() : 0;
+      const safeDateA = Number.isFinite(dateA) ? dateA : 0;
+      const safeDateB = Number.isFinite(dateB) ? dateB : 0;
+      if (safeDateA !== safeDateB) return safeDateB - safeDateA;
+
+      return a.slug.localeCompare(b.slug);
+    });
 }
 
 export function getEntry(type: ContentType, slug: string): Entry {
   const raw = fs.readFileSync(path.join(dirFor(type), `${slug}.mdx`), "utf8");
   const { data, content } = matter(raw);
+  const priority = data.priority !== undefined ? Number(data.priority) : undefined;
+  const logos = Array.isArray(data.logos) ? data.logos.map(String) : undefined;
   return {
     slug,
     title: String(data.title ?? slug),
@@ -62,6 +82,8 @@ export function getEntry(type: ContentType, slug: string): Entry {
     tags: Array.isArray(data.tags) ? data.tags.map(String) : undefined,
     cover: data.cover ? String(data.cover) : undefined,
     canonical: data.canonical ? String(data.canonical) : undefined,
+    logos,
+    priority: Number.isNaN(priority) ? undefined : priority,
     draft: Boolean(data.draft ?? false),
     body: content,
   };

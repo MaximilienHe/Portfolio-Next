@@ -92,14 +92,13 @@ export default function Contact() {
         <div className="contactContent">
           <h2>Me contacter</h2>
           <p>
-            Que ce soit pour un projet de developpement web, une collaboration en
-            redaction tech ou pour echanger, n&apos;hesitez pas a me joindre.
+            Que ce soit pour une proposition de recrutement, une nouvelle pour un média ou pour échanger, n&apos;hesitez pas à me joindre.
           </p>
 
           <div className="contactCard">
             <p>
-              Vous pouvez m&apos;ecrire par mail, via LinkedIn ou GitHub. Mon numero de
-              telephone est disponible sur demande.
+              Vous pouvez m&apos;écrire par mail, via LinkedIn ou GitHub. Mon numéro de
+              téléphone est disponible sur demande.
             </p>
             <div className="contactLogos">
               <a
@@ -127,7 +126,7 @@ export default function Contact() {
             <h3>Localisation</h3>
             <p>Clermont-Ferrand, France</p>
 
-            <h3>Reseaux</h3>
+            {/* <h3>Reseaux</h3>
             <ul>
               <li>
                 Twitter :{" "}
@@ -141,7 +140,7 @@ export default function Contact() {
                   maximilienherr
                 </a>
               </li>
-            </ul>
+            </ul> */}
           </div>
         </div>
       </section>

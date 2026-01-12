@@ -1,0 +1,202 @@
+---
+
+title: "T2C-Screen : affichage temps réel sur matrice LED (API + ESP32 + app)"
+description: "Projet complet d’affichage des prochains départs T2C à Clermont-Ferrand : serveur Node/Express (GTFS + GTFS-RT), API sécurisée par clés, interface web de configuration, firmware ESP32 pour matrice HUB75, et scripts Python pour envoyer des bitmaps."
+date: "2026-01-12"
+updated: "2026-01-12"
+tags: ["nodejs", "express", "gtfs", "gtfs-rt", "esp32", "platformio", "iot", "docker"]
+cover: "/images/Projects/t2c-screen/hero.png"
+canonical: "[https://maximilienherr.fr/projets/t2c-screen](https://maximilienherr.fr/projets/t2c-screen)"
+priority: 1
+logos: ["nodeLogo", "dockerLogo", "esp32Logo", "gitLogo"]
+draft: false
+------------
+
+# T2C-Screen : affichage temps réel sur matrice LED (API + ESP32 + app)
+
+T2C-Screen est un projet « bout en bout » pour afficher les prochains départs du réseau T2C (Clermont-Ferrand) sur un panneau LED piloté par ESP32. Le cœur repose sur un serveur Node/Express qui télécharge et indexe un flux **GTFS statique** (ZIP), puis combine ces données avec **GTFS-RT Trip Updates** pour calculer des départs « temps réel ». Une API HTTP expose les lignes, les arrêts et les départs, et l’ESP32 consomme directement cette API pour afficher deux directions sur une matrice HUB75 (deux panneaux 64×32 chaînés). Le projet inclut aussi une interface web légère (SPA) pour configurer la ligne et l’arrêt, ainsi que des scripts Python pour envoyer des bitmaps personnalisés vers l’écran.
+
+![T2C-Screen cover](/images/Projects/t2c-screen/hero.png)
+
+## Caractéristiques techniques du projet
+
+### Langages et technologies
+
+* **Backend** : Node.js (Express), parsing CSV (`csv-parse`), gestion ZIP (`adm-zip`), Protobuf GTFS-RT (`gtfs-realtime-bindings`).
+* **Sécurité API** : clés API + scopes, comparaison **SHA-256** timing-safe.
+* **Déploiement** : Docker (Node 22 Alpine) + `docker-compose` (volumes, variables d’environnement).
+* **Frontend** : SPA statique (HTML/CSS/JS) servie par Express (archivée, utile pour config / debug).
+* **Firmware** : ESP32 (Arduino via PlatformIO), bibliothèque HUB75 DMA (ESP32-HUB75-MatrixPanel-I2S-DMA), serveur HTTP local.
+* **Outils** : scripts Python (Pillow) pour convertir des images en **RGB565** et les envoyer à l’ESP.
+
+### Périmètre fonctionnel
+
+* Téléchargement et indexation du GTFS statique (routes, stops, trips, stop_times).
+* Lecture GTFS-RT (TripUpdates), cache court côté serveur pour limiter la charge.
+* Calcul des prochains départs par ligne/arrêt, regroupés par direction (headsign/directionId).
+* API HTTP sous `/api` :
+
+  * `GET /api/routes`
+  * `GET /api/stops?route=A[&q=jaude]`
+  * `GET /api/departures?route=A&stopId=...&max=2` (ou `stopName`)
+  * Health : `GET /api/_health/live`, `GET /api/_health/ready`
+* Affichage sur matrice LED 128×32 (2× 64×32) : 2 directions, terminus défilant si trop long.
+* Messages personnalisés sur l’écran via HTTP local ESP32 : texte, bitmap, clear, luminosité.
+
+### Combien de temps, qui, et quoi
+
+Le projet a été développé de manière itérative, avec une approche pragmatique : d’abord un serveur monolithique (`server.js`) pour valider le parsing GTFS et le calcul des départs, puis une refonte en modules (`src/*`) avec services dédiés (GTFS statique, GTFS-RT, clés API, calcul departures) et middlewares (requestId, auth, errors).
+
+Côté matériel, l’objectif était d’obtenir un rendu « panneau d’arrêt » : deux panneaux P5 64×32 chaînés, alimentation dédiée 5V 10A, ESP32 DevKit et câblage HUB75.
+
+## Détails du projet
+
+## Architecture globale
+
+Le projet se découpe en quatre blocs qui communiquent via HTTP.
+
+1. **Serveur Node/Express**
+
+   * Télécharge le GTFS statique, parse les fichiers et construit des index en mémoire.
+   * Interroge GTFS-RT TripUpdates, met en cache quelques secondes.
+   * Expose une API sécurisée par clé + scopes.
+
+2. **Frontend statique (SPA)**
+
+   * Sert d’outil de configuration et de visualisation.
+   * Mode « display » plein écran via query string (utile sur tablette/TV).
+
+3. **ESP32 + matrice HUB75**
+
+   * Consomme l’API `/api/departures` toutes les 30 s.
+   * Affiche deux directions, avec défilement si le terminus dépasse la largeur disponible.
+   * Propose un serveur HTTP local pour pousser des messages (texte / bitmap).
+
+4. **Scripts Python**
+
+   * Convertissent une image (PNG/JPG/GIF) vers un flux RGB565 (hex).
+   * Envoient un JSON à l’ESP32 via `POST /message/bitmap`.
+
+
+## Backend Node/Express
+
+### Chargement GTFS statique et indexation
+
+Le service `GtfsStaticService` télécharge régulièrement un ZIP GTFS, lit `routes.txt`, `stops.txt`, `trips.txt` et `stop_times.txt`, et construit des index pour répondre rapidement aux requêtes.
+
+Index principaux :
+
+* `routeByShortName` : code ligne (ex `A`) vers `{route_id, color, longName}`.
+* `stopsByName` : nom normalisé vers liste de `stop_id`.
+* `routeStopsByRouteId` : ensemble des arrêts desservis par la route.
+* `tripInfoById` : `trip_id` vers `{headsign, directionId, routeId}`.
+* `canonicalHeadsignByRouteDir` : terminus « majoritaire » par sens.
+* `stopDirsByRouteStop` : directions possibles par `stop_id` (si unique, utilisée en fallback).
+
+Le rechargement est fait par « swap atomique » du snapshot en mémoire : si une refresh échoue, l’ancien snapshot reste disponible.
+
+### Lecture GTFS-RT avec cache court
+
+`GtfsRtService` récupère un flux Protobuf GTFS-RT, le décode et le met en cache quelques secondes. Cela évite de refetch à chaque requête quand plusieurs clients interrogent l’API (ESP32 + navigateur + app).
+
+### Calcul des départs
+
+L’endpoint `GET /api/departures` :
+
+* Valide la ligne (`route`), puis résout l’arrêt par `stopId` (recommandé) ou `stopName`.
+* Parcourt les entités `TripUpdate` du feed.
+* Filtre sur `routeId`, puis cherche les `stopTimeUpdate` correspondant au stop.
+* Construit une liste triée par sens (directionId si connu), et renvoie `inMinutes` + `timeIso`.
+
+Le code privilégie l’information **GTFS statique** (directionId/headsign) avant GTFS-RT, et prévoit des fallback si certaines infos sont absentes.
+
+## Sécurité : clés API + scopes
+
+Les endpoints de données (`/routes`, `/stops`, `/departures`) sont protégés par un middleware `requireScopes`.
+
+* Le client envoie une clé via `Authorization: Bearer <token>` ou `X-API-Key: <token>`.
+* Le serveur calcule `sha256(token)` et compare au `tokenSha256` stocké dans `keys.json`.
+* Chaque clé possède des scopes. Exemple :
+
+  * app / navigateur : `routes:read`, `stops:read`, `departures:read`
+  * ESP32 : `departures:read`
+
+`keys.json` est monté dans le container en **read-only** et exclu de Git.
+
+## Frontend statique (outil de config)
+
+Le dossier `public/` contient une SPA minimale :
+
+* Suggestion des lignes via `GET /api/routes`.
+* Suggestion des arrêts filtrée par ligne via `GET /api/stops?route=...&q=...`.
+* Rendu de deux cartes, une par sens, avec l’« imminence » (À quai / Dans X min).
+* Mode plein écran : `?mode=display&route=A&stop=Jaude&max=2` (idéalement `stopId`).
+
+Ce frontend est volontairement simple : il sert d’outil de debug/validation et de configuration rapide, sans dépendances.
+
+## ESP32 + matrice HUB75
+
+Le firmware (PlatformIO / Arduino) :
+
+* Se connecte au WiFi.
+* Interroge `GET /api/departures` toutes les 30 secondes.
+* Affiche deux lignes (2 directions) sur une matrice 128×32.
+* Défile le terminus si la chaîne dépasse la zone prévue.
+
+### Serveur HTTP local sur l’ESP32
+
+L’ESP32 expose aussi un serveur HTTP (port 80) pour piloter l’affichage :
+
+* `POST /config` : changer `route` / `stop`.
+* `POST /message/text` : pousser un message texte (avec couleurs, défilement si long).
+* `POST /message/bitmap` : pousser un bitmap RGB565 (payload hex).
+* `POST /message/clear` : vider la file de messages.
+* `POST /display/brightness` : luminosité (0 à 255).
+
+Le rendu alterne entre le mode T2C et les messages personnalisés via une petite machine à états, avec expiration (`validityHours`) côté messages.
+
+## Scripts Python : envoi de bitmaps
+
+Les scripts `python-send-image/*.py` utilisent Pillow pour :
+
+* Charger une image.
+* La redimensionner en 128×32 (ou 128×64 selon variante).
+* Convertir chaque pixel RGB888 en RGB565.
+* Sérialiser un flux hex et l’envoyer à `POST /message/bitmap`.
+
+Cela permet de pousser rapidement un logo, une image ou un GIF aplati (dans l’état, le script traite une image à la fois).
+
+## Déploiement
+
+### Docker / NAS
+
+Le projet se déploie via `docker-compose.yaml` :
+
+* Port externe mappé (ex `8086:8080`).
+* Variables d’environnement pour GTFS/GTFS-RT, timeouts et logs.
+* Volume read-only pour `keys.json`.
+
+Le serveur écoute sur `APP_PORT` pour éviter certains environnements qui injectent `PORT` (cas observé sur NAS).
+
+## Auto-critique et pistes d’amélioration
+
+* **Authentification frontend** : le frontend statique ne doit pas embarquer une clé en dur. Si usage navigateur nécessaire, préférer un proxy interne non exposé, ou une auth navigateur dédiée (session/cookie), ou rendre ces endpoints publics et garder l’auth pour les clients « privés ».
+* **StopId par défaut** : la résolution par `stopName` reste un fallback. Un mode « sélection » qui stocke systématiquement `stopId` est plus robuste.
+* **Animation / layout** : le rendu ESP32 est optimisé pour la lisibilité, mais pourrait intégrer une meilleure hiérarchie typographique (icônes, alignements) et une gestion plus fine des noms longs.
+* **Messages bitmap** : ajouter un endpoint « playlist » ou support d’animations (frames) permettrait d’afficher des GIF réellement animés.
+* **Persistance** : conserver la config route/stop dans NVS (ESP32) éviterait de reconfigurer après reboot.
+
+<div className="logos">
+  <img src="/images/logos/node.png" alt="Node.js" className="logo" />
+  <img src="/images/logos/docker.png" alt="Docker" className="logo" />
+  <img src="/images/logos/esp32.png" alt="ESP32" className="logo" />
+  <img src="/images/logos/git.png" alt="Git" className="logo" />
+</div>
+
+## Sources du projet
+
+<a href="https://github.com/MaximilienHe/t2c-backend" target="_blank" rel="noopener">
+  <img src="/images/logos/logo-sources-projet.png" alt="Sources du projet" className="logo" />
+</a>
+
+---

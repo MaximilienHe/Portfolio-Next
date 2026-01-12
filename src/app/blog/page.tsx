@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import "./style.css";
 import { getAllEntries } from "@/lib/content";
 
 const pageUrl = "https://maximilienherr.fr/blog";
@@ -31,6 +32,8 @@ export const metadata: Metadata = {
 
 export default function BlogIndex() {
   const posts = getAllEntries("blog");
+  const pattern = ["wide", "tall", "medium", "short", "mini", "wide", "medium", "tall"];
+  const now = Date.now();
   const blogJsonLd = {
     "@context": "https://schema.org",
     "@type": "Blog",
@@ -56,14 +59,45 @@ export default function BlogIndex() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(blogJsonLd) }}
       />
       <h1>Blog</h1>
-      <ul>
-        {posts.map((p) => (
-          <li key={p.slug}>
-            <Link href={`/blog/${p.slug}`}>{p.title}</Link>
-            <div>{p.description}</div>
-          </li>
-        ))}
-      </ul>
+      <p className="blog-intro">Billets, humeurs et retours d&apos;expérience. Quelques cartes pour explorer.</p>
+
+      <div className="blog-masonry">
+        {posts.map((p, idx) => {
+          const variant = pattern[idx % pattern.length];
+          const date = new Date(p.date);
+          const days = Math.max(0, Math.floor((now - date.getTime()) / (1000 * 60 * 60 * 24)));
+          const dateLabel =
+            days <= 7
+              ? `Il y a ${days === 0 ? "moins d'un jour" : `${days} jour${days > 1 ? "s" : ""}`}`
+              : date.toLocaleDateString("fr-FR", { day: "2-digit", month: "short", year: "numeric" });
+
+          return (
+            <Link key={p.slug} href={`/blog/${p.slug}`} className={`blog-card card-${variant}`}>
+              <div className="blog-card-thumb">
+                {p.cover ? (
+                  <img src={p.cover} alt={p.title} loading="lazy" decoding="async" />
+                ) : (
+                  <div className="blog-card-placeholder" aria-hidden />
+                )}
+                <div className="blog-card-chip">{dateLabel}</div>
+              </div>
+              <div className="blog-card-body">
+                <h3 className="blog-card-title">{p.title}</h3>
+                <p className="blog-card-desc">{p.description}</p>
+                {p.tags?.length ? (
+                  <div className="blog-card-tags">
+                    {p.tags.map((t) => (
+                      <span key={t} className="blog-tag">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+            </Link>
+          );
+        })}
+      </div>
     </main>
   );
 }

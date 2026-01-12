@@ -1,0 +1,124 @@
+.blog-intro{
+  color: #475569;
+  margin-bottom: 24px;
+  font-family: 'Segoe UI','Helvetica Neue',Arial,sans-serif;
+}
+
+.blog-masonry{
+  column-count: 3;
+  column-gap: 18px;
+}
+
+.blog-card{
+  display: block;
+  break-inside: avoid;
+  background: #fff;
+  border-radius: 14px;
+  margin: 0 0 18px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  color: inherit;
+  text-decoration: none;
+  font-family: 'Segoe UI','Helvetica Neue',Arial,sans-serif;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.blog-card:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+}
+
+.blog-card-thumb{
+  position: relative;
+  overflow: hidden;
+}
+
+.blog-card-thumb img{
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.blog-card-placeholder{
+  width: 100%;
+  height: 220px;
+  background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+}
+
+.blog-card-chip{
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  background: rgba(15,23,42,0.8);
+  color: #f8fafc;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+.blog-card-body{
+  padding: 14px 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.blog-card-title{
+  font-size: 18px;
+  margin: 0;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.blog-card-desc{
+  margin: 0;
+  color: #475569;
+  font-size: 14px;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.blog-card-tags{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.blog-tag{
+  background: #eef2ff;
+  color: #4338ca;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  border: 1px solid #c7d2fe;
+}
+
+.card-tall .blog-card-thumb img,
+.card-tall .blog-card-placeholder{ aspect-ratio: 2 / 3; }
+
+.card-wide .blog-card-thumb img,
+.card-wide .blog-card-placeholder{ aspect-ratio: 21 / 9; }
+
+.card-medium .blog-card-thumb img,
+.card-medium .blog-card-placeholder{ aspect-ratio: 5 / 6; }
+
+.card-short .blog-card-thumb img,
+.card-short .blog-card-placeholder{ aspect-ratio: 16 / 7; }
+
+.card-mini .blog-card-thumb img,
+.card-mini .blog-card-placeholder{ aspect-ratio: 1 / 1; }
+
+@media (max-width: 1100px){
+  .blog-masonry{ column-count: 2; }
+}
+
+@media (max-width: 720px){
+  .blog-masonry{ column-count: 1; }
+}

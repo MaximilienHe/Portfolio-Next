@@ -210,6 +210,21 @@ const logos = {
     height: 400,
     name: "icdg",
   },
+  nodeLogo: {
+    id: 31,
+    image: "/images/logos/node.png",
+    name: "nodeLogo",
+  },
+  dockerLogo: {
+    id: 32,
+    image: "/images/logos/docker.png",
+    name: "dockerLogo",
+  },
+  esp32Logo: {
+    id: 33,
+    image: "/images/logos/esp32.png",
+    name: "esp32Logo",
+  },
   iutIG: images.iutIG,
 };
 export default logos;

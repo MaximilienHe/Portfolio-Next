@@ -32,6 +32,48 @@ h4 {
     font-size: 28px;
 }
 
+.mdx-content{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.mdx-content img,
+.mdx-content iframe{
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    border-radius: 8px;
+    display: block;
+}
+
+.mdx-content img{
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    display: block;
+}
+
+.mdx-content .logos{
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.mdx-content .logos .logo,
+.mdx-content .logo{
+    max-height: 64px;
+    height: auto;
+    width: auto;
+    object-fit: contain;
+}
+
+.mdx-content .sources{
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
 .sources {
     display: flex;
     flex-direction: row;

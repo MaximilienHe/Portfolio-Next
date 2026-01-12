@@ -4,7 +4,127 @@
 /* Default Style */
 
 body {
-	margin: 0
+	margin: 0;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+html {
+	min-height: 100%;
+}
+.article-page{
+	display: flex;
+	flex-direction: column;
+	gap: clamp(24px, 4vw, 48px);
+}
+.article-hero{
+	position: relative;
+	overflow: hidden;
+	border-radius: 18px;
+	min-height: clamp(260px, 40vw, 480px);
+	background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.08), rgba(15,23,42,0.9));
+}
+.article-hero img{
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+.article-hero-placeholder{
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(135deg, #1e293b, #0f172a);
+}
+.article-hero-overlay{
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(180deg, rgba(15,23,42,0.05) 0%, rgba(15,23,42,0.35) 45%, rgba(15,23,42,0.85) 75%, rgba(15,23,42,0.95) 100%);
+}
+.article-hero-meta{
+	position: absolute;
+	inset: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	gap: 12px;
+	padding: clamp(18px, 3vw, 36px) clamp(18px, 4vw, 42px);
+	color: #fff;
+	max-width: 1100px;
+	margin: 0 auto;
+}
+.article-hero-title{
+	margin: 0;
+	font-size: clamp(28px, 4vw, 44px);
+	line-height: 1.1;
+	color: #fff;
+	text-align: left;
+}
+.article-hero-date{
+	margin: 0;
+	color: #e2e8f0;
+	font-size: 14px;
+	letter-spacing: 0.02em;
+	text-transform: uppercase;
+}
+.article-hero-tags{
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+.article-hero-tag{
+	border-radius: 999px;
+	padding: 6px 12px;
+	background: rgba(255,255,255,0.12);
+	border: 1px solid rgba(255,255,255,0.2);
+	color: #f8fafc;
+	font-size: 12px;
+	backdrop-filter: blur(6px);
+}
+.article-body{
+	max-width: 900px;
+	width: 100%;
+	margin: 0 auto;
+	padding: 0 clamp(16px, 4vw, 32px) clamp(40px, 6vw, 64px);
+}
+.mdx-content{
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+}
+.mdx-content img,
+.mdx-content iframe{
+	max-width: 100%;
+	width: auto;
+	height: auto;
+	border-radius: 8px;
+	display: block;
+}
+.mdx-content .logos{
+	display: flex;
+	gap: 20px;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+}
+.mdx-content .logos .logo,
+.mdx-content .logo{
+	max-height: 64px;
+	height: auto;
+	width: auto;
+	object-fit: contain;
+}
+.mdx-content .sources{
+	gap: 40px;
+	flex-wrap: wrap;
+}
+.layout-root {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+.layout-content {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
 }
 *{
 	box-sizing: border-box;
