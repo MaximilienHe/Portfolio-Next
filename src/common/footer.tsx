@@ -3,7 +3,7 @@ import React from "react";
 export default function Footer() {
 	return (
 		<section className="footer">
-			<p>© Maximilien Herr | {new Date().getFullYear()} (site dev avec Next.js)</p>
+			<p>© Maximilien Herr | {new Date().getFullYear()}</p>
 			<div className="socials">
 			<a
 				href="https://www.linkedin.com/in/maximilien-herr/"

@@ -27,10 +27,9 @@ export default function Xp() {
           </div>
           <div className="singleXP">
             <div className="contentLeft">
-              <h2>Rédacteur</h2>
+              <h2>Journaliste</h2>
               <h4>
-                Cela fait depuis 2020 que je suis rédacteur tech à côté de mes
-                études
+                Cela fait depuis 2020 que je suis journaliste tech à côté de mes études
               </h4>
               <a href="articles" className="button">
                 Lire quelques articles

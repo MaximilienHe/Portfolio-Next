@@ -56,12 +56,20 @@ h5 {
 /* Expériences : layout en flex et alternance image ↔ texte */
 .XP .inner .experiences > .singleXP {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 2rem;
     margin-bottom: 4rem;
     /* remet l’ordre par défaut */
     flex-direction: row !important;
-  }
+}
+
+.XP .inner .experiences > .singleXP img {
+    align-self: flex-start;
+}
+
+.XP .inner .experiences > .singleXP .contentRight {
+    text-align: left;
+}
   
   /* Inverse la 2ᵉ, 4ᵉ, 6ᵉ… expérience */
   .XP .inner .experiences > .singleXP:nth-of-type(2n) {
@@ -103,7 +111,7 @@ h5 {
 .formation {
     background-color: #F7F7F7;
     margin-top: 15vh;
-    padding: 5vh 20vw;
+    padding: 5vh 0;
 }
 
 .formation .singleXP img {
@@ -115,6 +123,7 @@ h5 {
 .formation h1 {
     margin: 0;
     margin-bottom: 2vh;
+    text-align: center;
 }
 
 
@@ -126,13 +135,24 @@ h5 {
     flex-direction: row-reverse; /* on inverse l’ordre de base (logo, texte → texte, logo) */
     gap: 1rem !important;
     margin-bottom: 4rem;
+    width: 100%;
+  }
+
+  .formation .inner{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+    max-width: 960px;
+    margin: 0 auto;
   }
   
   /* Texte prend tout l’espace restant */
   .formation .singleXP .contentFormation {
     flex: 1 1 auto;
     margin-right: 1rem !important; /* ajustez à votre goût */
-}
+    max-width: 640px;
+  }
   
   /* Logo dimensionné et collé à droite */
   .formation .singleXP img {
@@ -241,7 +261,7 @@ h5 {
 .interest .inner {
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap;      /* ou wrap si tu veux laisser coller */
+    flex-wrap: wrap;      /* ou wrap si tu veux laisser coller */
     gap: 40px;
     justify-content: center;
     align-items: flex-start;
@@ -281,6 +301,11 @@ iframe {
     .interest{
         flex-wrap: wrap;
         justify-content: center;
+    }
+    .interest .inner{
+        flex-direction: column;
+        align-items: center;
+        gap: 1.25rem;
     }
     .interestCard{
         padding: 1rem;
