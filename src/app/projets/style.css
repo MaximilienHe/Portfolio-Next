@@ -168,3 +168,20 @@ h4 {
         object-fit: contain;
     }
 }
+
+.projectCard{
+  border-radius: 18px;
+  border: 1px solid rgba(57,43,31,0.14);
+  box-shadow: var(--shadow-1);
+  padding: 10px;
+  gap: 28px;
+}
+
+.projectContent h3{
+  font-family: var(--font-accent);
+  letter-spacing: -0.01em;
+}
+
+.projectDescription{
+  color: var(--muted);
+}
