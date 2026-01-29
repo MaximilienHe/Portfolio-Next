@@ -10,8 +10,11 @@ export default function Header() {
   const closeMenu = () => setIsOpen(false);
 
   return (
-    <section className="header">
-      <div className={`nav ${isOpen ? "nav--open" : ""}`}>
+    <header className="header">
+      <nav
+        className={`nav ${isOpen ? "nav--open" : ""}`}
+        aria-label="Navigation principale"
+      >
         <div className="nav-header">
           <div className="nav-title">
             <Link href="/">
@@ -54,7 +57,7 @@ export default function Header() {
             MON CV
           </Link>
         </div>
-      </div>
-    </section>
+      </nav>
+    </header>
   );
 }

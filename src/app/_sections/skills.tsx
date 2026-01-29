@@ -19,8 +19,8 @@ const {
 export default function Skills() {
   return (
     <section className="skills">
-      <h1>Compétences</h1>
-      <h2>Développement Web</h2>
+      <h2>Compétences</h2>
+      <h3>Développement Web</h3>
       <div className="logos">
         <ImageOptimize src={htmlLogo} alt="HTML5 logo" className="logo" />
         <ImageOptimize src={cssLogo} alt="CSS3 logo" className="logo" />
@@ -32,7 +32,7 @@ export default function Skills() {
         <ImageOptimize src={phpLogo} alt="PHP logo" className="logo" />
         <ImageOptimize src={mysqlLogo} alt="MySQL logo" className="logo" />
       </div>
-      <h2>Développement Logiciel</h2>
+      <h3>Développement Logiciel</h3>
       <div className="logos">
         <ImageOptimize src={cLogo} alt="C logo" className="logo" />
         <ImageOptimize src={cppLogo} alt="C++ logo" className="logo" />
@@ -43,7 +43,7 @@ export default function Skills() {
           className="logo"
         />
       </div>
-      <h2>3D & Jeu-vidéo</h2>
+      <h3>3D & Jeu-vidéo</h3>
       <div className="logos">
         <ImageOptimize src={unityLogo} alt="Unity logo" className="logo" />
         <ImageOptimize src={unrealLogo} alt="Unreal logo" className="logo" />

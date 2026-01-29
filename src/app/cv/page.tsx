@@ -11,6 +11,26 @@ import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
 
 export const metadata: Metadata = {
   title: "Maximilien Herr - CV",
+  description: "CV de Maximilien Herr : expériences, formations et compétences techniques.",
+  alternates: { canonical: "https://maximilienherr.fr/cv" },
+  openGraph: {
+    type: "profile",
+    url: "https://maximilienherr.fr/cv",
+    title: "Maximilien Herr - CV",
+    description: "Parcours, expériences et compétences de Maximilien Herr.",
+    images: [{
+      url: "https://maximilienherr.fr/banniere_dev_redac.png",
+      width: 1200,
+      height: 630,
+      alt: "Bannière CV Maximilien Herr",
+    }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Maximilien Herr - CV",
+    description: "Parcours, expériences et compétences de Maximilien Herr.",
+    images: ["https://maximilienherr.fr/banniere_dev_redac.png"],
+  },
 };
 
 export default function Cv() {

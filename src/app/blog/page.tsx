@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import "./style.css";
 import { getAllEntries } from "@/lib/content";
 
@@ -12,13 +13,16 @@ const ogImage = "https://maximilienherr.fr/banniere_dev_redac.png";
 export const metadata: Metadata = {
   title: pageTitle,
   description: pageDescription,
-  alternates: { canonical: pageUrl },
+  alternates: {
+    canonical: pageUrl,
+    types: { "application/rss+xml": `${pageUrl}/rss.xml` },
+  },
   openGraph: {
     type: "website",
     url: pageUrl,
     title: fullTitle,
     description: pageDescription,
-    images: [{ url: ogImage, alt: "Banniere Maximilien Herr" }],
+    images: [{ url: ogImage, width: 1200, height: 630, alt: "Banniere Maximilien Herr" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -75,7 +79,15 @@ export default function BlogIndex() {
             <Link key={p.slug} href={`/blog/${p.slug}`} className={`blog-card card-${variant}`}>
               <div className="blog-card-thumb">
                 {p.cover ? (
-                  <img src={p.cover} alt={p.title} loading="lazy" decoding="async" />
+                  <div className="blog-card-imgwrap">
+                    <Image
+                      src={p.cover}
+                      alt={p.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 420px"
+                      style={{ objectFit: "cover" }}
+                    />
+                  </div>
                 ) : (
                   <div className="blog-card-placeholder" aria-hidden />
                 )}

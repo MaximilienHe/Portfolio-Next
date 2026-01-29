@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     url: pageUrl,
     title: fullTitle,
     description: pageDescription,
-    images: [{ url: ogImage, alt: "Banniere Maximilien Herr" }],
+    images: [{ url: ogImage, width: 1200, height: 630, alt: "Banniere Maximilien Herr" }],
   },
   twitter: {
     card: "summary_large_image",

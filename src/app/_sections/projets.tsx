@@ -1,5 +1,6 @@
 // /src/app/_sections/projets.tsx
 import Link from "next/link";
+import Image from "next/image";
 import { getAllEntries } from "@/lib/content";
 
 export default function Projets() {
@@ -7,12 +8,21 @@ export default function Projets() {
 
   return (
     <section className="projets">
-      <h1>Projets</h1>
+      <h2>Projets</h2>
       <div className="cards">
         {projects.map((proj) => (
           <Link key={proj.slug} href={`/projets/${proj.slug}`} className="card">
             {proj.cover ? (
-              <img src={proj.cover} alt={proj.title} loading="lazy" decoding="async" />
+              <div className="cardImageWrapper">
+                <Image
+                  src={proj.cover}
+                  alt={proj.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 480px"
+                  style={{ objectFit: "cover" }}
+                  priority={false}
+                />
+              </div>
             ) : (
               <div className="article-hero-placeholder" aria-hidden />
             )}

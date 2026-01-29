@@ -1490,3 +1490,12 @@ a:hover{
   box-shadow: 0 10px 30px rgba(40,20,10,0.18);
 }
 
+
+.cardImageWrapper{position:relative;aspect-ratio:16/9;width:100%;overflow:hidden;border-radius:12px;}
+
+
+.article-hero-media{position:relative;aspect-ratio:16/9;width:100%;overflow:hidden;border-radius:18px;}
+
+
+.articleImgWrapper{position:relative;aspect-ratio:16/9;width:100%;overflow:hidden;border-radius:12px;}
+

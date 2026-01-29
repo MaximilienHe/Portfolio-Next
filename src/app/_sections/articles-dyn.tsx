@@ -2,6 +2,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 type Article = {
   source: string;
@@ -26,16 +27,32 @@ export default function ArticlesDyn() {
   return (
     <section className="articles" id="articles">
       <div className="container">
-        <h1>Mes derniers articles</h1>
+        <h2>Mes derniers articles</h2>
         {err && <p>{err}</p>}
         <div className="multiArticles two-column" style={{ flexWrap: "wrap" }}>
           {data.map(a => (
             <a key={a.id} href={a.url} target="_blank" rel="noopener" className="singleArticle">
               <div className="article">
                 {a.cover ? (
-                  <img src={a.cover} alt={a.title} loading="lazy" decoding="async" />
+                  <div className="articleImgWrapper">
+                    <Image
+                      src={a.cover}
+                      alt={a.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 420px"
+                      style={{ objectFit: "cover" }}
+                    />
+                  </div>
                 ) : (
-                  <img src="/images/articles/placeholder.webp" alt="" loading="lazy" />
+                  <div className="articleImgWrapper">
+                    <Image
+                      src="/images/articles/placeholder.webp"
+                      alt=""
+                      fill
+                      sizes="(max-width: 768px) 100vw, 420px"
+                      style={{ objectFit: "cover" }}
+                    />
+                  </div>
                 )}
                 <div className="articleDetail">
                   <h3>{a.title}</h3>

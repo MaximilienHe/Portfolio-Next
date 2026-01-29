@@ -9,6 +9,26 @@ const { numeriqueResponsable } = images;
 
 export const metadata: Metadata = {
   title: "Maximilien Herr - Numérique Responsable",
+  description: "Approche et réalisations de Maximilien Herr autour du numérique responsable et de la sobriété logicielle.",
+  alternates: { canonical: "https://maximilienherr.fr/nr" },
+  openGraph: {
+    type: "article",
+    url: "https://maximilienherr.fr/nr",
+    title: "Numérique Responsable | Maximilien Herr",
+    description: "Optimisations, hackathon et bonnes pratiques en sobriété numérique.",
+    images: [{
+      url: "https://maximilienherr.fr/banniere_dev_redac.png",
+      width: 1200,
+      height: 630,
+      alt: "Bannière Numérique Responsable",
+    }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Numérique Responsable | Maximilien Herr",
+    description: "Optimisations, hackathon et bonnes pratiques en sobriété numérique.",
+    images: ["https://maximilienherr.fr/banniere_dev_redac.png"],
+  },
 };
 
 export default function Nr() {

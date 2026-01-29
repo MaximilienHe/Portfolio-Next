@@ -185,3 +185,6 @@ h4 {
 .projectDescription{
   color: var(--muted);
 }
+
+.projectCardImage{position:relative;aspect-ratio:16/9;width:100%;overflow:hidden;border-radius:12px;}
+

@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getAllEntries, getEntry } from "@/lib/content";
 import { renderMdx } from "@/lib/mdx";
 import { mdxComponents } from "@/lib/mdxComponents";
+import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
 import "../style.css";
 
 export async function generateStaticParams() {
@@ -26,7 +28,7 @@ export async function generateMetadata(
         url: canonical,
         title: post.title,
         description: post.description,
-        images: [{ url: image }],
+        images: [{ url: image, width: 1200, height: 630 }],
       },
       twitter: {
         card: "summary_large_image",
@@ -56,6 +58,11 @@ export default async function BlogPost({ params }: { params: { slug: string } })
     month: "short",
     year: "numeric",
   });
+  const breadcrumbItems = [
+    { name: "Accueil", url: "https://maximilienherr.fr" },
+    { name: "Blog", url: "https://maximilienherr.fr/blog" },
+    { name: post.title, url: canonical },
+  ];
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -71,10 +78,20 @@ export default async function BlogPost({ params }: { params: { slug: string } })
 
   return (
     <main className="container">
+      <BreadcrumbJsonLd items={breadcrumbItems} />
       <article className="article-page">
         <div className="article-hero">
           {image ? (
-            <img src={image} alt={post.title} loading="lazy" decoding="async" />
+            <div className="article-hero-media">
+              <Image
+                src={image}
+                alt={post.title}
+                fill
+                sizes="(max-width: 768px) 100vw, 1080px"
+                style={{ objectFit: "cover" }}
+                priority
+              />
+            </div>
           ) : (
             <div className="article-hero-placeholder" aria-hidden />
           )}

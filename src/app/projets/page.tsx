@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import "./style.css";
 import { getAllEntries } from "@/lib/content";
 import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
     url: pageUrl,
     title: fullTitle,
     description: pageDescription,
-    images: [{ url: ogImage, alt: "Bannière Maximilien Herr" }],
+    images: [{ url: ogImage, width: 1200, height: 630, alt: "Bannière Maximilien Herr" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -98,7 +99,15 @@ export default function Projets() {
           <Link key={project.slug} href={`/projets/${project.slug}`} className="linkProject">
             <div className="projectCard">
               {project.cover ? (
-                <img src={project.cover} alt={project.title} loading="lazy" decoding="async" />
+                <div className="projectCardImage">
+                  <Image
+                    src={project.cover}
+                    alt={project.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 520px"
+                    style={{ objectFit: "cover" }}
+                  />
+                </div>
               ) : (
                 <div className="projectCardPlaceholder" aria-hidden />
               )}

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import "../projetstyle.css";
 import "../style.css";
@@ -28,7 +29,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
         url: canonical,
         title: project.title,
         description: project.description,
-        images: [{ url: image }],
+        images: [{ url: image, width: 1200, height: 630 }],
       },
       twitter: {
         card: "summary_large_image",
@@ -89,12 +90,21 @@ export default async function ProjetPage({ params }: { params: { slug: string } 
       />
       <main className="container">
         <article className="article-page">
-          <div className="article-hero">
-            {image ? (
-              <img src={image} alt={project.title} loading="lazy" decoding="async" />
-            ) : (
-              <div className="article-hero-placeholder" aria-hidden />
-            )}
+        <div className="article-hero">
+          {image ? (
+            <div className="article-hero-media">
+              <Image
+                src={image}
+                alt={project.title}
+                fill
+                sizes="(max-width: 768px) 100vw, 1080px"
+                style={{ objectFit: "cover" }}
+                priority
+              />
+            </div>
+          ) : (
+            <div className="article-hero-placeholder" aria-hidden />
+          )}
             <div className="article-hero-overlay" />
             <div className="article-hero-meta">
               <p className="article-hero-date">{displayDate}</p>
