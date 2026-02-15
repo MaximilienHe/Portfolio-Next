@@ -1,4 +1,5 @@
 // /src/app/_sections/xp.tsx
+import Link from "next/link";
 import ImageOptimize from "@/components/imageOptimization";
 
 import images from "@/data/images";
@@ -15,25 +16,25 @@ export default function Xp() {
               alt="developpeur illustrating image"
             />
             <div className="contentRight">
-              <h2>Ingénieur logiciel</h2>
+              <h2>Ingenieur logiciel</h2>
               <h4>
-                Je me suis lancé à fond dans le dév pour mes études, et ce, à
-                travers différents projets.
+                Je me suis lance a fond dans le dev pour mes etudes, et ce, a
+                travers differents projets.
               </h4>
-              <a href="./cv" className="button">
-                Plus de détails sur mon CV
-              </a>
+              <Link href="/cv" className="button">
+                Plus de details sur mon CV
+              </Link>
             </div>
           </div>
           <div className="singleXP">
             <div className="contentLeft">
               <h2>Journaliste</h2>
               <h4>
-                Cela fait depuis 2020 que je suis journaliste tech à côté de mes études
+                Cela fait depuis 2020 que je suis journaliste tech a cote de mes etudes
               </h4>
-              <a href="articles" className="button">
+              <Link href="/articles" className="button">
                 Lire quelques articles
-              </a>
+              </Link>
             </div>
             <ImageOptimize src={redacteur} alt="redacteur illustrating image" />
           </div>

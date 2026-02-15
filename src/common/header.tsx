@@ -38,6 +38,9 @@ export default function Header() {
         </div>
 
         <div className={`nav-links ${isOpen ? "is-open" : ""}`}>
+          <Link href="/" onClick={closeMenu}>
+            Accueil
+          </Link>
           <Link href="/nr" onClick={closeMenu}>
             Numerique Responsable
           </Link>

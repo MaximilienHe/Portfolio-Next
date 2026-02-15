@@ -1,9 +1,3 @@
-# *
 User-agent: *
 Allow: /
-
-# Host
-Host: https://maximilienherr.fr
-
-# Sitemaps
 Sitemap: https://maximilienherr.fr/sitemap.xml

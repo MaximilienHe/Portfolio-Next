@@ -44,9 +44,9 @@ export default function Projets() {
           </Link>
         ))}
       </div>
-      <a href="/projets" className="button" style={{ marginTop: "5vh", marginBottom: "5vh" }}>
+      <Link href="/projets" className="button" style={{ marginTop: "5vh", marginBottom: "5vh" }}>
         Voir tous les projets
-      </a>
+      </Link>
     </section>
   );
 }

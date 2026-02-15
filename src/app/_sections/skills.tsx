@@ -1,4 +1,5 @@
 // /src/app/_sections/skills.tsx
+import Link from "next/link";
 import ImageOptimize from "@/components/imageOptimization";
 import logos from "@/data/logos";
 
@@ -19,8 +20,8 @@ const {
 export default function Skills() {
   return (
     <section className="skills">
-      <h2>Compétences</h2>
-      <h3>Développement Web</h3>
+      <h2>Competences</h2>
+      <h3>Developpement Web</h3>
       <div className="logos">
         <ImageOptimize src={htmlLogo} alt="HTML5 logo" className="logo" />
         <ImageOptimize src={cssLogo} alt="CSS3 logo" className="logo" />
@@ -32,7 +33,7 @@ export default function Skills() {
         <ImageOptimize src={phpLogo} alt="PHP logo" className="logo" />
         <ImageOptimize src={mysqlLogo} alt="MySQL logo" className="logo" />
       </div>
-      <h3>Développement Logiciel</h3>
+      <h3>Developpement Logiciel</h3>
       <div className="logos">
         <ImageOptimize src={cLogo} alt="C logo" className="logo" />
         <ImageOptimize src={cppLogo} alt="C++ logo" className="logo" />
@@ -43,14 +44,14 @@ export default function Skills() {
           className="logo"
         />
       </div>
-      <h3>3D & Jeu-vidéo</h3>
+      <h3>3D & Jeu-video</h3>
       <div className="logos">
         <ImageOptimize src={unityLogo} alt="Unity logo" className="logo" />
         <ImageOptimize src={unrealLogo} alt="Unreal logo" className="logo" />
       </div>
-      <a href="./cv" className="button">
-        Découvrir toutes les technos et langages
-      </a>
+      <Link href="/cv" className="button">
+        Decouvrir toutes les technos et langages
+      </Link>
     </section>
   );
 }

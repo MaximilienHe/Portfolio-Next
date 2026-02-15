@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import "../projetstyle.css";
 import "../style.css";
@@ -80,6 +81,23 @@ export default async function ProjetPage({ params }: { params: { slug: string } 
     image: [image],
     mainEntityOfPage: { "@type": "WebPage", "@id": canonical },
   };
+  const currentTags = new Set((project.tags ?? []).map((tag) => tag.toLowerCase()));
+  const relatedProjects = getAllEntries("projets")
+    .filter((entry) => entry.slug !== project.slug)
+    .map((entry) => {
+      const score = (entry.tags ?? []).reduce((acc, tag) => {
+        return currentTags.has(tag.toLowerCase()) ? acc + 1 : acc;
+      }, 0);
+      return { entry, score };
+    })
+    .sort((a, b) => {
+      if (b.score !== a.score) return b.score - a.score;
+      const aDate = new Date(a.entry.updated ?? a.entry.date ?? 0).getTime();
+      const bDate = new Date(b.entry.updated ?? b.entry.date ?? 0).getTime();
+      return bDate - aDate;
+    })
+    .slice(0, 3)
+    .map(({ entry }) => entry);
 
   return (
     <>
@@ -124,6 +142,21 @@ export default async function ProjetPage({ params }: { params: { slug: string } 
           <section className="article-body mdx-wrapper">
             <article className="mdx-content">{content}</article>
           </section>
+
+          {relatedProjects.length ? (
+            <section className="related-projects" aria-labelledby="related-projects-title">
+              <h2 id="related-projects-title">D&apos;autres projets qui peuvent vous intéresser</h2>
+              <div className="related-project-grid">
+                {relatedProjects.map((entry) => (
+                  <Link key={entry.slug} href={`/projets/${entry.slug}`} className="related-project-card">
+                    <h3>{entry.title}</h3>
+                    <p>{entry.description}</p>
+                    <span>Voir le projet</span>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          ) : null}
         </article>
       </main>
     </>
