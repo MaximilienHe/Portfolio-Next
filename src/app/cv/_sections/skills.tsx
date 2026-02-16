@@ -4,28 +4,30 @@ import logos from "@/data/logos";
 
 const {
   htmlLogo,
+  cssLogo,
   javascriptLogo,
   phpLogo,
+  nextjsLogo,
+  nodeLogo,
   mysqlLogo,
+  redisLogo,
+  dockerLogo,
+  gitLogo,
+  pythonLogo,
   cLogo,
   cppLogo,
   csLogo,
-  visualStudioLogo,
-  unityLogo,
-  unrealLogo,
-  cssLogo,
-  nextjsLogo,
-  vuejsLogo,
-  vscodeLogo,
-  xamppLogo,
-  rustLogo,
   javaLogo,
   kotlinLogo,
+  rustLogo,
+  visualStudioLogo,
+  vscodeLogo,
   androidStudioLogo,
+  unityLogo,
+  unrealLogo,
   threeDsMaxLogo,
   threeDFZephyrLogo,
   substancePainterLogo,
-  pythonLogo,
 } = logos;
 
 export default function Skills() {
@@ -34,7 +36,7 @@ export default function Skills() {
       <section className="skills">
         <div className="inner">
           <h1>Logiciels et technologies utilisées</h1>
-          <h2>Développement Web</h2>
+          <h2>Web & API</h2>
           <div className="logos">
             <ImageOptimize src={htmlLogo} alt="HTML5 logo" className="logo" />
             <ImageOptimize src={cssLogo} alt="CSS3 logo" className="logo" />
@@ -44,30 +46,33 @@ export default function Skills() {
               className="logo"
             />
             <ImageOptimize src={phpLogo} alt="PHP logo" className="logo" />
+            <ImageOptimize src={nextjsLogo} alt="NextJS logo" className="logo" />
+            <ImageOptimize src={nodeLogo} alt="Node.js logo" className="logo" />
             <ImageOptimize src={mysqlLogo} alt="MySQL logo" className="logo" />
           </div>
+
+          <h2>Data, IA & Infrastructure</h2>
           <div className="logos">
-            <ImageOptimize src={nextjsLogo} alt="NextJS logo" className="logo" />
-            <ImageOptimize src={vuejsLogo} alt="VueJS logo" className="logo" />
+            <ImageOptimize src={pythonLogo} alt="Python logo" className="logo" />
+            <ImageOptimize src={redisLogo} alt="Redis logo" className="logo" />
+            <ImageOptimize src={dockerLogo} alt="Docker logo" className="logo" />
+            <ImageOptimize src={gitLogo} alt="Git logo" className="logo" />
             <ImageOptimize src={vscodeLogo} alt="VSCode logo" className="logo" />
-            <ImageOptimize src={xamppLogo} alt="XAMPP logo" className="logo" />
           </div>
+
           <h2>Développement Logiciel</h2>
           <div className="logos">
             <ImageOptimize src={cLogo} alt="C logo" className="logo" />
             <ImageOptimize src={cppLogo} alt="C++ logo" className="logo" />
             <ImageOptimize src={csLogo} alt="C# logo" className="logo" />
-            <ImageOptimize src={pythonLogo} alt="Python logo" className="logo" />
+            <ImageOptimize src={javaLogo} alt="Java logo" className="logo" />
+            <ImageOptimize src={kotlinLogo} alt="Kotlin logo" className="logo" />
+            <ImageOptimize src={rustLogo} alt="Rust logo" className="logo" />
             <ImageOptimize
               src={visualStudioLogo}
               alt="VisualStudio logo"
               className="logo"
             />
-          </div>
-          <div className="logos">
-            <ImageOptimize src={rustLogo} alt="Rust logo" className="logo" />
-            <ImageOptimize src={javaLogo} alt="Java logo" className="logo" />
-            <ImageOptimize src={kotlinLogo} alt="Kotlin logo" className="logo" />
             <ImageOptimize
               src={androidStudioLogo}
               alt="AndroidStudio logo"

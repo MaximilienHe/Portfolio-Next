@@ -17,11 +17,30 @@ export default function Formations() {
             <p>Septembre 2023 - Août 2026</p>
             <h4>ISIMA - Clermont Auvergne INP</h4>
             <ul>
-              <li>👨‍💻 Conception et implémentation de systèmes complexes en C++ et Python</li>
-              <li>🌐 Développement Full Stack avec React, Node.js et gestion PostgreSQL</li>
-              <li>🎮 Interfaces interactives pour applications web et mobiles</li>
-              <li>📱 Création et déploiement d&apos;applications Android</li>
-              <li>🗣️ Anglais technique et professionnel, économie, droit et gestion de projet</li>
+              <li>
+                🧠 Développement d&apos;une approche ingénieur centrée sur l&apos;analyse
+                de problèmes, la structuration de solutions et le travail en mode
+                projet. Renforcement des compétences transversales : communication
+                technique, restitution claire, travail en équipe et anglais pro.
+              </li>
+              <li>
+                🐍 Utilisation avancée de Python pour l&apos;algorithmique et l&apos;analyse
+                de données, avec une attention portée à la qualité du code, aux
+                performances et à la maintenabilité. Bases solides en conception
+                logicielle et modélisation.
+              </li>
+              <li>
+                🤖 Formation approfondie en intelligence artificielle, machine learning
+                et deep learning, avec mise en pratique sur des cas concrets
+                (réseaux de neurones, modèles profonds, modèles génératifs). IA
+                par renforcement (Q-Learning, DQN, PPO, SAC), incluant la conception
+                d&apos;agents et l&apos;expérimentation sur des environnements complexes.
+              </li>
+              <li>
+                🏗️ Vision globale des systèmes numériques modernes, intégrant
+                architecture logicielle, optimisation et enjeux de transformation
+                numérique, en lien direct avec des problématiques industrielles.
+              </li>
             </ul>
           </div>
         </div>

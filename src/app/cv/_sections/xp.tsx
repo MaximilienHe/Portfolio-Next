@@ -5,9 +5,10 @@ import images from "@/data/images";
 
 const {
   smartfluence,
+  itmi,
   humanoid,
-  droidsoft,
   cafeDuGeek,
+  droidsoft,
   clubic,
   agenceGeek,
 } = images;
@@ -22,14 +23,30 @@ export default function Xp() {
           <div className="singleXP">
             <ImageOptimize src={smartfluence} alt="Smartfluence Logo" />
             <div className="contentRight">
-              <h2>Ingénieur Informatique</h2>
+              <h2>Ingénieur Big Data & IA</h2>
               <p>Septembre 2023 - Présent</p>
               <h4>Smartfluence - AI Global Influence</h4>
               <ul>
-                <li>Scripts Python & API Express.js</li>
-                <li>Base de données MySQL/PostgreSQL</li>
-                <li>Docker, Docker Compose & déploiement serveur</li>
-                <li>Monitoring avec Grafana, Loki & Prometheus</li>
+                <li>
+                  Conception de l&apos;architecture technique interne avec un focus
+                  data, IA et scalabilité.
+                </li>
+                <li>
+                  Stack principale : Django, PostgreSQL, Redis, S3 et pipelines
+                  de collecte/traitement de données.
+                </li>
+                <li>
+                  Développement d&apos;un outil d&apos;analyse/agrégation de données
+                  sociales sur plus de 2 millions de chaînes et profils.
+                </li>
+                <li>
+                  Mise en place d&apos;une chaîne CI/CD fiable avec supervision et
+                  monitoring des services.
+                </li>
+                <li>
+                  Développement de sites de présentation marketing livrés en
+                  délai très court selon les besoins business.
+                </li>
               </ul>
             </div>
           </div>
@@ -37,7 +54,7 @@ export default function Xp() {
           <div className="singleXP">
             <ImageOptimize src={humanoid} alt="Humanoid Logo" />
             <div className="contentRight">
-              <h2>Rédacteur Tech</h2>
+              <h2>Pigiste tech</h2>
               <p>Septembre 2023 - Présent</p>
               <h4>Frandroid (Humanoid)</h4>
               <ul>
@@ -48,9 +65,22 @@ export default function Xp() {
           </div>
 
           <div className="singleXP">
+            <ImageOptimize src={cafeDuGeek} alt="Le Café du Geek Logo" />
+            <div className="contentRight">
+              <h2>Journaliste tech</h2>
+              <p>Septembre 2022 - Présent</p>
+              <h4>Le Café du Geek</h4>
+              <ul>
+                <li>Tests produits & actualités</li>
+                <li>Rédaction orientée audience tech</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="singleXP">
             <ImageOptimize src={droidsoft} alt="DroidSoft Logo" />
             <div className="contentRight">
-              <h2>Rédacteur Tech</h2>
+              <h2>Journaliste tech</h2>
               <p>Août 2020 - Présent</p>
               <h4>DroidSoft</h4>
               <ul>
@@ -61,14 +91,20 @@ export default function Xp() {
           </div>
 
           <div className="singleXP">
-            <ImageOptimize src={cafeDuGeek} alt="Le Café du Geek Logo" />
+            <ImageOptimize src={itmi} alt="ITMI Illustration" />
             <div className="contentRight">
-              <h2>Rédacteur Tech</h2>
-              <p>Septembre 2022 - Présent</p>
-              <h4>Le Café du Geek</h4>
+              <h2>Stagiaire Ingénieur Informatique</h2>
+              <p>Juin 2025 - Août 2025</p>
+              <h4>
+                Institut Technologique de Maintenance Industrielle (ITMI),
+                Sept-Îles, Québec, Canada
+              </h4>
               <ul>
-                <li>Tests produits & actualités</li>
-                <li>Rédaction orientée audience tech</li>
+                <li>Stage ingénieur informatique de 3 mois en environnement industriel.</li>
+                <li>
+                  Expérience internationale en collaboration avec des équipes
+                  locales sur site.
+                </li>
               </ul>
             </div>
           </div>
@@ -80,7 +116,8 @@ export default function Xp() {
               <p>Février 2023 - Juillet 2024</p>
               <h4>CLUBIC</h4>
               <ul>
-                <li>Fiches logiciels & actualités ChatGPT</li>
+                <li>Fiches logiciels : prises en main, comparatifs et guides d&apos;utilisation.</li>
+                <li>Actualités IA émergentes (arrivée de ChatGPT, Code Interpreter et premiers usages).</li>
               </ul>
             </div>
           </div>

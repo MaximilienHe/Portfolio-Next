@@ -5,10 +5,11 @@ export default function Quote() {
     <section className="quote">
       <div className="inner">
         <p>
-          J&apos;ai toujours été passionné par 2 choses : l&apos;informatique et la
-          rédaction. Depuis de nombreuses années, je me suis lancé à fond dans ces
-          deux domaines. Mon objectif à terme ? Rester passionné et rigoureux pour
-          toujours apprendre, découvrir et assouvir ma curiosité.
+          Développeur et futur ingénieur informatique, je construis des solutions
+          à l&apos;intersection du software, de la data et de l&apos;IA, tout en
+          poursuivant une activité de journalisme tech. Cette double casquette me
+          permet d&apos;allier rigueur technique, vision produit et communication
+          claire.
         </p>
       </div>
     </section>

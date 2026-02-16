@@ -7,10 +7,11 @@ export default function Download() {
       <div className="inner">
         <h1>Télécharger mon CV</h1>
         <a
-          href="../../../assets/images/Images/HERR_Maximilien_-_CV.pdf"
+          href="/cv-generated.pdf"
           className="button"
           target="_blank"
           rel="noopener"
+          download="HERR_Maximilien_-_CV.pdf"
         >
           TÉLÉCHARGER
         </a>

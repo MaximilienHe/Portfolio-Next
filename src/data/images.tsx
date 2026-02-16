@@ -286,5 +286,12 @@ const images = {
     width: 1200,
     height: 630,
   },
+  itmi: {
+    id: 43,
+    image: "/images/logos/itmi.jpg",
+    name: "itmi",
+    width: 999,
+    height: 366,
+  },
 };
 export default images;
