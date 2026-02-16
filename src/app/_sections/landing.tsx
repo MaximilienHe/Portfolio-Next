@@ -2,8 +2,9 @@
 // /src/app/_sections/landing.tsx
 import React, { useEffect, useState } from "react";
 
+const words = ["Concevoir", "Apprendre", "Réaliser", "Expliquer", "Comprendre", "Raconter"];
+
 export default function Landing() {
-  const words = ["Concevoir", "Apprendre", "Réaliser", "Expliquer", "Comprendre", "Raconter"];
   const [index, setIndex] = useState(0);
 
   useEffect(() => {

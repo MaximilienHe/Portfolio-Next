@@ -125,6 +125,7 @@ export default function CarouselSection({
 							>
 							<div className="thumb">
 								{article.cover ? (
+									/* eslint-disable-next-line @next/next/no-img-element */
 									<img
 										src={article.cover}
 										alt={article.title}

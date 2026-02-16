@@ -20,6 +20,7 @@ export default function ImageOptimize({
   className,
 }: Props) {
   return (
+    /* eslint-disable-next-line @next/next/no-img-element */
     <img
       className={className}
       src={src.image}
