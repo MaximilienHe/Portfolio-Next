@@ -113,8 +113,10 @@ export default async function ArticlesPage() {
                 <a key={a.id} className="card" href={a.url} target="_blank" rel="noopener">
                   <div className="thumb">
                     {a.cover ? (
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={a.cover} alt={a.title} loading="lazy" decoding="async" />
+                      <>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={a.cover} alt={a.title} loading="lazy" decoding="async" />
+                      </>
                     ) : (
                       <div className="thumb-placeholder" />
                     )}
