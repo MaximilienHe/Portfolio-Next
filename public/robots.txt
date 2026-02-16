@@ -1,3 +1,0 @@
-User-agent: *
-Allow: /
-Sitemap: https://maximilienherr.fr/sitemap.xml
