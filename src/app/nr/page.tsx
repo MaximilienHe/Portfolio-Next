@@ -1,9 +1,10 @@
 import "./style.css";
+import Image from "next/image";
 import type { Metadata } from "next";
-import ImageOptimize from "@/components/imageOptimization";
 import Link from "next/link";
 import images from "@/data/images";
-import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
+import { Breadcrumb } from "@/components/Breadcrumb";
+import { ExploreAlso } from "@/components/ExploreAlso";
 
 const { numeriqueResponsable } = images;
 
@@ -38,7 +39,7 @@ export default function Nr() {
   ];
   return (
     <>
-      <BreadcrumbJsonLd items={breadcrumbItems} />
+      <Breadcrumb items={breadcrumbItems} />
       <section className="nr">
         <div className="inner">
           <h2>Le numérique responsable : penser performance et efficience</h2>
@@ -60,7 +61,9 @@ export default function Nr() {
             contention et de prioriser les optimisations.
           </p>
 
-          <ImageOptimize src={numeriqueResponsable} alt="Schéma d'efficience numérique" />
+          <Image src={numeriqueResponsable.image}
+ width={numeriqueResponsable.width}
+ height={numeriqueResponsable.height} alt="Schéma d'efficience numérique" />
 
           <h2>Applications concrètes dans mes réalisations</h2>
           <p>
@@ -111,6 +114,7 @@ export default function Nr() {
           </p>
         </div>
       </section>
+      <ExploreAlso currentPath="/nr" />
     </>
   );
 }

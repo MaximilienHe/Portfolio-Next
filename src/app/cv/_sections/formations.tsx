@@ -1,6 +1,6 @@
 // /src/app/cv/_sections/formations.tsx
-import ImageOptimize from "@/components/imageOptimization";
 import images from "@/data/images";
+import Image from "next/image";
 
 const { isima, iutIG, saintJulien } = images;
 
@@ -11,7 +11,12 @@ export default function Formations() {
         <h1>Formation</h1>
 
         <div className="singleXP">
-          <ImageOptimize src={isima} alt="ISIMA Logo" />
+          <Image
+            src={isima.image}
+            width={isima.width}
+            height={isima.height}
+            alt="Logo ISIMA, ecole d'ingenieur de Maximilien Herr"
+          />
           <div className="contentFormation">
             <h2>Diplôme d&apos;ingénieur Informatique</h2>
             <p>Septembre 2023 - Août 2026</p>
@@ -46,7 +51,12 @@ export default function Formations() {
         </div>
 
         <div className="singleXP">
-          <ImageOptimize src={iutIG} alt="IUT Informatique Graphique Logo" />
+          <Image
+            src={iutIG.image}
+            width={iutIG.width}
+            height={iutIG.height}
+            alt="Logo IUT Informatique Graphique, formation de Maximilien Herr"
+          />
           <div className="contentFormation">
             <h2>BUT Informatique Graphique</h2>
             <p>Septembre 2021 - Juin 2023</p>
@@ -62,7 +72,12 @@ export default function Formations() {
         </div>
 
         <div className="singleXP">
-          <ImageOptimize src={saintJulien} alt="Lycée Saint-Julien Logo" />
+          <Image
+            src={saintJulien.image}
+            width={saintJulien.width}
+            height={saintJulien.height}
+            alt="Logo Lycee Saint-Julien, parcours scolaire de Maximilien Herr"
+          />
           <div className="contentFormation">
             <h2>Baccalauréat Scientifique</h2>
             <p>Septembre 2018 - Juin 2021</p>

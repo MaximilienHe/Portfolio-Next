@@ -104,10 +104,10 @@
   overflow: hidden;
   text-decoration: none;
   transition:
-    transform .35s cubic-bezier(.2,.7,.2,1),
-    box-shadow .35s cubic-bezier(.2,.7,.2,1),
-    opacity .35s ease,
-    filter .35s ease;
+    transform .15s cubic-bezier(.2,.7,.2,1),
+    box-shadow .15s cubic-bezier(.2,.7,.2,1),
+    opacity .15s ease,
+    filter .15s ease;
   will-change: transform, opacity, filter;
 }
 
@@ -209,14 +209,6 @@
   transform: translate(-50%, -50%) translateZ(0) scale(1.02);
 }
 
-/* Hover plus marqué uniquement sur la carte centrale */
-.card-pos-0:hover {
-  box-shadow:
-    0 6px 22px rgba(0,0,0,.16),
-    0 28px 80px rgba(0,0,0,.20);
-  transform: translate(-50%, -50%) translateZ(0) scale(1.02);
-}
-
 /* ===== Fallback noscript (si besoin) ===== */
 .noscript-grid {
   display: grid;
@@ -303,6 +295,15 @@
   }
 }
 @media (max-width: 767px) {
+  .articlesPage {
+    overflow-x: hidden;
+  }
+
+  .source-section,
+  .carousel {
+    overflow-x: hidden;
+  }
+
   .carousel-viewport {
     --card-w: min(95vw, 520px);
     --step-x-1: calc(var(--card-w) * 0.64 + 6px);

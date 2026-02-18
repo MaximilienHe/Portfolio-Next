@@ -39,3 +39,7 @@ next-env.d.ts
 
 # generated CV
 public/cv-generated.pdf
+
+# local temp files
+tmp_*
+*.tmp

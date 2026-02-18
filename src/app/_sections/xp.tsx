@@ -1,6 +1,6 @@
 // /src/app/_sections/xp.tsx
 import Link from "next/link";
-import ImageOptimize from "@/components/imageOptimization";
+import Image from "next/image";
 
 import images from "@/data/images";
 const { developpeur, redacteur } = images;
@@ -11,9 +11,11 @@ export default function Xp() {
       <div className="container">
         <div className="experiences">
           <div className="singleXP">
-            <ImageOptimize
-              src={developpeur}
-              alt="developpeur illustrating image"
+            <Image
+              src={developpeur.image}
+              width={developpeur.width}
+              height={developpeur.height}
+              alt="Illustration de Maximilien Herr, ingenieur logiciel et developpeur web"
             />
             <div className="contentRight">
               <h2>Ingenieur logiciel</h2>
@@ -30,13 +32,19 @@ export default function Xp() {
             <div className="contentLeft">
               <h2>Journaliste</h2>
               <h4>
-                Cela fait depuis 2020 que je suis journaliste tech a cote de mes etudes
+                Cela fait depuis 2020 que je suis journaliste tech a cote de mes
+                etudes
               </h4>
               <Link href="/articles" className="button">
                 Lire quelques articles
               </Link>
             </div>
-            <ImageOptimize src={redacteur} alt="redacteur illustrating image" />
+            <Image
+              src={redacteur.image}
+              width={redacteur.width}
+              height={redacteur.height}
+              alt="Illustration de Maximilien Herr, journaliste tech et redacteur web"
+            />
           </div>
         </div>
       </div>

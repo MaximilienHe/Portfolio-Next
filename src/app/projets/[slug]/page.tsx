@@ -7,7 +7,8 @@ import "../style.css";
 import { getAllEntries, getEntry } from "@/lib/content";
 import { renderMdx } from "@/lib/mdx";
 import { mdxComponents } from "@/lib/mdxComponents";
-import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
+import { Breadcrumb } from "@/components/Breadcrumb";
+import { ExploreAlso } from "@/components/ExploreAlso";
 
 const baseUrl = "https://maximilienherr.fr";
 
@@ -101,7 +102,7 @@ export default async function ProjetPage({ params }: { params: { slug: string } 
 
   return (
     <>
-      <BreadcrumbJsonLd items={breadcrumbItems} />
+      <Breadcrumb items={breadcrumbItems} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -159,6 +160,7 @@ export default async function ProjetPage({ params }: { params: { slug: string } 
           ) : null}
         </article>
       </main>
+      <ExploreAlso currentPath={`/projets/${params.slug}`} />
     </>
   );
 }

@@ -107,7 +107,8 @@ h4 {
     border-radius: 12px;
     padding: 1rem 1.1rem;
     text-decoration: none;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    will-change: transform;
 }
 
 .related-project-card:hover{

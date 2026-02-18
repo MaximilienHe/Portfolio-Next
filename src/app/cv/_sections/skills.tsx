@@ -1,6 +1,6 @@
 // /src/app/cv/_sections/skills.tsx
-import ImageOptimize from "@/components/imageOptimization";
 import logos from "@/data/logos";
+import Image from "next/image";
 
 const {
   htmlLogo,
@@ -38,66 +38,192 @@ export default function Skills() {
           <h1>Logiciels et technologies utilisées</h1>
           <h2>Web & API</h2>
           <div className="logos">
-            <ImageOptimize src={htmlLogo} alt="HTML5 logo" className="logo" />
-            <ImageOptimize src={cssLogo} alt="CSS3 logo" className="logo" />
-            <ImageOptimize
-              src={javascriptLogo}
-              alt="JavaScript logo"
+            <Image
+              src={htmlLogo.image}
+              width={htmlLogo.width}
+              height={htmlLogo.height}
+              alt="Logo HTML5, competence web de Maximilien Herr"
               className="logo"
             />
-            <ImageOptimize src={phpLogo} alt="PHP logo" className="logo" />
-            <ImageOptimize src={nextjsLogo} alt="NextJS logo" className="logo" />
-            <ImageOptimize src={nodeLogo} alt="Node.js logo" className="logo" />
-            <ImageOptimize src={mysqlLogo} alt="MySQL logo" className="logo" />
+            <Image
+              src={cssLogo.image}
+              width={cssLogo.width}
+              height={cssLogo.height}
+              alt="Logo CSS3, expertise front-end de Maximilien Herr"
+              className="logo"
+            />
+            <Image
+              src={javascriptLogo.image}
+              width={javascriptLogo.width}
+              height={javascriptLogo.height}
+              alt="Logo JavaScript, langage front-end et back-end maitrise par Maximilien Herr"
+              className="logo"
+            />
+            <Image
+              src={phpLogo.image}
+              width={phpLogo.width}
+              height={phpLogo.height}
+              alt="Logo PHP, competence back-end de Maximilien Herr"
+              className="logo"
+            />
+            <Image
+              src={nextjsLogo.image}
+              width={nextjsLogo.width}
+              height={nextjsLogo.height}
+              alt="Logo Next.js, framework React utilise par Maximilien Herr"
+              className="logo"
+            />
+            <Image
+              src={nodeLogo.image}
+              width={nodeLogo.width}
+              height={nodeLogo.height}
+              alt="Logo Node.js, environnement serveur utilise par Maximilien Herr"
+              className="logo"
+            />
+            <Image
+              src={mysqlLogo.image}
+              width={mysqlLogo.width}
+              height={mysqlLogo.height}
+              alt="Logo MySQL, base de donnees maitrisee par Maximilien Herr"
+              className="logo"
+            />
           </div>
 
           <h2>Data, IA & Infrastructure</h2>
           <div className="logos">
-            <ImageOptimize src={pythonLogo} alt="Python logo" className="logo" />
-            <ImageOptimize src={redisLogo} alt="Redis logo" className="logo" />
-            <ImageOptimize src={dockerLogo} alt="Docker logo" className="logo" />
-            <ImageOptimize src={gitLogo} alt="Git logo" className="logo" />
-            <ImageOptimize src={vscodeLogo} alt="VSCode logo" className="logo" />
+            <Image
+              src={pythonLogo.image}
+              width={pythonLogo.width}
+              height={pythonLogo.height}
+              alt="Logo Python, langage utilise par Maximilien Herr pour la data et l'IA"
+              className="logo"
+            />
+            <Image
+              src={redisLogo.image}
+              width={redisLogo.width}
+              height={redisLogo.height}
+              alt="Logo Redis, solution de cache utilisee par Maximilien Herr"
+              className="logo"
+            />
+            <Image
+              src={dockerLogo.image}
+              width={dockerLogo.width}
+              height={dockerLogo.height}
+              alt="Logo Docker, containerisation maitrisee par Maximilien Herr"
+              className="logo"
+            />
+            <Image
+              src={gitLogo.image}
+              width={gitLogo.width}
+              height={gitLogo.height}
+              alt="Logo Git, gestion de version utilisee par Maximilien Herr"
+              className="logo"
+            />
+            <Image
+              src={vscodeLogo.image}
+              width={vscodeLogo.width}
+              height={vscodeLogo.height}
+              alt="Logo Visual Studio Code, editeur de code de Maximilien Herr"
+              className="logo"
+            />
           </div>
 
           <h2>Développement Logiciel</h2>
           <div className="logos">
-            <ImageOptimize src={cLogo} alt="C logo" className="logo" />
-            <ImageOptimize src={cppLogo} alt="C++ logo" className="logo" />
-            <ImageOptimize src={csLogo} alt="C# logo" className="logo" />
-            <ImageOptimize src={javaLogo} alt="Java logo" className="logo" />
-            <ImageOptimize src={kotlinLogo} alt="Kotlin logo" className="logo" />
-            <ImageOptimize src={rustLogo} alt="Rust logo" className="logo" />
-            <ImageOptimize
-              src={visualStudioLogo}
-              alt="VisualStudio logo"
+            <Image
+              src={cLogo.image}
+              width={cLogo.width}
+              height={cLogo.height}
+              alt="Logo langage C, competence logicielle de Maximilien Herr"
               className="logo"
             />
-            <ImageOptimize
-              src={androidStudioLogo}
-              alt="AndroidStudio logo"
+            <Image
+              src={cppLogo.image}
+              width={cppLogo.width}
+              height={cppLogo.height}
+              alt="Logo C++, langage de programmation maitrise par Maximilien Herr"
+              className="logo"
+            />
+            <Image
+              src={csLogo.image}
+              width={csLogo.width}
+              height={csLogo.height}
+              alt="Logo C#, technologie de developpement maitrisee par Maximilien Herr"
+              className="logo"
+            />
+            <Image
+              src={javaLogo.image}
+              width={javaLogo.width}
+              height={javaLogo.height}
+              alt="Logo Java, langage objet utilise par Maximilien Herr"
+              className="logo"
+            />
+            <Image
+              src={kotlinLogo.image}
+              width={kotlinLogo.width}
+              height={kotlinLogo.height}
+              alt="Logo Kotlin, langage Android maitrise par Maximilien Herr"
+              className="logo"
+            />
+            <Image
+              src={rustLogo.image}
+              width={rustLogo.width}
+              height={rustLogo.height}
+              alt="Logo Rust, langage systeme utilise par Maximilien Herr"
+              className="logo"
+            />
+            <Image
+              src={visualStudioLogo.image}
+              width={visualStudioLogo.width}
+              height={visualStudioLogo.height}
+              alt="Logo Visual Studio, IDE utilise par Maximilien Herr"
+              className="logo"
+            />
+            <Image
+              src={androidStudioLogo.image}
+              width={androidStudioLogo.width}
+              height={androidStudioLogo.height}
+              alt="Logo Android Studio, IDE mobile utilise par Maximilien Herr"
               className="logo"
             />
           </div>
           <h2>3D & Jeu-vidéo</h2>
           <div className="logos">
-            <ImageOptimize src={unityLogo} alt="Unity logo" className="logo" />
-            <ImageOptimize src={unrealLogo} alt="Unreal logo" className="logo" />
+            <Image
+              src={unityLogo.image}
+              width={unityLogo.width}
+              height={unityLogo.height}
+              alt="Logo Unity, moteur de jeu maitrise par Maximilien Herr"
+              className="logo"
+            />
+            <Image
+              src={unrealLogo.image}
+              width={unrealLogo.width}
+              height={unrealLogo.height}
+              alt="Logo Unreal Engine, moteur 3D utilise par Maximilien Herr"
+              className="logo"
+            />
           </div>
           <div className="logos">
-            <ImageOptimize
-              src={threeDsMaxLogo}
-              alt="3DsMax logo"
+            <Image
+              src={threeDsMaxLogo.image}
+              width={threeDsMaxLogo.width}
+              height={threeDsMaxLogo.height}
+              alt="Logo 3ds Max, logiciel 3D utilise par Maximilien Herr"
               className="logo"
             />
-            <ImageOptimize
-              src={threeDFZephyrLogo}
-              alt="3DFZephyr logo"
+            <Image
+              src={threeDFZephyrLogo.image}
+              width={threeDFZephyrLogo.width}
+              height={threeDFZephyrLogo.height}
+              alt="Logo 3DF Zephyr, photogrammetrie pratiquee par Maximilien Herr"
               className="logo"
             />
-            <ImageOptimize
-              src={substancePainterLogo}
-              alt="Substance Painter logo"
+            <Image
+              src={substancePainterLogo.image}
+              width={substancePainterLogo.width}
+              height={substancePainterLogo.height}
+              alt="Logo Substance Painter, texturing 3D maitrise par Maximilien Herr"
               className="logo"
             />
           </div>

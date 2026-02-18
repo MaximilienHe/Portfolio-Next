@@ -8,7 +8,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "export": "next build"
+    "export": "next build",
+    "purge:app-css": "node scripts/purge-app-css.mjs",
+    "purge:app-css:replace": "node scripts/purge-app-css.mjs --replace"
   },
   "dependencies": {
     "@mdx-js/mdx": "^3.1.1",
@@ -31,6 +33,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
     "postcss": "^8",
+    "purgecss": "^8.0.0",
     "tailwindcss": "^3.4.1",
     "tsx": "^4.21.0",
     "typescript": "^5"

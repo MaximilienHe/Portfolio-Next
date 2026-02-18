@@ -1,10 +1,11 @@
 // /src/app/contact/page.tsx
 import type { Metadata } from "next";
+import Image from "next/image";
 import "./style.css";
 
 import images from "@/data/images";
-import ImageOptimize from "@/components/imageOptimization";
-import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
+import { Breadcrumb } from "@/components/Breadcrumb";
+import { ExploreAlso } from "@/components/ExploreAlso";
 
 const { photoProfilMaximilien, linkedin, github } = images;
 const pageUrl = "https://maximilienherr.fr/contact";
@@ -24,7 +25,14 @@ export const metadata: Metadata = {
     url: pageUrl,
     title: fullTitle,
     description: pageDescription,
-    images: [{ url: ogImage, width: 1200, height: 630, alt: "Banniere Maximilien Herr" }],
+    images: [
+      {
+        url: ogImage,
+        width: 1200,
+        height: 630,
+        alt: "Banniere Maximilien Herr",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -71,34 +79,39 @@ export default function Contact() {
         "https://github.com/MaximilienHe",
         "https://www.frandroid.com/author/aximilietech",
         "https://droidsoft.fr/author/micmac/",
-        "https://lecafedugeek.fr/author/maximilien/"
-
+        "https://lecafedugeek.fr/author/maximilien/",
       ],
     },
   };
 
   return (
     <>
-      <BreadcrumbJsonLd items={breadcrumbItems} />
+      <Breadcrumb items={breadcrumbItems} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(contactJsonLd) }}
       />
       <section className="contact">
         <div className="photoProfil">
-          <ImageOptimize src={photoProfilMaximilien} alt="photo de profil" />
+          <Image
+            src={photoProfilMaximilien.image}
+            width={photoProfilMaximilien.width}
+            height={photoProfilMaximilien.height}
+            alt="Portrait de Maximilien Herr, ingenieur logiciel et journaliste tech"
+          />
         </div>
 
         <div className="contactContent">
           <h2>Me contacter</h2>
           <p>
-            Que ce soit pour une proposition de recrutement, une nouvelle pour un média ou pour échanger, n&apos;hesitez pas à me joindre.
+            Que ce soit pour une proposition de recrutement, une nouvelle pour un
+            média ou pour échanger, n&apos;hesitez pas à me joindre.
           </p>
 
           <div className="contactCard">
             <p>
-              Vous pouvez m&apos;écrire par mail, via LinkedIn ou GitHub. Mon numéro de
-              téléphone est disponible sur demande.
+              Vous pouvez m&apos;écrire par mail, via LinkedIn ou GitHub. Mon
+              numéro de téléphone est disponible sur demande.
             </p>
             <div className="contactLogos">
               <a
@@ -106,14 +119,26 @@ export default function Contact() {
                 target="_blank"
                 rel="noopener"
               >
-                <ImageOptimize src={linkedin} alt="logo linkedin" className="logo" />
+                <Image
+                  src={linkedin.image}
+                  width={linkedin.width}
+                  height={linkedin.height}
+                  alt="Logo LinkedIn menant au profil de Maximilien Herr"
+                  className="logo"
+                />
               </a>
               <a
                 href="https://github.com/MaximilienHe"
                 target="_blank"
                 rel="noopener"
               >
-                <ImageOptimize src={github} alt="logo github" className="logo" />
+                <Image
+                  src={github.image}
+                  width={github.width}
+                  height={github.height}
+                  alt="Logo GitHub menant au profil de Maximilien Herr"
+                  className="logo"
+                />
               </a>
               <p>
                 <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
@@ -121,29 +146,14 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Bloc d&apos;infos supplementaires */}
           <div className="contactExtra">
             <h3>Localisation</h3>
             <p>Clermont-Ferrand, France</p>
-
-            {/* <h3>Reseaux</h3>
-            <ul>
-              <li>
-                Twitter :{" "}
-                <a href="https://twitter.com/Maximilien_Herr" target="_blank" rel="noopener">
-                  @Maximilien_Herr
-                </a>
-              </li>
-              <li>
-                LinkedIn :{" "}
-                <a href="https://linkedin.com/in/maximilien-herr" target="_blank" rel="noopener">
-                  maximilienherr
-                </a>
-              </li>
-            </ul> */}
           </div>
         </div>
       </section>
+
+      <ExploreAlso currentPath="/contact" />
     </>
   );
 }

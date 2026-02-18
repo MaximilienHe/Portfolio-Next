@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import "./style.css";
 import { getAllLatestArticles, type Article } from "@/lib/fetchArticles";
-import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
+import { Breadcrumb } from "@/components/Breadcrumb";
+import { ExploreAlso } from "@/components/ExploreAlso";
 import CarouselSection from "../../components/CarouselSection";
 
 const pageUrl = "https://maximilienherr.fr/articles";
@@ -73,7 +74,7 @@ export default async function ArticlesPage() {
 
   return (
     <>
-      <BreadcrumbJsonLd items={breadcrumbItems} />
+      <Breadcrumb items={breadcrumbItems} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articlesJsonLd) }}
@@ -132,6 +133,7 @@ export default async function ArticlesPage() {
             </div>
           </div>
         </noscript>
+        <ExploreAlso currentPath="/articles" />
       </main>
     </>
   );

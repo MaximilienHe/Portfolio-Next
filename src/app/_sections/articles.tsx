@@ -1,8 +1,8 @@
 // /src/app/_sections/articles.tsx
 "use client";
 
-import ImageOptimize from "@/components/imageOptimization";
 import articleSections from "@/data/articleSections";  // ta config “sectionnée”
+import Image from "next/image";
 import articlesData from "@/data/articles";           // méta‑data ARTICLES
 import logos from "@/data/logos";                     // méta‑data LOGOS
 
@@ -16,9 +16,11 @@ export default function Articles() {
           <div key={section.sourceName}>
             {/* -- LE LOGO DE LA SOURCE -- */}
             <div className="media">
-              <ImageOptimize
-                src={logos[section.logoKey]}
-                alt={`${section.sourceName} logo`}
+              <Image
+                src={logos[section.logoKey].image}
+                width={logos[section.logoKey].width}
+                height={logos[section.logoKey].height}
+                alt={`Logo ${section.sourceName}, media ou ecrit Maximilien Herr`}
                 className="logo"
               />
               <h2 style={{ marginBottom: 0 }}>{section.sourceName}</h2>
@@ -41,10 +43,11 @@ export default function Articles() {
                     className="singleArticle"
                   >
                     <div className="article">
-                      {/* on passe directement l'objet articleData à ImageOptimize */}
-                      <ImageOptimize
-                        src={artMeta}
-                        alt={art.alt}
+                      <Image
+                        src={artMeta.image}
+                        width={artMeta.width}
+                        height={artMeta.height}
+                        alt={`Illustration de l'article ${art.title}, redige par Maximilien Herr`}
                       />
                       <div className="articleDetail">
                         <h3>{art.title}</h3>

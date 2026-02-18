@@ -152,6 +152,8 @@ const logos = {
   unrealLogo: {
     id: 22,
     image: "/images/logos/UnrealEngine.png",
+    width: 1200,
+    height: 1308,
     name: "unrealLogo",
   },
   threeDsMaxLogo: {
@@ -213,16 +215,22 @@ const logos = {
   nodeLogo: {
     id: 31,
     image: "/images/logos/node.png",
+    width: 500,
+    height: 500,
     name: "nodeLogo",
   },
   dockerLogo: {
     id: 32,
     image: "/images/logos/docker.png",
+    width: 225,
+    height: 225,
     name: "dockerLogo",
   },
   esp32Logo: {
     id: 33,
     image: "/images/logos/esp32.png",
+    width: 225,
+    height: 225,
     name: "esp32Logo",
   },
   iutIG: images.iutIG,

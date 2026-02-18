@@ -3,8 +3,8 @@ import Link from "next/link";
 import Image from "next/image";
 import "./style.css";
 import { getAllEntries } from "@/lib/content";
-import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
-import ImageOptimize from "@/components/imageOptimization";
+import { Breadcrumb } from "@/components/Breadcrumb";
+import { ExploreAlso } from "@/components/ExploreAlso";
 import logos from "@/data/logos";
 
 const pageUrl = "https://maximilienherr.fr/projets";
@@ -12,6 +12,41 @@ const pageTitle = "Projets";
 const fullTitle = "Projets | Portfolio de Maximilien Herr";
 const pageDescription = "Découvrez mes réalisations techniques, applications et sites open-source.";
 const ogImage = "https://maximilienherr.fr/banniere_dev_redac.png";
+
+const projectLogoAltLabels: Partial<Record<keyof typeof logos, string>> = {
+  htmlLogo: "HTML5",
+  cssLogo: "CSS3",
+  javascriptLogo: "JavaScript",
+  phpLogo: "PHP",
+  mysqlLogo: "MySQL",
+  cppLogo: "C++",
+  visualStudioLogo: "Visual Studio",
+  gitLogo: "Git",
+  vuejsLogo: "Vue.js",
+  redisLogo: "Redis",
+  excelLogo: "Microsoft Excel",
+  wordLogo: "Microsoft Word",
+  androidStudioLogo: "Android Studio",
+  kotlinLogo: "Kotlin",
+  xamppLogo: "XAMPP",
+  nodeLogo: "Node.js",
+  dockerLogo: "Docker",
+  esp32Logo: "ESP32",
+  threeDsMaxLogo: "3ds Max",
+  substancePainterLogo: "Substance Painter",
+  unrealLogo: "Unreal Engine",
+};
+
+function getProjectLogoAlt(logoKey: keyof typeof logos): string {
+  const readableLabel =
+    projectLogoAltLabels[logoKey] ??
+    logoKey
+      .replace(/Logo$/, "")
+      .replace(/([a-z])([A-Z])/g, "$1 $2")
+      .trim();
+
+  return `Logo ${readableLabel}, technologie utilisee par Maximilien Herr sur ce projet`;
+}
 
 export const metadata: Metadata = {
   title: fullTitle,
@@ -66,7 +101,7 @@ export default function Projets() {
 
   return (
     <>
-      <BreadcrumbJsonLd items={breadcrumbItems} />
+      <Breadcrumb items={breadcrumbItems} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(listJsonLd) }}
@@ -125,9 +160,18 @@ export default function Projets() {
                 ) : null}
                 <div className="languages">
                   {(project.logos ?? []).map((logoKey) => {
-                    const logo = logos[logoKey as keyof typeof logos];
+                    const typedLogoKey = logoKey as keyof typeof logos;
+                    const logo = logos[typedLogoKey];
                     if (!logo) return null;
-                    return <ImageOptimize key={logoKey} src={logo} alt={logoKey} />;
+                    return (
+                      <Image
+                        key={logoKey}
+                        src={logo.image}
+                        width={logo.width}
+                        height={logo.height}
+                        alt={getProjectLogoAlt(typedLogoKey)}
+                      />
+                    );
                   })}
                 </div>
                 {project.date ? (
@@ -146,6 +190,7 @@ export default function Projets() {
           </Link>
         ))}
       </section>
+      <ExploreAlso currentPath="/projets" />
     </>
   );
 }

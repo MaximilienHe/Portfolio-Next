@@ -1,6 +1,6 @@
 // /src/app/cv/_sections/interest.tsx
-import ImageOptimize from "@/components/imageOptimization";
 import images from "@/data/images";
+import Image from "next/image";
 
 const { writer, plane, smartphone } = images;
 
@@ -10,7 +10,12 @@ export default function Interest() {
       <div className="inner">
         <div className="interestCard">
           <div className="title">
-            <ImageOptimize src={writer} alt="writer icon" />
+            <Image
+              src={writer.image}
+              width={writer.width}
+              height={writer.height}
+              alt="Icone ecriture, centre d'interet de Maximilien Herr pour la redaction tech"
+            />
             <h5>Écrire et rédiger</h5>
           </div>
           <p>
@@ -25,7 +30,12 @@ export default function Interest() {
         </div>
         <div className="interestCard">
           <div className="title">
-            <ImageOptimize src={plane} alt="plane icon" />
+            <Image
+              src={plane.image}
+              width={plane.width}
+              height={plane.height}
+              alt="Icone conference tech, veille technologique de Maximilien Herr"
+            />
             <h5>Conférences tech</h5>
           </div>
           <p>
@@ -40,7 +50,12 @@ export default function Interest() {
         </div>
         <div className="interestCard">
           <div className="title">
-            <ImageOptimize src={smartphone} alt="téléphone icon" />
+            <Image
+              src={smartphone.image}
+              width={smartphone.width}
+              height={smartphone.height}
+              alt="Icone smartphone, passion high-tech de Maximilien Herr"
+            />
             <h5>High Tech</h5>
           </div>
           <p>

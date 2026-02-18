@@ -1,6 +1,6 @@
 // /src/app/cv/_sections/xp.tsx
 import React from "react";
-import ImageOptimize from "@/components/imageOptimization";
+import Image from "next/image";
 import images from "@/data/images";
 
 const {
@@ -21,7 +21,12 @@ export default function Xp() {
         <div className="experiences">
 
           <div className="singleXP">
-            <ImageOptimize src={smartfluence} alt="Smartfluence Logo" />
+            <Image
+              src={smartfluence.image}
+              width={smartfluence.width}
+              height={smartfluence.height}
+              alt="Logo Smartfluence, experience de Maximilien Herr en Big Data et IA"
+            />
             <div className="contentRight">
               <h2>Ingénieur Big Data & IA</h2>
               <p>Septembre 2023 - Présent</p>
@@ -52,7 +57,12 @@ export default function Xp() {
           </div>
 
           <div className="singleXP">
-            <ImageOptimize src={humanoid} alt="Humanoid Logo" />
+            <Image
+              src={humanoid.image}
+              width={humanoid.width}
+              height={humanoid.height}
+              alt="Logo Humanoid et Frandroid, experience de pigiste tech de Maximilien Herr"
+            />
             <div className="contentRight">
               <h2>Pigiste tech</h2>
               <p>Septembre 2023 - Présent</p>
@@ -65,7 +75,12 @@ export default function Xp() {
           </div>
 
           <div className="singleXP">
-            <ImageOptimize src={cafeDuGeek} alt="Le Café du Geek Logo" />
+            <Image
+              src={cafeDuGeek.image}
+              width={cafeDuGeek.width}
+              height={cafeDuGeek.height}
+              alt="Logo Le Cafe du Geek, media de redaction de Maximilien Herr"
+            />
             <div className="contentRight">
               <h2>Journaliste tech</h2>
               <p>Septembre 2022 - Présent</p>
@@ -78,7 +93,12 @@ export default function Xp() {
           </div>
 
           <div className="singleXP">
-            <ImageOptimize src={droidsoft} alt="DroidSoft Logo" />
+            <Image
+              src={droidsoft.image}
+              width={droidsoft.width}
+              height={droidsoft.height}
+              alt="Logo DroidSoft, media tech ou publie Maximilien Herr"
+            />
             <div className="contentRight">
               <h2>Journaliste tech</h2>
               <p>Août 2020 - Présent</p>
@@ -91,7 +111,12 @@ export default function Xp() {
           </div>
 
           <div className="singleXP">
-            <ImageOptimize src={itmi} alt="ITMI Illustration" />
+            <Image
+              src={itmi.image}
+              width={itmi.width}
+              height={itmi.height}
+              alt="Logo ITMI, stage ingenieur informatique de Maximilien Herr au Quebec"
+            />
             <div className="contentRight">
               <h2>Stagiaire Ingénieur Informatique</h2>
               <p>Juin 2025 - Août 2025</p>
@@ -110,7 +135,12 @@ export default function Xp() {
           </div>
 
           <div className="singleXP">
-            <ImageOptimize src={clubic} alt="Clubic Logo" />
+            <Image
+              src={clubic.image}
+              width={clubic.width}
+              height={clubic.height}
+              alt="Logo Clubic, experience de redacteur tech de Maximilien Herr"
+            />
             <div className="contentRight">
               <h2>Rédacteur Tech</h2>
               <p>Février 2023 - Juillet 2024</p>
@@ -123,7 +153,12 @@ export default function Xp() {
           </div>
 
           <div className="singleXP">
-            <ImageOptimize src={agenceGeek} alt="Agence Geek Media Logo" />
+            <Image
+              src={agenceGeek.image}
+              width={agenceGeek.width}
+              height={agenceGeek.height}
+              alt="Logo Agence Geek Media, mission developpeur web de Maximilien Herr"
+            />
             <div className="contentRight">
               <h2>Développeur Web</h2>
               <p>Avril 2023 - Juin 2023</p>

@@ -1,34 +1,3 @@
-import React from "react";
-
-type ImageType = {
-  id: number;
-  image: string; 
-  width?: number;
-  height?: number;
-  name?: string;
-};
-
-type Props = {
-  src: ImageType;
-  alt: string;
-  className?: string;
-};
-
-export default function ImageOptimize({
-  src,
-  alt = "image",
-  className,
-}: Props) {
-  // eslint-disable-next-line @next/next/no-img-element
-  return (
-    <img
-      className={className}
-      src={src.image}
-      alt={alt}
-      width={src.width}
-      height={src.height}
-      loading="lazy"
-      decoding="async"
-    />
-  );
-}
+// Legacy placeholder kept only to avoid accidental re-creation of this component.
+// Use `next/image` directly in application code.
+export {};

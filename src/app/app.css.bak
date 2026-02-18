@@ -242,7 +242,7 @@ a:visited {
 	font-family: Montserrat;
 
 	font-size: 100%;
-	transition: font-size 0.15s ease;
+	transition: 0.5s;
 }
 
 .button {
@@ -253,6 +253,7 @@ a:visited {
 .button:hover {
 	/* transform: rotate3d(0, 0, 1, 5deg) scale(1.05); */
 	font-size: 110%;
+	transition: 0.5s;
 }
 
 .button:link {
@@ -354,7 +355,6 @@ a:visited {
 	white-space:nowrap;
 	width: calc(var(--chars) * 1ch);
 	animation: landing-type 4s steps(var(--chars)) infinite;
-	will-change: opacity, transform;
 }
 
 .landing__typehint{
@@ -609,8 +609,7 @@ a:visited {
 	color: inherit;
 
 	transform: scale(1.0);
-	transition: transform 0.15s ease, box-shadow 0.15s ease;
-	will-change: transform;
+	transition: 0.5s;
 	border-radius: 20px;
 	box-shadow: rgba(0, 0, 0, 0.15) 0px 0.707995px 0.707995px -0.625px, rgba(0, 0, 0, 0.145) 0px 1.80969px 1.80969px -1.25px, rgba(0, 0, 0, 0.137) 0px 3.62052px 3.62052px -1.875px, rgba(0, 0, 0, 0.125) 0px 6.87063px 6.87063px -2.5px, rgba(0, 0, 0, 0.106) 0px 13.6444px 13.6444px -3.125px, rgba(0, 0, 0, 0.05) 0px 30px 30px -3.75px;
 }
@@ -902,16 +901,17 @@ width: 320px; /* au cas où l’UA n’interprète pas flex-basis seul */
 
 .singleArticle {
 	transform: scale(1.0);
-	transition: transform 0.15s ease;
-	will-change: transform;
+	transition: 0.5s;
 }
 
 .singleArticle:hover {
 	transform: scale(1.05);
+	transition: 0.5s;
 }
 
 .card:hover {
 	transform: scale(1.05);
+	transition: 0.5s;
 }
 
 
@@ -982,8 +982,7 @@ width: 320px; /* au cas où l’UA n’interprète pas flex-basis seul */
 		width: 24px;
 		height: 2px;
 		background: #000;
-		transition: transform 0.15s ease, opacity 0.15s ease;
-		will-change: transform, opacity;
+		transition: transform 0.2s ease, opacity 0.2s ease;
 	}
 	.nav--open .nav-toggle span:nth-child(1){
 		transform: translateY(7px) rotate(45deg);
@@ -1127,11 +1126,14 @@ width: 320px; /* au cas où l’UA n’interprète pas flex-basis seul */
   --ink: #392A1D;
   --ink-alt: #433428;
   --clay: #735B4D;
+
+  --copper: #A4856A;
   --copper-dark: #836A55;
   --sand: #CFBBA2;
 
   /* Surfaces */
   --paper: #FBFAF8;
+  --subtle: #F8F5F1;
   --surface: #FFFFFF;
   --hairline: #E9E0D5;
 
@@ -1140,12 +1142,23 @@ width: 320px; /* au cas où l’UA n’interprète pas flex-basis seul */
   --font-head: "Space Grotesk", "Inter", var(--font-body);
   --font-display: "Space Grotesk", "Inter", var(--font-body);
   --font-accent: "Space Grotesk", "Inter", var(--font-body);
+  --font-kicker: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
 
   /* Layout */
+  --radius-sm: 10px;
   --radius-md: 14px;
+  --radius-lg: 18px;
 
   --shadow-1: 0 1px 2px rgba(0,0,0,.06);
   --shadow-2: 0 6px 18px rgba(0,0,0,.08);
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
 
   --focus: 0 0 0 3px rgba(207,187,162,.55);
 
@@ -1183,7 +1196,7 @@ a:hover{ color: var(--ink); }
 }
 
 /* Boutons (on garde .button existant et on ajoute .btn) */
-
+.btn,
 .button{
   display:inline-flex; align-items:center; justify-content:center;
   gap:10px;
@@ -1193,16 +1206,23 @@ a:hover{ color: var(--ink); }
   font-weight: 600;
   font-family: var(--font-body);
 }
-
+.btn:focus-visible,
 .button:focus-visible{ outline: none; box-shadow: var(--focus); }
 
-
+.btn-primary,
 .button{
   background: var(--ink);
   color: var(--paper);
 }
-
+.btn-primary:hover,
 .button:hover{ filter: brightness(0.95); }
+
+.btn-secondary{
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--hairline);
+}
+.btn-secondary:hover{ background: var(--subtle); }
 
 .card{
   background: var(--surface);
@@ -1664,32 +1684,6 @@ a:hover{
   }
 }
 
-@media (max-width: 991px) {
-  .nav > .nav-links .search-trigger {
-    width: 100%;
-    justify-content: flex-start;
-    padding: 10px 12px;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    background: rgba(255, 255, 255, 0.08);
-    color: #f5efe8;
-    backdrop-filter: none;
-  }
-
-  .nav > .nav-links .search-trigger .search-trigger-text {
-    display: inline;
-    color: inherit;
-  }
-
-  .nav > .nav-links .search-trigger .search-kbd {
-    display: inline-block;
-    margin-left: auto;
-    border-color: rgba(255, 255, 255, 0.22);
-    background: rgba(255, 255, 255, 0.1);
-    color: inherit;
-  }
-}
-
 /* ─── Modal overlay ─── */
 
 .search-overlay {
@@ -1703,19 +1697,6 @@ a:hover{
   background: rgba(20, 14, 10, 0.45);
   backdrop-filter: blur(4px);
   animation: searchFadeIn 0.15s ease;
-}
-
-@media (max-width: 991px) {
-  .search-overlay {
-    padding-top: 72px;
-    background: transparent;
-    backdrop-filter: none;
-  }
-
-  .search-modal {
-    width: min(640px, calc(100vw - 20px));
-    max-height: calc(100dvh - 84px);
-  }
 }
 
 @keyframes searchFadeIn {

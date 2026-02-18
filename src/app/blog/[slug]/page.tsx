@@ -4,7 +4,8 @@ import { notFound } from "next/navigation";
 import { getAllEntries, getEntry } from "@/lib/content";
 import { renderMdx } from "@/lib/mdx";
 import { mdxComponents } from "@/lib/mdxComponents";
-import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
+import { Breadcrumb } from "@/components/Breadcrumb";
+import { ExploreAlso } from "@/components/ExploreAlso";
 import "../style.css";
 
 export async function generateStaticParams() {
@@ -78,7 +79,7 @@ export default async function BlogPost({ params }: { params: { slug: string } })
 
   return (
     <main className="container">
-      <BreadcrumbJsonLd items={breadcrumbItems} />
+      <Breadcrumb items={breadcrumbItems} />
       <article className="article-page">
         <div className="article-hero">
           {image ? (
@@ -120,6 +121,7 @@ export default async function BlogPost({ params }: { params: { slug: string } })
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <ExploreAlso currentPath={`/blog/${params.slug}`} />
     </main>
   );
 }

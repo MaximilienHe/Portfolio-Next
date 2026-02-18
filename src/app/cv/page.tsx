@@ -7,7 +7,8 @@ import Skills from "./_sections/skills";
 import Interest from "./_sections/interest";
 import Formations from "./_sections/formations";
 import Download from "./_sections/download";
-import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
+import { Breadcrumb } from "@/components/Breadcrumb";
+import { ExploreAlso } from "@/components/ExploreAlso";
 
 export const metadata: Metadata = {
   title: "Maximilien Herr - CV",
@@ -40,13 +41,14 @@ export default function Cv() {
   ];
   return (
     <>
-      <BreadcrumbJsonLd items={breadcrumbItems} />
+      <Breadcrumb items={breadcrumbItems} />
       <Quote />
       <Xp />
       <Formations />
       <Skills />
       <Interest />
       <Download />
+      <ExploreAlso currentPath="/cv" />
     </>
   );
 }
