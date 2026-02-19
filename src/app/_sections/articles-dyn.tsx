@@ -1,7 +1,14 @@
 // src/app/_sections/articles-dyn.tsx
 // Server Component — le contenu est dans le HTML initial (visible par Googlebot)
-import Image from "next/image";
 import { getAllLatestArticles } from "@/lib/fetchArticles";
+
+function normalizeCoverSrc(src?: string | null): string | null {
+  if (!src) return null;
+  const value = src.trim();
+  if (!value) return null;
+  if (value.startsWith("//")) return `https:${value}`;
+  return value;
+}
 
 export default async function ArticlesDyn() {
   let data: any[];
@@ -25,46 +32,39 @@ export default async function ArticlesDyn() {
       <div className="container">
         <h2>Mes derniers articles</h2>
         <div className="multiArticles two-column" style={{ flexWrap: "wrap" }}>
-          {data.map((a) => (
-            <a
-              key={a.id}
-              href={a.url}
-              target="_blank"
-              rel="noopener"
-              className="singleArticle"
-            >
-              <div className="article">
-                {a.cover ? (
+          {data.map((a) => {
+            const coverSrc = normalizeCoverSrc(a.cover);
+
+            return (
+              <a
+                key={a.id}
+                href={a.url}
+                target="_blank"
+                rel="noopener"
+                className="singleArticle"
+              >
+                <div className="article">
                   <div className="articleImgWrapper">
-                    <Image
-                      src={a.cover}
-                      alt={a.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 420px"
-                      style={{ objectFit: "cover" }}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={coverSrc ?? "/images/articles/placeholder.webp"}
+                      alt={coverSrc ? a.title : ""}
+                      loading="lazy"
+                      decoding="async"
+                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
                     />
                   </div>
-                ) : (
-                  <div className="articleImgWrapper">
-                    <Image
-                      src="/images/articles/placeholder.webp"
-                      alt=""
-                      fill
-                      sizes="(max-width: 768px) 100vw, 420px"
-                      style={{ objectFit: "cover" }}
-                    />
+                  <div className="articleDetail">
+                    <h3>{a.title}</h3>
+                    <p style={{ color: "#fff" }}>
+                      {a.source} -{" "}
+                      {new Date(a.date).toLocaleDateString("fr-FR")}
+                    </p>
                   </div>
-                )}
-                <div className="articleDetail">
-                  <h3>{a.title}</h3>
-                  <p style={{ color: "#fff" }}>
-                    {a.source} -{" "}
-                    {new Date(a.date).toLocaleDateString("fr-FR")}
-                  </p>
                 </div>
-              </div>
-            </a>
-          ))}
+              </a>
+            );
+          })}
         </div>
       </div>
     </section>

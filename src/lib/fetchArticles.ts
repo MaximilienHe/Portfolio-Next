@@ -81,6 +81,37 @@ function decodeHtml(input: string): string {
     .replace(/&amp;/g, "&");
 }
 
+function normalizeCoverUrl(
+  raw: string | null | undefined,
+  baseUrl?: string
+): string | null {
+  if (!raw) return null;
+
+  let value = decodeHtml(raw).trim();
+  if (!value) return null;
+
+  // Some feeds expose protocol-relative urls: //cdn.example.com/image.jpg
+  if (value.startsWith("//")) value = `https:${value}`;
+
+  try {
+    if (/^https?:\/\//i.test(value)) {
+      const url = new URL(value);
+      if (url.protocol === "http:") url.protocol = "https:";
+      return url.toString();
+    }
+
+    if (value.startsWith("/") && baseUrl) {
+      const url = new URL(value, baseUrl);
+      if (url.protocol === "http:") url.protocol = "https:";
+      return url.toString();
+    }
+
+    return null;
+  } catch {
+    return null;
+  }
+}
+
 async function resolveWpAuthorId(base: string, slug: string) {
   const url = `${base}/wp-json/wp/v2/users?slug=${encodeURIComponent(slug)}`;
   const arr = await fetchJson<Array<{ id: number }>>(url);
@@ -96,31 +127,33 @@ function pickYoastThumbnail(yoast?: YoastHeadJson | null): string | null {
   const graph = Array.isArray(yoast["@graph"]) ? yoast["@graph"] : [];
   for (const node of graph) {
     const val = (node as any)?.thumbnailUrl;
-    if (typeof val === "string" && /^https?:\/\//i.test(val)) {
-      return val;
+    if (typeof val === "string") {
+      const normalized = normalizeCoverUrl(val);
+      if (normalized) return normalized;
     }
   }
 
   // 2) Fallback: og_image[0].url
-  const og = yoast.og_image?.[0]?.url;
-  if (og && /^https?:\/\//i.test(og)) return og;
+  const og = normalizeCoverUrl(yoast.og_image?.[0]?.url);
+  if (og) return og;
 
   return null;
 }
 
-function pickWpCover(p: WpPost): string | null {
+function pickWpCover(p: WpPost, base: string): string | null {
   // Ordre: Yoast thumbnailUrl -> og_image -> jetpack -> _embedded sizes/source
   const fromYoast = pickYoastThumbnail(p.yoast_head_json);
   if (fromYoast) return fromYoast;
 
-  if (p.jetpack_featured_media_url) return p.jetpack_featured_media_url;
+  const fromJetpack = normalizeCoverUrl(p.jetpack_featured_media_url, base);
+  if (fromJetpack) return fromJetpack;
 
   const emb = p._embedded?.["wp:featuredmedia"]?.[0];
   const fromSizes =
     emb?.media_details?.sizes &&
     Object.values(emb.media_details.sizes).find(Boolean)?.source_url;
 
-  return fromSizes || emb?.source_url || null;
+  return normalizeCoverUrl(fromSizes || emb?.source_url || null, base);
 }
 
 async function getWpPostsByAuthor(
@@ -138,7 +171,7 @@ async function getWpPostsByAuthor(
     title: decodeHtml(p.title?.rendered?.replace(/<[^>]+>/g, "") ?? ""),
     url: p.link,
     date: new Date(p.date_gmt + "Z").toISOString(),
-    cover: pickWpCover(p),
+    cover: pickWpCover(p, base),
   }));
 }
 
@@ -179,12 +212,12 @@ function parseFrandroidRss(xml: string): Article[] {
     const rawTitle = pickCdata(it, "title");
     const rawLink = pick(it, "link");
     const pubDate = pick(it, "pubDate");
-    const cover = pickMediaUrl(it);
     const iso = pubDate
       ? new Date(pubDate).toISOString()
       : new Date().toISOString();
     const title = decodeHtml(rawTitle);
     const link = decodeHtml(rawLink);
+    const cover = normalizeCoverUrl(pickMediaUrl(it), link);
     return {
       source: "Frandroid" as const,
       id: `Frandroid-${link || title}`,
