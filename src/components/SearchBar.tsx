@@ -6,6 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import { search, type SearchEntry, type SearchResult } from "@/lib/search";
+import { loadSearchIndex } from "@/lib/searchIndexClient";
 
 const TYPE_LABELS: Record<string, string> = {
   page: "Page",
@@ -20,6 +21,20 @@ const TYPE_COLORS: Record<string, string> = {
   blog: "#6b7db3",
   article: "#b35a5a",
 };
+
+function toInternalPath(url: string): string | null {
+  if (url.startsWith("/")) return url;
+
+  if (typeof window === "undefined") return null;
+
+  try {
+    const parsed = new URL(url);
+    if (parsed.origin !== window.location.origin) return null;
+    return `${parsed.pathname}${parsed.search}${parsed.hash}`;
+  } catch {
+    return null;
+  }
+}
 
 export function SearchBar() {
   const [open, setOpen] = useState(false);
@@ -38,16 +53,16 @@ export function SearchBar() {
   // Charger l'index au premier ouverture (lazy)
   useEffect(() => {
     if (open && !index) {
-      fetch("/api/search-index")
-        .then((r) => r.json())
+      loadSearchIndex()
         .then((data) => setIndex(data))
         .catch(console.error);
     }
     if (open) {
+      router.prefetch("/recherche");
       // Focus l'input après l'animation
       setTimeout(() => inputRef.current?.focus(), 50);
     }
-  }, [open, index]);
+  }, [open, index, router]);
 
   // Recherche à chaque frappe
   useEffect(() => {
@@ -60,6 +75,11 @@ export function SearchBar() {
     setResults(r);
     setSelectedIdx(-1);
   }, [query, index]);
+
+  useEffect(() => {
+    if (!query.trim()) return;
+    router.prefetch(`/recherche?q=${encodeURIComponent(query)}`);
+  }, [query, router]);
 
   // Raccourci clavier Ctrl+K / Cmd+K
   useEffect(() => {
@@ -74,11 +94,34 @@ export function SearchBar() {
     return () => window.removeEventListener("keydown", handleKey);
   }, []);
 
+  const prefetchIfInternal = useCallback(
+    (url: string) => {
+      const internalPath = toInternalPath(url);
+      if (!internalPath) return;
+      router.prefetch(internalPath);
+    },
+    [router]
+  );
+
+  useEffect(() => {
+    for (const result of results.slice(0, 6)) {
+      prefetchIfInternal(result.url);
+    }
+  }, [results, prefetchIfInternal]);
+
   const navigate = useCallback(
     (url: string) => {
       setOpen(false);
       setQuery("");
-      router.push(url);
+      setResults([]);
+
+      const internalPath = toInternalPath(url);
+      if (internalPath) {
+        router.push(internalPath);
+        return;
+      }
+
+      window.location.assign(url);
     },
     [router]
   );
@@ -190,7 +233,11 @@ export function SearchBar() {
                   key={r.url}
                   className={`search-result ${i === selectedIdx ? "search-result--active" : ""}`}
                   onClick={() => navigate(r.url)}
-                  onMouseEnter={() => setSelectedIdx(i)}
+                  onMouseEnter={() => {
+                    setSelectedIdx(i);
+                    prefetchIfInternal(r.url);
+                  }}
+                  onFocus={() => prefetchIfInternal(r.url)}
                   role="option"
                   aria-selected={i === selectedIdx}
                   type="button"

@@ -1,13 +1,12 @@
 // src/app/api/search-index/route.ts
-// API route qui génère l'index de recherche au build time (ISR ou static)
-// Next.js va le cacher automatiquement → 0 coût runtime
+// Dynamic search index based on real content files (plus stable static pages).
 
 import { NextResponse } from "next/server";
+import { getAllEntries } from "@/lib/content";
+import { getAllLatestArticles } from "@/lib/fetchArticles";
 
-// ─── ADAPTER : importe tes fonctions de contenu existantes ───
-// Si ta lib s'appelle autrement, adapte l'import
-// import { getAllEntries } from "@/lib/content";
-// import { getAllProjects } from "@/data/projects";
+export const runtime = "nodejs";
+export const revalidate = 600;
 
 export type SearchEntry = {
   title: string;
@@ -18,7 +17,6 @@ export type SearchEntry = {
   date?: string;
 };
 
-// ─── Pages statiques (toujours indexées) ───
 const STATIC_PAGES: SearchEntry[] = [
   {
     title: "Accueil",
@@ -33,7 +31,7 @@ const STATIC_PAGES: SearchEntry[] = [
       "Parcours, expériences professionnelles, formations et compétences techniques de Maximilien Herr.",
     url: "/cv",
     type: "page",
-    tags: ["cv", "expériences", "compétences", "formation", "ISIMA", "Smartfluence"],
+    tags: ["cv", "expériences", "compétences", "formation", "isima", "smartfluence"],
   },
   {
     title: "Contact",
@@ -76,106 +74,74 @@ const STATIC_PAGES: SearchEntry[] = [
   },
 ];
 
-export async function GET() {
-  // ─── Projets dynamiques (MDX) ───
-  // ADAPTER : décommente et adapte selon ta lib de contenu
-  // Exemple si tu utilises getAllEntries("projets") :
-  //
-  // const projets = getAllEntries("projets").map((p) => ({
-  //   title: p.title,
-  //   description: p.description || "",
-  //   url: `/projets/${p.slug}`,
-  //   type: "projet" as const,
-  //   tags: p.tags || [],
-  //   date: p.date,
-  // }));
+function uniqByUrl(entries: SearchEntry[]): SearchEntry[] {
+  const seen = new Set<string>();
+  const unique: SearchEntry[] = [];
+  for (const entry of entries) {
+    if (seen.has(entry.url)) continue;
+    seen.add(entry.url);
+    unique.push(entry);
+  }
+  return unique;
+}
 
-  // Fallback statique basé sur tes URLs GSC connues :
-  const projets: SearchEntry[] = [
-    {
-      title: "Comparaison Algorithmique",
-      description: "Visualisation et comparaison d'algorithmes de tri et de recherche.",
-      url: "/projets/comparaison-algorithmique",
-      type: "projet",
-      tags: ["algorithmes", "tri", "visualisation"],
-    },
-    {
-      title: "Twitch Tracker",
-      description: "Application de suivi de streamers Twitch en temps réel.",
-      url: "/projets/twitch-tracker",
-      type: "projet",
-      tags: ["twitch", "streaming", "tracker", "API"],
-    },
-    {
-      title: "DroidSoft App",
-      description: "Application mobile pour le média DroidSoft.",
-      url: "/projets/droidsoft-app",
-      type: "projet",
-      tags: ["android", "mobile", "droidsoft", "application"],
-    },
-    {
-      title: "ASCII Art",
-      description: "Générateur d'art ASCII à partir d'images.",
-      url: "/projets/ascii-art",
-      type: "projet",
-      tags: ["ascii", "art", "image", "générateur"],
-    },
-    {
-      title: "Blog sans CMS",
-      description: "Création d'un blog statique sans système de gestion de contenu.",
-      url: "/projets/blog-sans-cms",
-      type: "projet",
-      tags: ["blog", "statique", "MDX", "Next.js"],
-    },
-    {
-      title: "Game Jam BDD",
-      description: "Projet de game jam avec base de données.",
-      url: "/projets/game-jam-bdd",
-      type: "projet",
-      tags: ["game jam", "jeu", "base de données"],
-    },
-    {
-      title: "Temple 3D",
-      description: "Modélisation et visualisation 3D d'un temple.",
-      url: "/projets/temple-3D",
-      type: "projet",
-      tags: ["3D", "modélisation", "three.js", "WebGL"],
-    },
-    {
-      title: "Réchauffement Climatique",
-      description: "Visualisation de données sur le réchauffement climatique.",
-      url: "/projets/rechauffement-climatique",
-      type: "projet",
-      tags: ["climat", "données", "visualisation", "écologie"],
-    },
-    {
-      title: "T2C Screen",
-      description: "Écran d'affichage pour les transports en commun T2C.",
-      url: "/projets/t2c-screen",
-      type: "projet",
-      tags: ["transport", "T2C", "affichage", "temps réel"],
-    },
-  ];
+function getDynamicProjectEntries(): SearchEntry[] {
+  return getAllEntries("projets").map((project) => ({
+    title: project.title,
+    description: project.description || "",
+    url: `/projets/${project.slug}`,
+    type: "projet" as const,
+    tags: project.tags ?? [],
+    date: project.date || undefined,
+  }));
+}
 
-  // ─── Blog dynamique (MDX) ───
-  // ADAPTER : même logique que projets
-  // const blog = getAllEntries("blog").map(...)
-  const blog: SearchEntry[] = [
-    {
-      title: "Blog en construction",
-      description: "Le blog est en cours de mise en place.",
-      url: "/blog/blog-en-construction",
-      type: "blog",
-      tags: ["blog", "construction"],
-    },
-  ];
+function getDynamicBlogEntries(): SearchEntry[] {
+  return getAllEntries("blog").map((post) => ({
+    title: post.title,
+    description: post.description || "",
+    url: `/blog/${post.slug}`,
+    type: "blog" as const,
+    tags: post.tags ?? [],
+    date: post.date || undefined,
+  }));
+}
 
-  const index = [...STATIC_PAGES, ...projets, ...blog];
+async function getDynamicArticleEntries(): Promise<SearchEntry[]> {
+  const articlesPromise = getAllLatestArticles({
+    perDroidsoft: 6,
+    perLcdg: 6,
+    perFrandroid: 6,
+    maxTotal: 18,
+  })
+    .then((latestArticles) =>
+      latestArticles.map((article) => ({
+        title: article.title,
+        description: `Article ${article.source} publié le ${new Date(article.date).toLocaleDateString("fr-FR")}.`,
+        url: article.url,
+        type: "article" as const,
+        tags: ["article", article.source.toLowerCase()],
+        date: article.date,
+      }))
+    )
+    .catch(() => []);
 
-  return NextResponse.json(index, {
-    headers: {
-      // Cache 1 heure en production, revalidate au build
-      "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
-    },
+  const timeoutPromise = new Promise<SearchEntry[]>((resolve) => {
+    setTimeout(() => resolve([]), 1500);
   });
+
+  return Promise.race([articlesPromise, timeoutPromise]);
+}
+
+export async function GET() {
+  const articleEntries = await getDynamicArticleEntries();
+
+  const index = uniqByUrl([
+    ...STATIC_PAGES,
+    ...getDynamicProjectEntries(),
+    ...getDynamicBlogEntries(),
+    ...articleEntries,
+  ]);
+
+  return NextResponse.json(index);
 }

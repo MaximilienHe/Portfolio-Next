@@ -2,12 +2,13 @@
 // src/app/recherche/page.tsx
 // Page de résultats de recherche — full client-side
 
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState, Suspense } from "react";
 import Link from "next/link";
 import { search, type SearchEntry, type SearchResult } from "@/lib/search";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { ExploreAlso } from "@/components/ExploreAlso";
+import { loadSearchIndex } from "@/lib/searchIndexClient";
 
 const TYPE_LABELS: Record<string, string> = {
   page: "Page",
@@ -23,7 +24,22 @@ const TYPE_COLORS: Record<string, string> = {
   article: "#b35a5a",
 };
 
+function toInternalPath(url: string): string | null {
+  if (url.startsWith("/")) return url;
+
+  if (typeof window === "undefined") return null;
+
+  try {
+    const parsed = new URL(url);
+    if (parsed.origin !== window.location.origin) return null;
+    return `${parsed.pathname}${parsed.search}${parsed.hash}`;
+  } catch {
+    return null;
+  }
+}
+
 function SearchResults() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const q = searchParams.get("q") || "";
   const [index, setIndex] = useState<SearchEntry[] | null>(null);
@@ -32,8 +48,7 @@ function SearchResults() {
 
   // Charger l'index
   useEffect(() => {
-    fetch("/api/search-index")
-      .then((r) => r.json())
+    loadSearchIndex()
       .then(setIndex)
       .catch(console.error);
   }, []);
@@ -53,6 +68,13 @@ function SearchResults() {
   useEffect(() => {
     if (q && !inputValue) setInputValue(q);
   }, [q]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    for (const result of results.slice(0, 8)) {
+      const internalPath = toInternalPath(result.url);
+      if (internalPath) router.prefetch(internalPath);
+    }
+  }, [results, router]);
 
   const activeQuery = inputValue || q;
 
@@ -88,35 +110,59 @@ function SearchResults() {
           )}
 
           <div className="recherche-results">
-            {results.map((r) => (
-              <Link
-                key={r.url}
-                href={r.url}
-                className="recherche-result-card"
-              >
-                <div className="recherche-result-header">
+            {results.map((r) => {
+              const internalPath = toInternalPath(r.url);
+
+              const cardContent = (
+                <>
+                  <div className="recherche-result-header">
+                    <span
+                      className="recherche-result-type"
+                      style={{
+                        backgroundColor: TYPE_COLORS[r.type] || "#888",
+                      }}
+                    >
+                      {TYPE_LABELS[r.type] || r.type}
+                    </span>
+                    <span
+                      className="recherche-result-title"
+                      dangerouslySetInnerHTML={{ __html: r.highlightedTitle }}
+                    />
+                  </div>
                   <span
-                    className="recherche-result-type"
-                    style={{
-                      backgroundColor: TYPE_COLORS[r.type] || "#888",
+                    className="recherche-result-desc"
+                    dangerouslySetInnerHTML={{
+                      __html: r.highlightedDescription,
                     }}
-                  >
-                    {TYPE_LABELS[r.type] || r.type}
-                  </span>
-                  <span
-                    className="recherche-result-title"
-                    dangerouslySetInnerHTML={{ __html: r.highlightedTitle }}
                   />
-                </div>
-                <span
-                  className="recherche-result-desc"
-                  dangerouslySetInnerHTML={{
-                    __html: r.highlightedDescription,
-                  }}
-                />
-                <span className="recherche-result-url">{r.url}</span>
-              </Link>
-            ))}
+                  <span className="recherche-result-url">{r.url}</span>
+                </>
+              );
+
+              if (!internalPath) {
+                return (
+                  <a
+                    key={r.url}
+                    href={r.url}
+                    className="recherche-result-card"
+                  >
+                    {cardContent}
+                  </a>
+                );
+              }
+
+              return (
+                <Link
+                  key={r.url}
+                  href={internalPath}
+                  className="recherche-result-card"
+                  onMouseEnter={() => router.prefetch(internalPath)}
+                  onFocus={() => router.prefetch(internalPath)}
+                >
+                  {cardContent}
+                </Link>
+              );
+            })}
           </div>
 
           {activeQuery.trim() && results.length === 0 && index && (

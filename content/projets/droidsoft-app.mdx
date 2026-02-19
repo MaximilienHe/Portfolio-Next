@@ -3,7 +3,7 @@ title: "DroidSoft App - Application Mobile"
 description: "Découvrez mon projet d'application mobile, réalisé pour DroidSoft."
 date: "2023-03-31"
 priority: 1
-cover: "/images/Images/droidsoft_app_horizontal.png"
+cover: "/images/Images/projects/droidsoft_app_horizontal.png"
 canonical: "https://maximilienherr.fr/projets/droidsoft-app"
 tags: ["kotlin", "android", "api", "scraping"]
 logos: ["androidStudioLogo", "kotlinLogo", "javascriptLogo", "gitLogo"]
@@ -14,7 +14,7 @@ draft: false
 
 A l'occasion du projet tutoré de 2e année, j'ai entrepris le développement d'une application mobile pour DroidSoft. DroidSoft est un média en ligne (sous WordPress), spécialisé dans les technologies autour du monde d'Android. Ce sont notamment les smartphones, les tablettes, les écouteurs, les montres connectées ƒ?Ý Ainsi, dédié à ces technologies, il était pertinent d'investir un support mobile intégré, et pas simplement la version mobile du site. C'est donc ça la genèse du projet, mais comment l'avons-nous fait ? ƒÏæ‹÷?
 
-![Logo DroidSoft App](/images/Images/droidsoft_app_horizontal.png)
+![Logo DroidSoft App](/images/Images/projects/droidsoft_app_horizontal.png)
 
 ## Caractéristiques techniques du projet
 
@@ -51,7 +51,7 @@ Ce projet se concentre donc autour de 4 piliers majeurs. Il y a d'une part toute
 
 Je n'ai pas crée directement le design, pour cette partie là, j'étais en charge de faire des retours aux clients sur ce qui était fait, pour adapter en conséquence le design. Connaissant l'ambition du projet, j'ai par ailleurs aidé la personne en charge, afin qu'elle sache quoi faire, et lui donner les éléments de la charte graphique du site.
 
-![design DroidSoft App](/images/Images/design.webp)
+![design DroidSoft App](/images/Images/projects/design.webp)
 
 <div id="GreenIT"></div>
 
@@ -63,7 +63,7 @@ Un peu de contexte d'abord. Sur le marché des smartphones, une technologie d'é
 
 C'est pourquoi, nous avons opté pour deux designs, un _Light Mode_ et un _Dark Mode_. Le _Dark Mode_ peut utiliser des teintes de couleurs sombres, ou simplement un fond noir. Et si le design est justement réellement noir, et non pas une teinte colorée, cela permet d'éteindre les pixels affichés, ce qui augmente le contraste d'ailleurs. Le bénéfice est donc à la fois pour l'environnement, mais aussi pour l'accessibilité.
 
-![Oled design vs Not Oled design](/images/Images/design%20OLED.webp)
+![Oled design vs Not Oled design](/images/Images/projects/design%20OLED.webp)
 
 ### Communication avec l'API WordPress
 
@@ -81,7 +81,7 @@ Nous avons aussi profité de ce projet pour travailler en mode `“entreprise“
 
 Comme précisé plus haut aussi, la création de cette API se fait en javascript pour le _scraping_, mais aussi pour l'interaction avec la base de données. Celle-ci est d'ailleurs gérée en MySQL, avec une conception réfléchie pour améliorer la rapidité. Le _scraping_ récupère des données sous un format initial, se basant sur un triplet de chemins d'accès.
 
-![endpoints](/images/Images/endpoints.webp)
+![endpoints](/images/Images/projects/endpoints.webp)
 
 On a le `/brands` qui nous donne les marques, le `/brand/{url}` qui nous donne tous les produits d'une marque, et le `/device/{url}` qui nous donne les détails techniques de ce téléphone. Un premier script était en charge de récupérer ces données, et de les stocker dans une base de données. Ensuite, tous les jours, un second script doit comparer pour trouver les nouvelles données, et les enregistrer.
 
@@ -98,10 +98,10 @@ Pour la partie développement de l'application, bien que nous partions sur une b
 Enfin, pour la partie création de l'API des smartphones (avec base de données), étant donné que cela s'étalait aussi sur mon projet de stage, j'ai repris en main cette partie là sur le 3e sprint. Etant donné qu'il y avait beaucoup d'intermédiaires (le site que l'on scrappe, une API tampon ƒ?Ý) cela impliquait des contre-temps. Mais dans l'ensemble, le résultat est bon. Comme je viens de le dire, c'est lié à mon stage, donc j'en reparlerai dans le projet `“Stage“` qui arrivera à la fin de celui-ci sur ce site !
 
 <div className="logos">
-  <img src="/images/logos/Kotlin.png" alt="kotlin" className="logo" />
-  <img src="/images/logos/AndroidStudio.png" alt="AndroidStudio" className="logo" />
-  <img src="/images/logos/JavaScript.png" alt="JavaScript" className="logo" />
-  <img src="/images/logos/git.png" alt="Git" className="logo" />
+  <img src="/images/logos/Dev Logiciels/Kotlin.png" alt="kotlin" className="logo" />
+  <img src="/images/logos/Dev Logiciels/AndroidStudio.png" alt="AndroidStudio" className="logo" />
+  <img src="/images/logos/Dev Web/JavaScript.png" alt="JavaScript" className="logo" />
+  <img src="/images/logos/Dev Logiciels/git.png" alt="Git" className="logo" />
 </div>
 
 ## Sources du projet
@@ -109,14 +109,14 @@ Enfin, pour la partie création de l'API des smartphones (avec base de données)
 <div className="sources">
   <a href="https://github.com/MaximilienHe/DroidApp" target="_blank" rel="noopener">
     <p>Sources de l'application</p>
-    <img src="/images/logos/logo-sources-projet.png" alt="Sources du projet" className="logo" />
+    <img src="/images/logos/Dev Web/logo-sources-projet.png" alt="Sources du projet" className="logo" />
   </a>
   <a href="https://github.com/MaximilienHe/DroidApp" target="_blank" rel="noopener">
     <p>Sources de l'API de scrapping</p>
-    <img src="/images/logos/logo-sources-projet.png" alt="Sources du projet" className="logo" />
+    <img src="/images/logos/Dev Web/logo-sources-projet.png" alt="Sources du projet" className="logo" />
   </a>
   <a href="https://github.com/MaximilienHe/Phone-API-BDD" target="_blank" rel="noopener">
     <p>Sources des scripts liés à l'API base de données</p>
-    <img src="/images/logos/logo-sources-projet.png" alt="Sources du projet" className="logo" />
+    <img src="/images/logos/Dev Web/logo-sources-projet.png" alt="Sources du projet" className="logo" />
   </a>
 </div>
