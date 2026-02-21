@@ -22,7 +22,7 @@ export default function Formations() {
             width={isima.width}
             height={isima.height}
             {...formationImageProps}
-            alt="Logo ISIMA, ecole d'ingenieur de Maximilien Herr"
+            alt="Logo ISIMA, école d'ingénieur de Maximilien Herr"
           />
           <div className="contentFormation">
             <h2>Diplôme d&apos;ingénieur Informatique</h2>

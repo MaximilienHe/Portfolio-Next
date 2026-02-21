@@ -88,7 +88,7 @@ export default function Xp() {
               width={cafeDuGeek.width}
               height={cafeDuGeek.height}
               {...xpImageProps}
-              alt="Logo Le Cafe du Geek, media de redaction de Maximilien Herr"
+              alt="Logo Le Café du Geek, média de rédaction de Maximilien Herr"
             />
             <div className="contentRight">
               <h2>Journaliste tech</h2>
@@ -126,7 +126,7 @@ export default function Xp() {
               width={itmi.width}
               height={itmi.height}
               {...xpImageProps}
-              alt="Logo ITMI, stage ingenieur informatique de Maximilien Herr au Quebec"
+              alt="Logo ITMI, stage ingénieur informatique de Maximilien Herr au Québec"
             />
             <div className="contentRight">
               <h2>Stagiaire Ingénieur Informatique</h2>
@@ -170,7 +170,7 @@ export default function Xp() {
               width={agenceGeek.width}
               height={agenceGeek.height}
               {...xpImageProps}
-              alt="Logo Agence Geek Media, mission developpeur web de Maximilien Herr"
+              alt="Logo Agence Geek Media, mission développeur web de Maximilien Herr"
             />
             <div className="contentRight">
               <h2>Développeur Web</h2>

@@ -15,7 +15,7 @@ export default function Xp() {
               src={developpeur.image}
               width={developpeur.width}
               height={developpeur.height}
-              alt="Illustration de Maximilien Herr, ingenieur logiciel et developpeur web"
+              alt="Illustration de Maximilien Herr, ingénieur logiciel et développeur web"
             />
             <div className="contentRight">
               <h2>Ingenieur logiciel</h2>

@@ -9,7 +9,7 @@ import { ExploreAlso } from "@/components/ExploreAlso";
 const pageUrl = "https://maximilienherr.fr/blog";
 const pageTitle = "Blog";
 const fullTitle = "Blog | Maximilien Herr";
-const pageDescription = "Notes, retours d experience et articles personnels.";
+const pageDescription = "Notes, retours d'expérience et articles personnels.";
 const ogImage = "https://maximilienherr.fr/banniere_dev_redac.png";
 
 export const metadata: Metadata = {
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     url: pageUrl,
     title: fullTitle,
     description: pageDescription,
-    images: [{ url: ogImage, width: 1200, height: 630, alt: "Banniere Maximilien Herr" }],
+    images: [{ url: ogImage, width: 1200, height: 630, alt: "Bannière Maximilien Herr" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     images: [ogImage],
   },
   robots: { index: true, follow: true },
-  keywords: ["blog", "retours d experience", "articles personnels", "tech"],
+  keywords: ["blog", "retours d'expérience", "articles personnels", "tech"],
 };
 
 export default function BlogIndex() {

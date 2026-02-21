@@ -117,7 +117,7 @@ export default function Skills() {
               src={redisLogo.image}
               width={redisLogo.width}
               height={redisLogo.height}
-              alt="Logo Redis, solution de cache utilisee par Maximilien Herr"
+              alt="Logo Redis, solution de cache utilisée par Maximilien Herr"
               className="logo"
             {...skillLogoProps}
             />
@@ -133,7 +133,7 @@ export default function Skills() {
               src={gitLogo.image}
               width={gitLogo.width}
               height={gitLogo.height}
-              alt="Logo Git, gestion de version utilisee par Maximilien Herr"
+              alt="Logo Git, gestion de version utilisée par Maximilien Herr"
               className="logo"
             {...skillLogoProps}
             />

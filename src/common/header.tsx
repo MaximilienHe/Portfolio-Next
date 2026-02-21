@@ -96,7 +96,7 @@ export default function Header() {
 						Accueil
 					</Link>
 					<Link href="/nr" onClick={closeMenu}>
-						Numerique Responsable
+						Numérique Responsable
 					</Link>
 					<Link href="/articles" onClick={closeMenu}>
 						Articles

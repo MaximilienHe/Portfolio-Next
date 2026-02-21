@@ -134,7 +134,7 @@ const siteNavigationSchema = {
     {
       "@type": "SiteNavigationElement",
       position: 5,
-      name: "Numerique Responsable",
+      name: "Numérique Responsable",
       url: "https://maximilienherr.fr/nr",
     },
     {

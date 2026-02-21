@@ -11,7 +11,7 @@ export default function Footer() {
           <Link href="/projets">Projets</Link>
           <Link href="/blog">Blog</Link>
           <Link href="/articles">Articles</Link>
-          <Link href="/nr">Numerique Responsable</Link>
+          <Link href="/nr">Numérique Responsable</Link>
           <Link href="/contact">Contact</Link>
           <Link href="/cv">CV</Link>
         </nav>

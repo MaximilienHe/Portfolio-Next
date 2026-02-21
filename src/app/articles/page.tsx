@@ -10,7 +10,7 @@ const pageUrl = "https://maximilienherr.fr/articles";
 const pageTitle = "Articles";
 const fullTitle = "Articles | Maximilien Herr";
 const pageDescription =
-  "Derniers articles publies sur Frandroid, DroidSoft et Le Café du Geek.";
+  "Derniers articles publiés sur Frandroid, DroidSoft et Le Café du Geek.";
 const ogImage = "https://maximilienherr.fr/banniere_dev_redac.png";
 
 export const metadata: Metadata = {
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     url: pageUrl,
     title: fullTitle,
     description: pageDescription,
-    images: [{ url: ogImage, width: 1200, height: 630, alt: "Banniere Maximilien Herr" }],
+    images: [{ url: ogImage, width: 1200, height: 630, alt: "Bannière Maximilien Herr" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -86,7 +86,7 @@ export default async function ArticlesPage() {
         <div className="inner">
           <h1 className="page-title">Mes derniers articles</h1>
           <p className="page-sub">
-            Agregation automatique depuis Frandroid, DroidSoft et Le Café du Geek.
+            Agrégation automatique depuis Frandroid, DroidSoft et Le Café du Geek.
           </p>
         </div>
 
@@ -104,7 +104,7 @@ export default async function ArticlesPage() {
         />
 
         <CarouselSection
-          title="Le Cafe du Geek"
+          title="Le Café du Geek"
           variant="lcdg"
           items={(bySource["Le Café du Geek"] || []).slice(0, 18)}
         />

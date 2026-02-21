@@ -22,7 +22,7 @@ export default function Interest() {
               width={writer.width}
               height={writer.height}
               {...interestIconProps}
-              alt="Icone ecriture, centre d'interet de Maximilien Herr pour la redaction tech"
+              alt="Icône écriture, centre d'intérêt de Maximilien Herr pour la rédaction tech"
             />
             <h5>Écrire et rédiger</h5>
           </div>
@@ -43,7 +43,7 @@ export default function Interest() {
               width={plane.width}
               height={plane.height}
               {...interestIconProps}
-              alt="Icone conference tech, veille technologique de Maximilien Herr"
+              alt="Icône conférence tech, veille technologique de Maximilien Herr"
             />
             <h5>Conférences tech</h5>
           </div>
@@ -64,7 +64,7 @@ export default function Interest() {
               width={smartphone.width}
               height={smartphone.height}
               {...interestIconProps}
-              alt="Icone smartphone, passion high-tech de Maximilien Herr"
+              alt="Icône smartphone, passion high-tech de Maximilien Herr"
             />
             <h5>High Tech</h5>
           </div>

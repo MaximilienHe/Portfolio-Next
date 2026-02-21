@@ -45,7 +45,7 @@ function getProjectLogoAlt(logoKey: keyof typeof logos): string {
       .replace(/([a-z])([A-Z])/g, "$1 $2")
       .trim();
 
-  return `Logo ${readableLabel}, technologie utilisee par Maximilien Herr sur ce projet`;
+  return `Logo ${readableLabel}, technologie utilisée par Maximilien Herr sur ce projet`;
 }
 
 export const metadata: Metadata = {

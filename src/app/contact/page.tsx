@@ -12,7 +12,7 @@ const pageUrl = "https://maximilienherr.fr/contact";
 const pageTitle = "Contact";
 const fullTitle = "Contact | Maximilien Herr";
 const pageDescription =
-  "Contactez Maximilien Herr pour un projet web, une collaboration de redaction tech ou toute autre demande.";
+  "Contactez Maximilien Herr pour un projet web, une collaboration de rédaction tech ou toute autre demande.";
 const ogImage = "https://maximilienherr.fr/banniere_dev_redac.png";
 const contactEmail = "maximilienherr@gmail.com";
 
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
         url: ogImage,
         width: 1200,
         height: 630,
-        alt: "Banniere Maximilien Herr",
+        alt: "Bannière Maximilien Herr",
       },
     ],
   },
@@ -46,8 +46,8 @@ export const metadata: Metadata = {
   },
   keywords: [
     "contact",
-    "developpeur web",
-    "redaction technique",
+    "développeur web",
+    "rédaction technique",
     "portfolio",
     "Maximilien Herr",
   ],
@@ -98,7 +98,7 @@ export default function Contact() {
             width={photoProfilMaximilien.width}
             height={photoProfilMaximilien.height}
             quality={72}
-            alt="Portrait de Maximilien Herr, ingenieur logiciel et journaliste tech"
+            alt="Portrait de Maximilien Herr, ingénieur logiciel et journaliste tech"
             sizes="(max-width: 767px) 72vw, 300px"
             priority
             fetchPriority="high"
@@ -110,7 +110,7 @@ export default function Contact() {
           <h2>Me contacter</h2>
           <p>
             Que ce soit pour une proposition de recrutement, une nouvelle pour un
-            média ou pour échanger, n&apos;hesitez pas à me joindre.
+            média ou pour échanger, n&apos;hésitez pas à me joindre.
           </p>
 
           <div className="contactCard">

@@ -79,7 +79,7 @@ export default function Skills() {
           src={csLogo.image}
           width={csLogo.width}
           height={csLogo.height}
-          alt="Logo C#, technologie logicielle utilisee par Maximilien Herr"
+          alt="Logo C#, technologie logicielle utilisée par Maximilien Herr"
           className="logo"
         />
         <Image
