@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+set -e
+
+npm run generate-version >/dev/null
+
+if ! git diff --quiet -- src/generated/app-version.ts; then
+  echo "Version file changed: src/generated/app-version.ts"
+  echo "Commit it before pushing, then retry."
+  exit 1
+fi

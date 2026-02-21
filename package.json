@@ -3,8 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "generate-version": "node scripts/generate-version.mjs",
     "generate-cv": "tsx scripts/generate-cv.ts",
-    "prebuild": "tsx scripts/generate-cv.ts",
+    "predev": "node scripts/generate-version.mjs",
+    "prebuild": "tsx scripts/generate-cv.ts && node scripts/generate-version.mjs",
+    "hooks:enable": "git config core.hooksPath .githooks",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

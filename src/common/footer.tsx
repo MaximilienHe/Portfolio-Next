@@ -1,11 +1,14 @@
 import React from "react";
 import Link from "next/link";
+import { APP_VERSION } from "@/generated/app-version";
 
 export default function Footer() {
   return (
     <footer className="footer">
       <div className="footer-main">
-        <p>&copy; Maximilien Herr | {new Date().getFullYear()}</p>
+        <p>
+          &copy; Maximilien Herr | {new Date().getFullYear()} | {APP_VERSION}
+        </p>
         <nav className="footer-nav" aria-label="Liens principaux">
           <Link href="/">Accueil</Link>
           <Link href="/projets">Projets</Link>

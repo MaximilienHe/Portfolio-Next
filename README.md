@@ -34,3 +34,27 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Automatic Footer Version
+
+This project can generate a footer version from commit messages:
+
+- Marker commit: `feat: v2` -> sets major to `2`
+- `feat: ...` after marker -> increments minor
+- Non-`feat` commits after the latest `feat` -> increments patch
+
+Example: `v2.2.4`
+
+Commands:
+
+```bash
+npm run generate-version
+```
+
+Optional pre-push hook setup (run once per clone):
+
+```bash
+npm run hooks:enable
+```
+
+The hook (`.githooks/pre-push`) regenerates `src/generated/app-version.ts` and blocks push if that file changed, so you can commit the new version first.
