@@ -11,6 +11,10 @@ function normalizeCoverSrc(src?: string | null): string | null {
   return value;
 }
 
+function isExternalUrl(src?: string | null): boolean {
+  return typeof src === "string" && /^https?:\/\//i.test(src);
+}
+
 export default async function ArticlesDyn() {
   let data: any[];
   try {
@@ -35,6 +39,7 @@ export default async function ArticlesDyn() {
         <div className="multiArticles two-column" style={{ flexWrap: "wrap" }}>
           {data.map((a, idx) => {
             const coverSrc = normalizeCoverSrc(a.cover);
+            const isExternalCover = isExternalUrl(coverSrc);
 
             return (
               <a
@@ -52,6 +57,7 @@ export default async function ArticlesDyn() {
                       fill
                       sizes="(max-width: 767px) 100vw, 320px"
                       style={{ objectFit: "cover" }}
+                      unoptimized={isExternalCover}
                       loading={idx === 0 ? "eager" : "lazy"}
                       priority={idx === 0}
                       fetchPriority={idx === 0 ? "high" : "auto"}

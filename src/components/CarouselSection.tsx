@@ -141,6 +141,7 @@ export default function CarouselSection({
 													: "(max-width: 767px) 62vw, 560px"
 										}
 										style={{ objectFit: "cover" }}
+										unoptimized={/^https?:\/\//i.test(article.cover ?? "")}
 										loading={offset === 0 && prioritizeLcp ? "eager" : "lazy"}
 										priority={offset === 0 && prioritizeLcp}
 										fetchPriority={offset === 0 && prioritizeLcp ? "high" : "auto"}

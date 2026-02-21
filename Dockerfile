@@ -21,6 +21,7 @@ RUN addgroup -g 1001 -S nodejs && adduser -S nextjs -u 1001
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/content ./content
+COPY --from=builder /app/next.config.mjs ./next.config.mjs
 COPY package*.json ./
 RUN npm ci --omit=dev
 USER nextjs
