@@ -4,6 +4,12 @@ import Image from "next/image";
 
 const { isima, iutIG, saintJulien } = images;
 
+const formationImageProps = {
+  sizes: "(max-width: 767px) 100vw, 320px",
+  loading: "lazy" as const,
+  decoding: "async" as const,
+};
+
 export default function Formations() {
   return (
     <section className="formation">
@@ -15,6 +21,7 @@ export default function Formations() {
             src={isima.image}
             width={isima.width}
             height={isima.height}
+            {...formationImageProps}
             alt="Logo ISIMA, ecole d'ingenieur de Maximilien Herr"
           />
           <div className="contentFormation">
@@ -55,6 +62,7 @@ export default function Formations() {
             src={iutIG.image}
             width={iutIG.width}
             height={iutIG.height}
+            {...formationImageProps}
             alt="Logo IUT Informatique Graphique, formation de Maximilien Herr"
           />
           <div className="contentFormation">
@@ -76,6 +84,7 @@ export default function Formations() {
             src={saintJulien.image}
             width={saintJulien.width}
             height={saintJulien.height}
+            {...formationImageProps}
             alt="Logo Lycee Saint-Julien, parcours scolaire de Maximilien Herr"
           />
           <div className="contentFormation">

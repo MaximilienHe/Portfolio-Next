@@ -13,6 +13,12 @@ const {
   agenceGeek,
 } = images;
 
+const xpImageProps = {
+  sizes: "(max-width: 767px) 100vw, 50vw",
+  loading: "lazy" as const,
+  decoding: "async" as const,
+};
+
 export default function Xp() {
   return (
     <section className="XP">
@@ -25,6 +31,7 @@ export default function Xp() {
               src={smartfluence.image}
               width={smartfluence.width}
               height={smartfluence.height}
+              {...xpImageProps}
               alt="Logo Smartfluence, experience de Maximilien Herr en Big Data et IA"
             />
             <div className="contentRight">
@@ -61,6 +68,7 @@ export default function Xp() {
               src={humanoid.image}
               width={humanoid.width}
               height={humanoid.height}
+              {...xpImageProps}
               alt="Logo Humanoid et Frandroid, experience de pigiste tech de Maximilien Herr"
             />
             <div className="contentRight">
@@ -79,6 +87,7 @@ export default function Xp() {
               src={cafeDuGeek.image}
               width={cafeDuGeek.width}
               height={cafeDuGeek.height}
+              {...xpImageProps}
               alt="Logo Le Cafe du Geek, media de redaction de Maximilien Herr"
             />
             <div className="contentRight">
@@ -97,6 +106,7 @@ export default function Xp() {
               src={droidsoft.image}
               width={droidsoft.width}
               height={droidsoft.height}
+              {...xpImageProps}
               alt="Logo DroidSoft, media tech ou publie Maximilien Herr"
             />
             <div className="contentRight">
@@ -115,6 +125,7 @@ export default function Xp() {
               src={itmi.image}
               width={itmi.width}
               height={itmi.height}
+              {...xpImageProps}
               alt="Logo ITMI, stage ingenieur informatique de Maximilien Herr au Quebec"
             />
             <div className="contentRight">
@@ -139,6 +150,7 @@ export default function Xp() {
               src={clubic.image}
               width={clubic.width}
               height={clubic.height}
+              {...xpImageProps}
               alt="Logo Clubic, experience de redacteur tech de Maximilien Herr"
             />
             <div className="contentRight">
@@ -157,6 +169,7 @@ export default function Xp() {
               src={agenceGeek.image}
               width={agenceGeek.width}
               height={agenceGeek.height}
+              {...xpImageProps}
               alt="Logo Agence Geek Media, mission developpeur web de Maximilien Herr"
             />
             <div className="contentRight">

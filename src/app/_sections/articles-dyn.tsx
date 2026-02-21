@@ -1,5 +1,6 @@
 // src/app/_sections/articles-dyn.tsx
 // Server Component — le contenu est dans le HTML initial (visible par Googlebot)
+import Image from "next/image";
 import { getAllLatestArticles } from "@/lib/fetchArticles";
 
 function normalizeCoverSrc(src?: string | null): string | null {
@@ -32,7 +33,7 @@ export default async function ArticlesDyn() {
       <div className="container">
         <h2>Mes derniers articles</h2>
         <div className="multiArticles two-column" style={{ flexWrap: "wrap" }}>
-          {data.map((a) => {
+          {data.map((a, idx) => {
             const coverSrc = normalizeCoverSrc(a.cover);
 
             return (
@@ -45,13 +46,16 @@ export default async function ArticlesDyn() {
               >
                 <div className="article">
                   <div className="articleImgWrapper">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                       src={coverSrc ?? "/images/articles/placeholder.webp"}
                       alt={coverSrc ? a.title : ""}
-                      loading="lazy"
+                      fill
+                      sizes="(max-width: 767px) 100vw, 320px"
+                      style={{ objectFit: "cover" }}
+                      loading={idx === 0 ? "eager" : "lazy"}
+                      priority={idx === 0}
+                      fetchPriority={idx === 0 ? "high" : "auto"}
                       decoding="async"
-                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
                     />
                   </div>
                   <div className="articleDetail">

@@ -2,8 +2,69 @@ import Image from "next/image";
 import React from "react";
 
 type ImageItem = { src: string; alt?: string; width?: number; height?: number };
+type MdxImgProps = React.ImgHTMLAttributes<HTMLImageElement>;
+
+function toPositiveNumber(value: string | number | undefined): number | undefined {
+  if (typeof value === "number" && Number.isFinite(value) && value > 0) return value;
+  if (typeof value === "string") {
+    const parsed = Number(value);
+    if (Number.isFinite(parsed) && parsed > 0) return parsed;
+  }
+  return undefined;
+}
+
+function MdxImage({ src, alt, className, width, height }: MdxImgProps) {
+  const safeSrc = typeof src === "string" ? src : "";
+  if (!safeSrc) return null;
+
+  const isExternal = safeSrc.startsWith("http://") || safeSrc.startsWith("https://");
+  const isLogo = (className ?? "").split(/\s+/).includes("logo");
+
+  if (isExternal) {
+    // Fallback for unknown remote hosts that may not be allowed by next/image config.
+    // eslint-disable-next-line @next/next/no-img-element
+    return <img src={safeSrc} alt={alt ?? ""} className={className} loading="lazy" decoding="async" />;
+  }
+
+  if (isLogo) {
+    const logoWidth = toPositiveNumber(width) ?? 80;
+    const logoHeight = toPositiveNumber(height) ?? 80;
+    return (
+      <Image
+        src={safeSrc}
+        alt={alt ?? ""}
+        className={className}
+        width={logoWidth}
+        height={logoHeight}
+        quality={70}
+        sizes="80px"
+        loading="lazy"
+        decoding="async"
+      />
+    );
+  }
+
+  const imageWidth = toPositiveNumber(width) ?? 1200;
+  const imageHeight = toPositiveNumber(height) ?? 675;
+
+  return (
+    <Image
+      src={safeSrc}
+      alt={alt ?? ""}
+      className={className}
+      width={imageWidth}
+      height={imageHeight}
+      quality={70}
+      sizes="(max-width: 767px) 100vw, 900px"
+      style={{ width: "100%", height: "auto" }}
+      loading="lazy"
+      decoding="async"
+    />
+  );
+}
 
 export const mdxComponents = {
+  img: MdxImage,
   Callout: ({ title, children }: { title?: string; children: React.ReactNode }) => (
     <div
       style={{

@@ -4,6 +4,13 @@ import Image from "next/image";
 
 const { writer, plane, smartphone } = images;
 
+const interestIconProps = {
+  sizes: "50px",
+  quality: 70,
+  loading: "lazy" as const,
+  decoding: "async" as const,
+};
+
 export default function Interest() {
   return (
     <section className="interest">
@@ -14,6 +21,7 @@ export default function Interest() {
               src={writer.image}
               width={writer.width}
               height={writer.height}
+              {...interestIconProps}
               alt="Icone ecriture, centre d'interet de Maximilien Herr pour la redaction tech"
             />
             <h5>Écrire et rédiger</h5>
@@ -34,6 +42,7 @@ export default function Interest() {
               src={plane.image}
               width={plane.width}
               height={plane.height}
+              {...interestIconProps}
               alt="Icone conference tech, veille technologique de Maximilien Herr"
             />
             <h5>Conférences tech</h5>
@@ -54,6 +63,7 @@ export default function Interest() {
               src={smartphone.image}
               width={smartphone.width}
               height={smartphone.height}
+              {...interestIconProps}
               alt="Icone smartphone, passion high-tech de Maximilien Herr"
             />
             <h5>High Tech</h5>

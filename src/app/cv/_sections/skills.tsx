@@ -30,6 +30,13 @@ const {
   substancePainterLogo,
 } = logos;
 
+const skillLogoProps = {
+  sizes: "80px",
+  quality: 70,
+  loading: "lazy" as const,
+  decoding: "async" as const,
+};
+
 export default function Skills() {
   return (
     <>
@@ -44,6 +51,7 @@ export default function Skills() {
               height={htmlLogo.height}
               alt="Logo HTML5, competence web de Maximilien Herr"
               className="logo"
+            {...skillLogoProps}
             />
             <Image
               src={cssLogo.image}
@@ -51,6 +59,7 @@ export default function Skills() {
               height={cssLogo.height}
               alt="Logo CSS3, expertise front-end de Maximilien Herr"
               className="logo"
+            {...skillLogoProps}
             />
             <Image
               src={javascriptLogo.image}
@@ -58,6 +67,7 @@ export default function Skills() {
               height={javascriptLogo.height}
               alt="Logo JavaScript, langage front-end et back-end maitrise par Maximilien Herr"
               className="logo"
+            {...skillLogoProps}
             />
             <Image
               src={phpLogo.image}
@@ -65,6 +75,7 @@ export default function Skills() {
               height={phpLogo.height}
               alt="Logo PHP, competence back-end de Maximilien Herr"
               className="logo"
+            {...skillLogoProps}
             />
             <Image
               src={nextjsLogo.image}
@@ -72,6 +83,7 @@ export default function Skills() {
               height={nextjsLogo.height}
               alt="Logo Next.js, framework React utilise par Maximilien Herr"
               className="logo"
+            {...skillLogoProps}
             />
             <Image
               src={nodeLogo.image}
@@ -79,6 +91,7 @@ export default function Skills() {
               height={nodeLogo.height}
               alt="Logo Node.js, environnement serveur utilise par Maximilien Herr"
               className="logo"
+            {...skillLogoProps}
             />
             <Image
               src={mysqlLogo.image}
@@ -86,6 +99,7 @@ export default function Skills() {
               height={mysqlLogo.height}
               alt="Logo MySQL, base de donnees maitrisee par Maximilien Herr"
               className="logo"
+            {...skillLogoProps}
             />
           </div>
 
@@ -97,6 +111,7 @@ export default function Skills() {
               height={pythonLogo.height}
               alt="Logo Python, langage utilise par Maximilien Herr pour la data et l'IA"
               className="logo"
+            {...skillLogoProps}
             />
             <Image
               src={redisLogo.image}
@@ -104,6 +119,7 @@ export default function Skills() {
               height={redisLogo.height}
               alt="Logo Redis, solution de cache utilisee par Maximilien Herr"
               className="logo"
+            {...skillLogoProps}
             />
             <Image
               src={dockerLogo.image}
@@ -111,6 +127,7 @@ export default function Skills() {
               height={dockerLogo.height}
               alt="Logo Docker, containerisation maitrisee par Maximilien Herr"
               className="logo"
+            {...skillLogoProps}
             />
             <Image
               src={gitLogo.image}
@@ -118,6 +135,7 @@ export default function Skills() {
               height={gitLogo.height}
               alt="Logo Git, gestion de version utilisee par Maximilien Herr"
               className="logo"
+            {...skillLogoProps}
             />
             <Image
               src={vscodeLogo.image}
@@ -125,6 +143,7 @@ export default function Skills() {
               height={vscodeLogo.height}
               alt="Logo Visual Studio Code, editeur de code de Maximilien Herr"
               className="logo"
+            {...skillLogoProps}
             />
           </div>
 
@@ -136,6 +155,7 @@ export default function Skills() {
               height={cLogo.height}
               alt="Logo langage C, competence logicielle de Maximilien Herr"
               className="logo"
+            {...skillLogoProps}
             />
             <Image
               src={cppLogo.image}
@@ -143,6 +163,7 @@ export default function Skills() {
               height={cppLogo.height}
               alt="Logo C++, langage de programmation maitrise par Maximilien Herr"
               className="logo"
+            {...skillLogoProps}
             />
             <Image
               src={csLogo.image}
@@ -150,6 +171,7 @@ export default function Skills() {
               height={csLogo.height}
               alt="Logo C#, technologie de developpement maitrisee par Maximilien Herr"
               className="logo"
+            {...skillLogoProps}
             />
             <Image
               src={javaLogo.image}
@@ -157,6 +179,7 @@ export default function Skills() {
               height={javaLogo.height}
               alt="Logo Java, langage objet utilise par Maximilien Herr"
               className="logo"
+            {...skillLogoProps}
             />
             <Image
               src={kotlinLogo.image}
@@ -164,6 +187,7 @@ export default function Skills() {
               height={kotlinLogo.height}
               alt="Logo Kotlin, langage Android maitrise par Maximilien Herr"
               className="logo"
+            {...skillLogoProps}
             />
             <Image
               src={rustLogo.image}
@@ -171,6 +195,7 @@ export default function Skills() {
               height={rustLogo.height}
               alt="Logo Rust, langage systeme utilise par Maximilien Herr"
               className="logo"
+            {...skillLogoProps}
             />
             <Image
               src={visualStudioLogo.image}
@@ -178,6 +203,7 @@ export default function Skills() {
               height={visualStudioLogo.height}
               alt="Logo Visual Studio, IDE utilise par Maximilien Herr"
               className="logo"
+            {...skillLogoProps}
             />
             <Image
               src={androidStudioLogo.image}
@@ -185,6 +211,7 @@ export default function Skills() {
               height={androidStudioLogo.height}
               alt="Logo Android Studio, IDE mobile utilise par Maximilien Herr"
               className="logo"
+            {...skillLogoProps}
             />
           </div>
           <h2>3D & Jeu-vidéo</h2>
@@ -195,6 +222,7 @@ export default function Skills() {
               height={unityLogo.height}
               alt="Logo Unity, moteur de jeu maitrise par Maximilien Herr"
               className="logo"
+            {...skillLogoProps}
             />
             <Image
               src={unrealLogo.image}
@@ -202,6 +230,7 @@ export default function Skills() {
               height={unrealLogo.height}
               alt="Logo Unreal Engine, moteur 3D utilise par Maximilien Herr"
               className="logo"
+            {...skillLogoProps}
             />
           </div>
           <div className="logos">
@@ -211,6 +240,7 @@ export default function Skills() {
               height={threeDsMaxLogo.height}
               alt="Logo 3ds Max, logiciel 3D utilise par Maximilien Herr"
               className="logo"
+            {...skillLogoProps}
             />
             <Image
               src={threeDFZephyrLogo.image}
@@ -218,6 +248,7 @@ export default function Skills() {
               height={threeDFZephyrLogo.height}
               alt="Logo 3DF Zephyr, photogrammetrie pratiquee par Maximilien Herr"
               className="logo"
+            {...skillLogoProps}
             />
             <Image
               src={substancePainterLogo.image}
@@ -225,6 +256,7 @@ export default function Skills() {
               height={substancePainterLogo.height}
               alt="Logo Substance Painter, texturing 3D maitrise par Maximilien Herr"
               className="logo"
+            {...skillLogoProps}
             />
           </div>
         </div>

@@ -61,9 +61,16 @@ export default function Nr() {
             contention et de prioriser les optimisations.
           </p>
 
-          <Image src={numeriqueResponsable.image}
- width={numeriqueResponsable.width}
- height={numeriqueResponsable.height} alt="Schéma d'efficience numérique" />
+          <Image
+            src={numeriqueResponsable.image}
+            width={numeriqueResponsable.width}
+            height={numeriqueResponsable.height}
+            quality={72}
+            alt="Schéma d'efficience numérique"
+            sizes="(max-width: 991px) calc(100vw - 4rem), 560px"
+            loading="lazy"
+            decoding="async"
+          />
 
           <h2>Applications concrètes dans mes réalisations</h2>
           <p>

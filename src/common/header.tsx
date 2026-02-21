@@ -1,8 +1,33 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Link from "next/link";
-import { SearchBar } from "@/components/SearchBar";
 import { useEffect, useRef, useState } from "react";
+
+const SearchBar = dynamic(
+	() => import("@/components/SearchBar").then((mod) => mod.SearchBar),
+	{
+		ssr: false,
+		loading: () => (
+			<Link href="/recherche" className="search-trigger" aria-label="Aller à la recherche">
+				<svg
+					width="18"
+					height="18"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					strokeWidth="2"
+					strokeLinecap="round"
+					strokeLinejoin="round"
+				>
+					<circle cx="11" cy="11" r="8" />
+					<line x1="21" y1="21" x2="16.65" y2="16.65" />
+				</svg>
+				<span className="search-trigger-text">Rechercher</span>
+			</Link>
+		),
+	}
+);
 
 export default function Header() {
 	const [isOpen, setIsOpen] = useState(false);

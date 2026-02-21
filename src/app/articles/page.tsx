@@ -4,6 +4,7 @@ import { getAllLatestArticles, type Article } from "@/lib/fetchArticles";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { ExploreAlso } from "@/components/ExploreAlso";
 import CarouselSection from "../../components/CarouselSection";
+import { droidsoftFont, frandroidFont, lcdgFont } from "./fonts";
 
 const pageUrl = "https://maximilienherr.fr/articles";
 const pageTitle = "Articles";
@@ -79,7 +80,9 @@ export default async function ArticlesPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articlesJsonLd) }}
       />
-      <main className="articlesPage">
+      <main
+        className={`articlesPage ${frandroidFont.variable} ${droidsoftFont.variable} ${lcdgFont.variable}`}
+      >
         <div className="inner">
           <h1 className="page-title">Mes derniers articles</h1>
           <p className="page-sub">
@@ -90,6 +93,7 @@ export default async function ArticlesPage() {
         <CarouselSection
           title="Frandroid"
           variant="frandroid"
+          prioritizeLcp
           items={(bySource["Frandroid"] || []).slice(0, 18)}
         />
 

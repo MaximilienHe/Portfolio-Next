@@ -130,7 +130,7 @@ export default function Projets() {
           mais aussi la mise en place de Git pour le partage de code.
         </p>
 
-        {projects.map((project) => (
+        {projects.map((project, idx) => (
           <Link key={project.slug} href={`/projets/${project.slug}`} className="linkProject">
             <div className="projectCard">
               {project.cover ? (
@@ -139,8 +139,13 @@ export default function Projets() {
                     src={project.cover}
                     alt={project.title}
                     fill
-                    sizes="(max-width: 768px) 100vw, 520px"
+                    quality={68}
+                    sizes="(max-width: 767px) calc(100vw - 2rem), 340px"
                     style={{ objectFit: "cover" }}
+                    loading={idx === 0 ? "eager" : "lazy"}
+                    priority={idx === 0}
+                    fetchPriority={idx === 0 ? "high" : "auto"}
+                    decoding="async"
                   />
                 </div>
               ) : (
@@ -169,7 +174,11 @@ export default function Projets() {
                         src={logo.image}
                         width={logo.width}
                         height={logo.height}
+                        quality={70}
                         alt={getProjectLogoAlt(typedLogoKey)}
+                        sizes="70px"
+                        loading="lazy"
+                        decoding="async"
                       />
                     );
                   })}

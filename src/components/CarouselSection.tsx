@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useMemo, useState, useCallback, useEffect, useRef } from "react";
 
 type Article = {
@@ -21,10 +22,12 @@ export default function CarouselSection({
 	title,
 	variant,
 	items,
+	prioritizeLcp = false,
 }: {
 	title: string;
 	variant: "frandroid" | "droidsoft" | "lcdg";
 	items: Article[];
+	prioritizeLcp?: boolean;
 }) {
 	const base = useMemo(() => items ?? [], [items]);
 	const n = base.length;
@@ -125,15 +128,24 @@ export default function CarouselSection({
 							>
 							<div className="thumb">
 								{article.cover ? (
-									<>
-										{/* eslint-disable-next-line @next/next/no-img-element */}
-										<img
-											src={article.cover}
-											alt={article.title}
-											loading="lazy"
-											decoding="async"
-										/>
-									</>
+									<Image
+										src={article.cover}
+										alt={article.title}
+										fill
+										quality={62}
+										sizes={
+											offset === 0
+												? "(max-width: 767px) 95vw, 820px"
+												: Math.abs(offset) === 1
+													? "(max-width: 767px) 80vw, 720px"
+													: "(max-width: 767px) 62vw, 560px"
+										}
+										style={{ objectFit: "cover" }}
+										loading={offset === 0 && prioritizeLcp ? "eager" : "lazy"}
+										priority={offset === 0 && prioritizeLcp}
+										fetchPriority={offset === 0 && prioritizeLcp ? "high" : "auto"}
+										decoding="async"
+									/>
 								) : (
 									<div className="thumb-placeholder" />
 								)}

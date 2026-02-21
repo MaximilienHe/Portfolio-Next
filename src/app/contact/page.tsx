@@ -97,7 +97,12 @@ export default function Contact() {
             src={photoProfilMaximilien.image}
             width={photoProfilMaximilien.width}
             height={photoProfilMaximilien.height}
+            quality={72}
             alt="Portrait de Maximilien Herr, ingenieur logiciel et journaliste tech"
+            sizes="(max-width: 767px) 72vw, 300px"
+            priority
+            fetchPriority="high"
+            decoding="async"
           />
         </div>
 
@@ -123,8 +128,12 @@ export default function Contact() {
                   src={linkedin.image}
                   width={linkedin.width}
                   height={linkedin.height}
+                  quality={70}
                   alt="Logo LinkedIn menant au profil de Maximilien Herr"
                   className="logo"
+                  sizes="50px"
+                  loading="lazy"
+                  decoding="async"
                 />
               </a>
               <a
@@ -136,8 +145,12 @@ export default function Contact() {
                   src={github.image}
                   width={github.width}
                   height={github.height}
+                  quality={70}
                   alt="Logo GitHub menant au profil de Maximilien Herr"
                   className="logo"
+                  sizes="50px"
+                  loading="lazy"
+                  decoding="async"
                 />
               </a>
               <p>

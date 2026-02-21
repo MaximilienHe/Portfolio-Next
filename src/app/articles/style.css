@@ -1,6 +1,4 @@
 /* Polices pour cohérence de page et variantes brand */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"); /* Frandroid-like */
-@import url("https://fonts.googleapis.com/css2?family=Titillium+Web:wght@600;700&family=Open+Sans:wght@400;600&display=swap"); /* DroidSoft-like */
 
 /* Conteneur page */
 .articlesPage .inner {
@@ -225,7 +223,7 @@
   background: linear-gradient(180deg, rgba(108,76,246,.08), rgba(42,140,255,.08));
   border-top: 1px solid rgba(108,76,246,.15);
   border-bottom: 1px solid rgba(42,140,255,.12);
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif;
+  font-family: var(--font-frandroid), system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif;
 }
 .source-section.frandroid .section-head h2 { color: #3f2bd8; }
 .source-section.frandroid .card { border: 1px solid rgba(63,43,216,.08); }
@@ -243,11 +241,11 @@
   background: linear-gradient(180deg, rgba(13,186,83,.10), rgba(13,186,83,.04));
   border-top: 1px solid rgba(13,186,83,.18);
   border-bottom: 1px solid rgba(13,186,83,.12);
-  font-family: "Open Sans", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-family: var(--font-droidsoft), system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
 }
 .source-section.droidsoft .section-head h2 {
   color: #0a9a45;
-  font-family: "Titillium Web", "Open Sans", sans-serif;
+  font-family: var(--font-lcdg), var(--font-droidsoft), sans-serif;
 }
 .source-section.droidsoft .card {
   background: #171a1c;

@@ -18,9 +18,11 @@ export default function Projets() {
                   src={proj.cover}
                   alt={proj.title}
                   fill
-                  sizes="(max-width: 768px) 100vw, 480px"
+                  sizes="(max-width: 767px) calc(100vw - 2rem), 360px"
                   style={{ objectFit: "cover" }}
                   priority={false}
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
             ) : (

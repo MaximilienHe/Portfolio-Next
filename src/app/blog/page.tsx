@@ -76,6 +76,7 @@ export default function BlogIndex() {
         <div className="blog-masonry">
           {posts.map((p, idx) => {
             const variant = pattern[idx % pattern.length];
+            const isLcpCandidate = idx === 0;
             const date = new Date(p.date);
             const days = Math.max(0, Math.floor((now - date.getTime()) / (1000 * 60 * 60 * 24)));
             const dateLabel =
@@ -92,8 +93,13 @@ export default function BlogIndex() {
                         src={p.cover}
                         alt={p.title}
                         fill
+                        quality={70}
                         sizes="(max-width: 768px) 100vw, 420px"
                         style={{ objectFit: "cover" }}
+                        priority={isLcpCandidate}
+                        loading={isLcpCandidate ? "eager" : "lazy"}
+                        fetchPriority={isLcpCandidate ? "high" : "auto"}
+                        decoding="async"
                       />
                     </div>
                   ) : (

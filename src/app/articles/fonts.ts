@@ -1,24 +1,25 @@
-import { Inter, Roboto, Poppins } from "next/font/google";
+import { Inter, Open_Sans, Titillium_Web } from "next/font/google";
 
 // Frandroid: sans moderne lisible
 export const frandroidFont = Inter({
   subsets: ["latin"],
+  weight: ["400", "600", "700"],
   display: "swap",
   variable: "--font-frandroid",
 });
 
 // DroidSoft: style Android/WordPress courant
-export const droidsoftFont = Roboto({
+export const droidsoftFont = Open_Sans({
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
+  weight: ["400", "600"],
   display: "swap",
   variable: "--font-droidsoft",
 });
 
 // Le Café du Geek: titres au tracé un peu plus rond
-export const lcdgFont = Poppins({
+export const lcdgFont = Titillium_Web({
   subsets: ["latin"],
-  weight: ["400", "600", "700"],
+  weight: ["600", "700"],
   display: "swap",
   variable: "--font-lcdg",
 });
