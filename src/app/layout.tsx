@@ -1,6 +1,6 @@
 // src/app/layout.tsx
 import type { Metadata } from "next";
-import { Inter, Montserrat, Space_Grotesk } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import "./app.css";
 import "../assets/Product Sans/stylesheet.css";
@@ -8,23 +8,83 @@ import Header from "@/common/header";
 import Footer from "@/common/footer";
 import { DEFAULT_OG_IMAGE, SITE_URL } from "@/lib/seo";
 
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+const inter = localFont({
+  src: [
+    {
+      path: "../assets/Product Sans/product_sans_regular-webfont.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../assets/Product Sans/product_sans_italic-webfont.woff2",
+      weight: "400",
+      style: "italic",
+    },
+    {
+      path: "../assets/Product Sans/product_sans_bold-webfont.woff2",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../assets/Product Sans/product_sans_bold_italic-webfont.woff2",
+      weight: "700",
+      style: "italic",
+    },
+  ],
   display: "swap",
   variable: "--font-inter",
 });
 
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  weight: ["500", "600", "700"],
+const spaceGrotesk = localFont({
+  src: [
+    {
+      path: "../assets/Product Sans/product_sans_regular-webfont.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../assets/Product Sans/product_sans_bold-webfont.woff2",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../assets/Product Sans/product_sans_bold-webfont.woff2",
+      weight: "700",
+      style: "normal",
+    },
+  ],
   display: "swap",
   variable: "--font-space-grotesk",
 });
 
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+const montserrat = localFont({
+  src: [
+    {
+      path: "../assets/Product Sans/product_sans_regular-webfont.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../assets/Product Sans/product_sans_regular-webfont.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../assets/Product Sans/product_sans_bold-webfont.woff2",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../assets/Product Sans/product_sans_bold-webfont.woff2",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../assets/Product Sans/product_sans_bold-webfont.woff2",
+      weight: "800",
+      style: "normal",
+    },
+  ],
   display: "swap",
   variable: "--font-montserrat",
 });
