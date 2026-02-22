@@ -176,7 +176,7 @@ export default async function ProjetPage({ params }: { params: { slug: string } 
 
           {params.slug === "t2c-screen" ? (
             <nav className="project-mobile-toc" aria-label="Sommaire rapide">
-              <a href="#t2c-overview">Vue d'ensemble</a>
+              <a href="#t2c-overview">Vue d&apos;ensemble</a>
               <a href="#t2c-architecture">Architecture</a>
               <a href="#t2c-backend">Backend</a>
               <a href="#t2c-firmware">Firmware</a>
@@ -190,7 +190,7 @@ export default async function ProjetPage({ params }: { params: { slug: string } 
 
           {relatedProjects.length ? (
             <section className="related-projects" aria-labelledby="related-projects-title">
-              <h2 id="related-projects-title">D'autres projets qui peuvent vous intéresser</h2>
+              <h2 id="related-projects-title">D&apos;autres projets qui peuvent vous intéresser</h2>
               <div className="related-project-grid">
                 {relatedProjects.map((entry) => (
                   <Link key={entry.slug} href={`/projets/${entry.slug}`} className="related-project-card">

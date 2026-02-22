@@ -36,7 +36,7 @@ export default function Cv() {
         <a href="#cv-xp">Expériences</a>
         <a href="#cv-formations">Formation</a>
         <a href="#cv-skills">Compétences</a>
-        <a href="#cv-interest">Centres d'intérêt</a>
+        <a href="#cv-interest">Centres d&apos;intérêt</a>
         <a href="#cv-download">Téléchargement</a>
       </nav>
       <Quote />

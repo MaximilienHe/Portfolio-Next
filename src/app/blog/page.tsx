@@ -62,8 +62,8 @@ export default function BlogIndex() {
 
         <h1 className="blog-title">Blog</h1>
         <p className="blog-intro">
-          Ici je publie des retours d'expérience sur mes projets, des notes
-          d'implémentation et des choix techniques documentés.
+          Ici je publie des retours d&apos;expérience sur mes projets, des notes
+          d&apos;implémentation et des choix techniques documentés.
         </p>
         <p className="blog-links-inline">
           À lire aussi : <Link href="/projets/t2c-screen">T2C-Screen</Link>,{" "}

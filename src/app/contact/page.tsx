@@ -82,7 +82,7 @@ export default function Contact() {
           <div className="contactContent">
             <h1>Me contacter</h1>
             <p>
-              Cette page est ouverte à l'échange autour de deux axes : l'ingénierie
+              Cette page est ouverte à l&apos;échange autour de deux axes : l&apos;ingénierie
               logicielle et le journalisme / la rédaction tech.
             </p>
 
@@ -90,13 +90,13 @@ export default function Contact() {
               <section className="contactPanel">
                 <h2>Côté ingénierie</h2>
                 <p>
-                  Vous pouvez me contacter pour discuter d'architecture, de
-                  performance, de SEO technique, de data/IA ou d'un retour
-                  d'expérience sur un projet.
+                  Vous pouvez me contacter pour discuter d&apos;architecture, de
+                  performance, de SEO technique, de data/IA ou d&apos;un retour
+                  d&apos;expérience sur un projet.
                 </p>
                 <p>
-                  Je ne propose pas de prestation freelance ici : l'objectif est
-                  surtout d'échanger et de creuser des sujets techniques.
+                  Je ne propose pas de prestation freelance ici : l&apos;objectif est
+                  surtout d&apos;échanger et de creuser des sujets techniques.
                 </p>
               </section>
 
@@ -109,7 +109,7 @@ export default function Contact() {
                 </p>
                 <p>
                   Si vous avez un sujet, un angle ou une proposition, vous pouvez
-                  me l'envoyer directement par email.
+                  me l&apos;envoyer directement par email.
                 </p>
               </section>
             </div>
