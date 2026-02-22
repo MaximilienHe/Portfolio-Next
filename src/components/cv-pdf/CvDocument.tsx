@@ -247,6 +247,8 @@ export function CvDocument() {
 
           {/* Photo */}
           <View style={s.photoBorder}>
+            {/* react-pdf Image is not an HTML img element; jsx-a11y/alt-text is not applicable here */}
+            {/* eslint-disable-next-line jsx-a11y/alt-text */}
             <Image src={photoSrc} style={s.photo} />
           </View>
 
