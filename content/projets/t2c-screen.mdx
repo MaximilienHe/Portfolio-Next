@@ -5,7 +5,7 @@ description: "Projet complet d’affichage des prochains départs T2C à Clermon
 date: "2026-01-12"
 updated: "2026-01-12"
 tags: ["nodejs", "express", "gtfs", "gtfs-rt", "esp32", "platformio", "iot", "docker"]
-cover: "/images/Projects/t2c-screen/hero.png"
+cover: "/images/Projects/t2c-screen/hero.webp"
 canonical: "https://maximilienherr.fr/projets/t2c-screen"
 priority: 1
 logos: ["nodeLogo", "dockerLogo", "esp32Logo", "gitLogo"]
@@ -16,7 +16,9 @@ draft: false
 
 T2C-Screen est un projet « bout en bout » pour afficher les prochains départs du réseau T2C (Clermont-Ferrand) sur un panneau LED piloté par ESP32. Le cœur repose sur un serveur Node/Express qui télécharge et indexe un flux **GTFS statique** (ZIP), puis combine ces données avec **GTFS-RT Trip Updates** pour calculer des départs « temps réel ». Une API HTTP expose les lignes, les arrêts et les départs, et l’ESP32 consomme directement cette API pour afficher deux directions sur une matrice HUB75 (deux panneaux 64×32 chaînés). Le projet inclut aussi une interface web légère (SPA) pour configurer la ligne et l’arrêt, ainsi que des scripts Python pour envoyer des bitmaps personnalisés vers l’écran.
 
-![T2C-Screen cover](/images/Projects/t2c-screen/hero.png)
+![T2C-Screen cover](/images/Projects/t2c-screen/hero.webp)
+
+<div id="t2c-overview"></div>
 
 ## Caractéristiques techniques du projet
 
@@ -51,6 +53,8 @@ Côté matériel, l’objectif était d’obtenir un rendu « panneau d’arrêt
 
 ## Détails du projet
 
+<div id="t2c-architecture"></div>
+
 ## Architecture globale
 
 Le projet se découpe en quatre blocs qui communiquent via HTTP.
@@ -77,6 +81,8 @@ Le projet se découpe en quatre blocs qui communiquent via HTTP.
    * Convertissent une image (PNG/JPG/GIF) vers un flux RGB565 (hex).
    * Envoient un JSON à l’ESP32 via `POST /message/bitmap`.
 
+
+<div id="t2c-backend"></div>
 
 ## Backend Node/Express
 
@@ -134,6 +140,8 @@ Le dossier `public/` contient une SPA minimale :
 
 Ce frontend est volontairement simple : il sert d’outil de debug/validation et de configuration rapide, sans dépendances.
 
+<div id="t2c-firmware"></div>
+
 ## ESP32 + matrice HUB75
 
 Le firmware (PlatformIO / Arduino) :
@@ -165,6 +173,8 @@ Les scripts `python-send-image/*.py` utilisent Pillow pour :
 * Sérialiser un flux hex et l’envoyer à `POST /message/bitmap`.
 
 Cela permet de pousser rapidement un logo, une image ou un GIF aplati (dans l’état, le script traite une image à la fois).
+
+<div id="t2c-deploy"></div>
 
 ## Déploiement
 
@@ -200,3 +210,4 @@ Le serveur écoute sur `APP_PORT` pour éviter certains environnements qui injec
 </a>
 
 ---
+

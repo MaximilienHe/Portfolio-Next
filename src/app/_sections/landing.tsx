@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 // /src/app/_sections/landing.tsx
 import React, { useEffect, useState } from "react";
 
@@ -17,7 +17,7 @@ export default function Landing() {
   useEffect(() => {
     const id = setInterval(
       () => setIndex((i) => (i + 1) % words.length),
-      4000
+      4000,
     );
     return () => clearInterval(id);
   }, []);

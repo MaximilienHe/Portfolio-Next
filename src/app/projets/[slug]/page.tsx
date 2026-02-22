@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -9,8 +9,28 @@ import { renderMdx } from "@/lib/mdx";
 import { mdxComponents } from "@/lib/mdxComponents";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { ExploreAlso } from "@/components/ExploreAlso";
+import { buildPageMetadata, DEFAULT_OG_IMAGE, getCanonicalUrl, SITE_NAME } from "@/lib/seo";
 
-const baseUrl = "https://maximilienherr.fr";
+function getMetaImage(url: string | undefined): string {
+  if (!url) return DEFAULT_OG_IMAGE;
+  if (/^https?:\/\//i.test(url)) return url;
+  return getCanonicalUrl(url);
+}
+
+function getRenderImage(url: string | undefined): string {
+  if (!url) return "/banniere_dev_redac.png";
+  if (/^https?:\/\//i.test(url)) return url;
+  return url;
+}
+
+function toCanonicalPath(canonicalUrl: string): string {
+  try {
+    const parsed = new URL(canonicalUrl);
+    return `${parsed.pathname}${parsed.search}`;
+  } catch {
+    return "/projets";
+  }
+}
 
 export async function generateStaticParams() {
   return getAllEntries("projets").map((p) => ({ slug: p.slug }));
@@ -19,27 +39,19 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   try {
     const project = getEntry("projets", params.slug);
-    const canonical = project.canonical ?? `${baseUrl}/projets/${project.slug}`;
-    const image = project.cover ?? "/banniere_dev_redac.png";
+    const canonical = project.canonical ?? getCanonicalUrl(`/projets/${project.slug}`);
+    const title = project.seoTitle ?? project.title;
+    const description = project.seoDescription ?? project.description;
 
-    return {
-      title: project.title,
-      description: project.description,
-      alternates: { canonical },
-      openGraph: {
-        type: "article",
-        url: canonical,
-        title: project.title,
-        description: project.description,
-        images: [{ url: image, width: 1200, height: 630 }],
-      },
-      twitter: {
-        card: "summary_large_image",
-        title: project.title,
-        description: project.description,
-        images: [image],
-      },
-    };
+    return buildPageMetadata({
+      path: toCanonicalPath(canonical),
+      title,
+      description,
+      ogTitle: `${title} | ${SITE_NAME}`,
+      type: "article",
+      image: getMetaImage(project.cover),
+      keywords: project.tags,
+    });
   } catch {
     return {};
   }
@@ -58,8 +70,12 @@ export default async function ProjetPage({ params }: { params: { slug: string } 
   }
 
   const content = await renderMdx(project.body, { autolinkHeadings: false, components: mdxComponents });
-  const canonical = project.canonical ?? `${baseUrl}/projets/${project.slug}`;
-  const image = project.cover ?? "https://maximilienherr.fr/banniere_dev_redac.png";
+  const canonical = project.canonical ?? getCanonicalUrl(`/projets/${project.slug}`);
+  const metaImage = getMetaImage(project.cover);
+  const renderImage = getRenderImage(project.cover);
+  const title = project.seoTitle ?? project.title;
+  const description = project.seoDescription ?? project.description;
+
   const displayDate = new Date(project.updated ?? project.date).toLocaleDateString("fr-FR", {
     day: "2-digit",
     month: "short",
@@ -67,21 +83,34 @@ export default async function ProjetPage({ params }: { params: { slug: string } 
   });
 
   const breadcrumbItems = [
-    { name: "Accueil", url: "https://maximilienherr.fr" },
-    { name: "Projets", url: `${baseUrl}/projets` },
-    { name: project.title, url: canonical },
+    { name: "Accueil", url: getCanonicalUrl("/") },
+    { name: "Projets", url: getCanonicalUrl("/projets") },
+    { name: title, url: canonical },
   ];
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
-    headline: project.title,
-    description: project.description,
+    headline: title,
+    description,
     datePublished: project.date,
     dateModified: project.updated ?? project.date,
-    image: [image],
+    image: [metaImage],
     mainEntityOfPage: { "@type": "WebPage", "@id": canonical },
   };
+
+  const faqJsonLd = project.faq?.length
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: project.faq.map((item) => ({
+          "@type": "Question",
+          name: item.question,
+          acceptedAnswer: { "@type": "Answer", text: item.answer },
+        })),
+      }
+    : null;
+
   const currentTags = new Set((project.tags ?? []).map((tag) => tag.toLowerCase()));
   const relatedProjects = getAllEntries("projets")
     .filter((entry) => entry.slug !== project.slug)
@@ -107,14 +136,19 @@ export default async function ProjetPage({ params }: { params: { slug: string } 
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      {faqJsonLd ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      ) : null}
       <main className="container">
         <article className="article-page">
-        <div className="article-hero">
-          {image ? (
+          <div className="article-hero">
             <div className="article-hero-media">
               <Image
-                src={image}
-                alt={project.title}
+                src={renderImage}
+                alt={title}
                 fill
                 quality={70}
                 sizes="(max-width: 767px) 100vw, 700px"
@@ -124,13 +158,10 @@ export default async function ProjetPage({ params }: { params: { slug: string } 
                 decoding="async"
               />
             </div>
-          ) : (
-            <div className="article-hero-placeholder" aria-hidden />
-          )}
             <div className="article-hero-overlay" />
             <div className="article-hero-meta">
               <p className="article-hero-date">{displayDate}</p>
-              <h1 className="article-hero-title">{project.title}</h1>
+              <h1 className="article-hero-title">{title}</h1>
               {project.tags?.length ? (
                 <div className="article-hero-tags">
                   {project.tags.map((tag) => (
@@ -143,18 +174,28 @@ export default async function ProjetPage({ params }: { params: { slug: string } 
             </div>
           </div>
 
+          {params.slug === "t2c-screen" ? (
+            <nav className="project-mobile-toc" aria-label="Sommaire rapide">
+              <a href="#t2c-overview">Vue d'ensemble</a>
+              <a href="#t2c-architecture">Architecture</a>
+              <a href="#t2c-backend">Backend</a>
+              <a href="#t2c-firmware">Firmware</a>
+              <a href="#t2c-deploy">Déploiement</a>
+            </nav>
+          ) : null}
+
           <section className="article-body mdx-wrapper">
             <article className="mdx-content">{content}</article>
           </section>
 
           {relatedProjects.length ? (
             <section className="related-projects" aria-labelledby="related-projects-title">
-              <h2 id="related-projects-title">D&apos;autres projets qui peuvent vous intéresser</h2>
+              <h2 id="related-projects-title">D'autres projets qui peuvent vous intéresser</h2>
               <div className="related-project-grid">
                 {relatedProjects.map((entry) => (
                   <Link key={entry.slug} href={`/projets/${entry.slug}`} className="related-project-card">
-                    <h3>{entry.title}</h3>
-                    <p>{entry.description}</p>
+                    <h3>{entry.seoTitle ?? entry.title}</h3>
+                    <p>{entry.seoDescription ?? entry.description}</p>
                     <span>Voir le projet</span>
                   </Link>
                 ))}

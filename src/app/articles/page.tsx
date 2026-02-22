@@ -1,42 +1,29 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import "./style.css";
 import { getAllLatestArticles, type Article } from "@/lib/fetchArticles";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { ExploreAlso } from "@/components/ExploreAlso";
 import CarouselSection from "../../components/CarouselSection";
 import { droidsoftFont, frandroidFont, lcdgFont } from "./fonts";
+import { buildPageMetadata, getCanonicalUrl } from "@/lib/seo";
 
-const pageUrl = "https://maximilienherr.fr/articles";
+const pagePath = "/articles";
+const pageUrl = getCanonicalUrl(pagePath);
 const pageTitle = "Articles";
 const fullTitle = "Articles | Maximilien Herr";
-const pageDescription =
-  "Derniers articles publiés sur Frandroid, DroidSoft et Le Café du Geek.";
-const ogImage = "https://maximilienherr.fr/banniere_dev_redac.png";
+const pageDescription = "Derniers articles publiés sur Frandroid, DroidSoft et Le Café du Geek.";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
+  path: pagePath,
   title: pageTitle,
   description: pageDescription,
-  alternates: { canonical: pageUrl },
-  openGraph: {
-    type: "website",
-    url: pageUrl,
-    title: fullTitle,
-    description: pageDescription,
-    images: [{ url: ogImage, width: 1200, height: 630, alt: "Bannière Maximilien Herr" }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: fullTitle,
-    description: pageDescription,
-    images: [ogImage],
-  },
-  robots: { index: true, follow: true },
+  ogTitle: fullTitle,
   keywords: ["articles", "Frandroid", "DroidSoft", "Le Café du Geek", "portfolio"],
-};
+});
 
 export default async function ArticlesPage() {
   const breadcrumbItems = [
-    { name: "Accueil", url: "https://maximilienherr.fr" },
+    { name: "Accueil", url: getCanonicalUrl("/") },
     { name: "Articles", url: pageUrl },
   ];
 
@@ -106,10 +93,9 @@ export default async function ArticlesPage() {
         <CarouselSection
           title="Le Café du Geek"
           variant="lcdg"
-          items={(bySource["Le Café du Geek"] || []).slice(0, 18)}
+          items={((bySource["Le Café du Geek"] || bySource["Le Cafe du Geek"]) || []).slice(0, 18)}
         />
 
-        {/* Fallback simple si JS desactive */}
         <noscript>
           <div className="inner">
             <h2>Liste des articles</h2>
@@ -128,9 +114,7 @@ export default async function ArticlesPage() {
                   </div>
                   <div className="meta">
                     <h3 className="title">{a.title}</h3>
-                    <p className="date">
-                      {new Date(a.date).toLocaleDateString("fr-FR")}
-                    </p>
+                    <p className="date">{new Date(a.date).toLocaleDateString("fr-FR")}</p>
                   </div>
                 </a>
               ))}

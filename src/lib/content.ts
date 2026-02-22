@@ -11,11 +11,14 @@ export type EntryMeta = {
   slug: string;
   title: string;
   description: string;
+  seoTitle?: string;
+  seoDescription?: string;
   date: string;
   updated?: string;
   tags?: string[];
   cover?: string;
   canonical?: string;
+  faq?: Array<{ question: string; answer: string }>;
   logos?: string[];
   priority?: number;
   draft?: boolean;
@@ -35,16 +38,30 @@ export function getAllEntries(type: ContentType): EntryMeta[] {
     const { data } = matter(raw);
     const priority = data.priority !== undefined ? Number(data.priority) : undefined;
     const logos = Array.isArray(data.logos) ? data.logos.map(String) : undefined;
+    const faq = Array.isArray(data.faq)
+      ? data.faq
+          .map((item) => {
+            if (!item || typeof item !== "object") return null;
+            const question = String((item as Record<string, unknown>).question ?? "").trim();
+            const answer = String((item as Record<string, unknown>).answer ?? "").trim();
+            if (!question || !answer) return null;
+            return { question, answer };
+          })
+          .filter((item): item is { question: string; answer: string } => Boolean(item))
+      : undefined;
 
     return {
       slug,
       title: String(data.title ?? slug),
       description: String(data.description ?? ""),
+      seoTitle: data.seoTitle ? String(data.seoTitle) : undefined,
+      seoDescription: data.seoDescription ? String(data.seoDescription) : undefined,
       date: String(data.date ?? ""),
       updated: data.updated ? String(data.updated) : undefined,
       tags: Array.isArray(data.tags) ? data.tags.map(String) : undefined,
       cover: data.cover ? String(data.cover) : undefined,
       canonical: data.canonical ? String(data.canonical) : undefined,
+      faq,
       logos,
       priority: Number.isNaN(priority) ? undefined : priority,
       draft: Boolean(data.draft ?? false),
@@ -73,15 +90,29 @@ export function getEntry(type: ContentType, slug: string): Entry {
   const { data, content } = matter(raw);
   const priority = data.priority !== undefined ? Number(data.priority) : undefined;
   const logos = Array.isArray(data.logos) ? data.logos.map(String) : undefined;
+  const faq = Array.isArray(data.faq)
+    ? data.faq
+        .map((item) => {
+          if (!item || typeof item !== "object") return null;
+          const question = String((item as Record<string, unknown>).question ?? "").trim();
+          const answer = String((item as Record<string, unknown>).answer ?? "").trim();
+          if (!question || !answer) return null;
+          return { question, answer };
+        })
+        .filter((item): item is { question: string; answer: string } => Boolean(item))
+    : undefined;
   return {
     slug,
     title: String(data.title ?? slug),
     description: String(data.description ?? ""),
+    seoTitle: data.seoTitle ? String(data.seoTitle) : undefined,
+    seoDescription: data.seoDescription ? String(data.seoDescription) : undefined,
     date: String(data.date ?? ""),
     updated: data.updated ? String(data.updated) : undefined,
     tags: Array.isArray(data.tags) ? data.tags.map(String) : undefined,
     cover: data.cover ? String(data.cover) : undefined,
     canonical: data.canonical ? String(data.canonical) : undefined,
+    faq,
     logos,
     priority: Number.isNaN(priority) ? undefined : priority,
     draft: Boolean(data.draft ?? false),

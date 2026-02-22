@@ -6,6 +6,7 @@ import "./app.css";
 import "../assets/Product Sans/stylesheet.css";
 import Header from "@/common/header";
 import Footer from "@/common/footer";
+import { DEFAULT_OG_IMAGE, SITE_URL } from "@/lib/seo";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -29,7 +30,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://maximilienherr.fr"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default:
       "Maximilien Herr — Ingénieur Logiciel & Journaliste Tech | Portfolio",
@@ -39,12 +40,12 @@ export const metadata: Metadata = {
     "Maximilien Herr, ingénieur logiciel chez Smartfluence et journaliste tech (Frandroid, DroidSoft, Le Café du Geek). Découvrez mon portfolio : projets, CV, compétences et articles.",
   openGraph: {
     type: "website",
-    url: "https://maximilienherr.fr",
+    url: SITE_URL,
     siteName: "Maximilien Herr",
     locale: "fr_FR",
     images: [
       {
-        url: "https://maximilienherr.fr/banniere_dev_redac.png",
+        url: DEFAULT_OG_IMAGE,
         width: 1200,
         height: 630,
         alt: "Bannière portfolio Maximilien Herr — Ingénieur logiciel et journaliste tech",
@@ -53,7 +54,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    images: ["https://maximilienherr.fr/banniere_dev_redac.png"],
+    images: [DEFAULT_OG_IMAGE],
   },
   alternates: { canonical: "/" },
   icons: { icon: "/favicon.ico" },
@@ -63,7 +64,7 @@ const personSchema = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Maximilien Herr",
-  url: "https://maximilienherr.fr",
+  url: SITE_URL,
   "@id": "https://maximilienherr.fr#person",
   image: "https://maximilienherr.fr/photo.jpg",
   jobTitle: "Ingénieur Logiciel",
@@ -155,7 +156,7 @@ const siteNavigationSchema = {
 const webSiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  url: "https://maximilienherr.fr",
+  url: SITE_URL,
   name: "Maximilien Herr",
   inLanguage: "fr-FR",
   description:
@@ -213,3 +214,4 @@ export default function RootLayout({
     </html>
   );
 }
+

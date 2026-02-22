@@ -19,10 +19,10 @@ export default async function ArticlesDyn() {
   let data: any[];
   try {
     data = await getAllLatestArticles({
-      perDroidsoft: 10,
-      perLcdg: 10,
-      perFrandroid: 10,
-      maxTotal: 24,
+      perDroidsoft: 6,
+      perLcdg: 6,
+      perFrandroid: 6,
+      maxTotal: 12,
     });
   } catch {
     data = [];
@@ -37,7 +37,7 @@ export default async function ArticlesDyn() {
       <div className="container">
         <h2>Mes derniers articles</h2>
         <div className="multiArticles two-column" style={{ flexWrap: "wrap" }}>
-          {data.map((a, idx) => {
+          {data.map((a) => {
             const coverSrc = normalizeCoverSrc(a.cover);
             const isExternalCover = isExternalUrl(coverSrc);
 
@@ -58,9 +58,9 @@ export default async function ArticlesDyn() {
                       sizes="(max-width: 767px) 100vw, 320px"
                       style={{ objectFit: "cover" }}
                       unoptimized={isExternalCover}
-                      loading={idx === 0 ? "eager" : "lazy"}
-                      priority={idx === 0}
-                      fetchPriority={idx === 0 ? "high" : "auto"}
+                      loading="lazy"
+                      priority={false}
+                      fetchPriority="auto"
                       decoding="async"
                     />
                   </div>

@@ -1,64 +1,58 @@
-import "./style.css";
+﻿import "./style.css";
 import Image from "next/image";
 import type { Metadata } from "next";
 import Link from "next/link";
 import images from "@/data/images";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { ExploreAlso } from "@/components/ExploreAlso";
+import { buildPageMetadata, getCanonicalUrl } from "@/lib/seo";
 
 const { numeriqueResponsable } = images;
+const pagePath = "/nr";
+const pageUrl = getCanonicalUrl(pagePath);
 
-export const metadata: Metadata = {
-  title: "Maximilien Herr - Numérique Responsable",
-  description: "Approche et réalisations de Maximilien Herr autour du numérique responsable et de la sobriété logicielle.",
-  alternates: { canonical: "https://maximilienherr.fr/nr" },
-  openGraph: {
-    type: "article",
-    url: "https://maximilienherr.fr/nr",
-    title: "Numérique Responsable | Maximilien Herr",
-    description: "Optimisations, hackathon et bonnes pratiques en sobriété numérique.",
-    images: [{
-      url: "https://maximilienherr.fr/banniere_dev_redac.png",
-      width: 1200,
-      height: 630,
-      alt: "Bannière Numérique Responsable",
-    }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Numérique Responsable | Maximilien Herr",
-    description: "Optimisations, hackathon et bonnes pratiques en sobriété numérique.",
-    images: ["https://maximilienherr.fr/banniere_dev_redac.png"],
-  },
-};
+export const metadata: Metadata = buildPageMetadata({
+  path: pagePath,
+  title: "Numérique Responsable",
+  description:
+    "Approche et réalisations de Maximilien Herr autour du numérique responsable et de la sobriété logicielle.",
+  ogTitle: "Numérique Responsable | Maximilien Herr",
+  ogDescription: "Optimisations, hackathon et bonnes pratiques en sobriété numérique.",
+  type: "article",
+  keywords: ["numérique responsable", "sobriété logicielle", "performance", "green IT"],
+  imageAlt: "Bannière Numérique Responsable",
+});
 
 export default function Nr() {
   const breadcrumbItems = [
-    { name: "Accueil", url: "https://maximilienherr.fr" },
-    { name: "Numérique Responsable", url: "https://maximilienherr.fr/nr" },
+    { name: "Accueil", url: getCanonicalUrl("/") },
+    { name: "Numérique Responsable", url: pageUrl },
   ];
+
   return (
     <>
       <Breadcrumb items={breadcrumbItems} />
       <section className="nr">
         <div className="inner">
+          <h1>Numérique Responsable</h1>
+
           <h2>Le numérique responsable : penser performance et efficience</h2>
           <p>
-            Au fil de ma formation en informatique et de mes missions en
-            tant qu&apos;ingénieur informatique, j&apos;ai progressivement compris que
-            l&apos;objectif n&apos;était pas simplement de rendre un service « vert », mais
-            de concevoir des architectures et des algorithmes dont la légèreté et
-            l&apos;optimisation sont prioritaires. Réduire le nombre de requêtes,
-            minimiser l&apos;empreinte mémoire ou optimiser les pipelines de calcul
-            s&apos;inscrit dans un souci de performance dont l&apos;impact carbone est la
-            conséquence directe.
+            Je n&apos;aborde pas le numérique responsable par idéologie, ni comme un
+            sujet politique ou d&apos;image. Pris uniquement sous cet angle, je trouve
+            l&apos;approche souvent peu concluante. Ma logique est d&apos;abord technique :
+            un site ou un logiciel bien optimisé consomme moins de ressources, ce
+            qui est effectivement plus sobre, mais c&apos;est surtout plus agréable et
+            plus fiable pour les utilisateurs.
           </p>
           <p>
-            Cette démarche nécessite des compétences variées : audit de code,
-            profilage, choix d&apos;outils adaptés et mise en place de métriques de
-            suivi. En entreprise, j&apos;ai pu déployer des solutions de monitoring de
-            la consommation CPU et de la latence, afin d&apos;identifier les points de
-            contention et de prioriser les optimisations.
+            Au fil de ma formation et de mes missions d&apos;ingénierie, j&apos;ai donc
+            privilégié des actions concrètes : réduire les requêtes inutiles,
+            limiter les transferts réseau, optimiser le rendu et mesurer les
+            performances. Cette démarche demande des audits réguliers, du
+            profilage, des choix d&apos;outils adaptés et un suivi par métriques
+            (latence, CPU, volume de données) pour prioriser ce qui améliore
+            réellement l&apos;expérience.
           </p>
 
           <Image
@@ -81,14 +75,14 @@ export default function Nr() {
             bibliothèques externes et favorisé des composants natifs, plus
             performants. Le passage à un mode sombre optimisé a réduit la
             sollicitation GPU sur les appareils AMOLED, diminuant la
-            consommation d&apos;énergie jusqu&apos;à 20 % selon mes mesures.
+            consommation d&apos;énergie jusqu&apos;à 20 % selon mes mesures.
           </p>
           <p>
             Sur un autre projet interne, j&apos;ai mis en place un système de mise en
             cache à différents niveaux (navigateur, CDN, serveur). En combinant
             l&apos;usage de HTTP/2 et d&apos;un bundler configuré pour le tree-shaking, nous
-            sommes parvenus à réduire de 35 % le volume de données échangées, tout
-            en maintenant un temps de réponse sous la barre des 200 ms.
+            sommes parvenus à réduire de 35 % le volume de données échangées, tout
+            en maintenant un temps de réponse sous la barre des 200 ms.
           </p>
 
           <h2>Participation à un hackathon dédié</h2>
@@ -97,11 +91,11 @@ export default function Nr() {
             pour les Journées du Numérique Responsable, ponctuées d&apos;un hackathon
             d&apos;une journée. L&apos;exercice consistait à concevoir un prototype en
             quelques heures et à le défendre devant un jury et les autres
-            participants. Le 
+            participants. Le&nbsp;
             <a href="https://ig.iut-clermont.fr/news/les-journees-du-numerique-responsable-2-jours-pour-programmer-vert/">
               projet de mon équipe a été retenu comme le plus pertinent
             </a>
-            &nbsp;et a conquis le Jury 🏆.
+            &nbsp;et a conquis le Jury.
           </p>
 
           <h2>Perspectives et bonnes pratiques</h2>
@@ -125,3 +119,4 @@ export default function Nr() {
     </>
   );
 }
+

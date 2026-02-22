@@ -13,7 +13,8 @@
     "start": "next start",
     "export": "next build",
     "purge:app-css": "node scripts/purge-app-css.mjs",
-    "purge:app-css:replace": "node scripts/purge-app-css.mjs --replace"
+    "purge:app-css:replace": "node scripts/purge-app-css.mjs --replace",
+    "seo:check": "tsx scripts/seo-check.ts"
   },
   "dependencies": {
     "@mdx-js/mdx": "^3.1.1",

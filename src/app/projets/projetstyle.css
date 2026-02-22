@@ -81,6 +81,26 @@ h4 {
     gap: 150px;
 }
 
+.project-mobile-toc{
+    margin: 1rem 0 0.5rem;
+    padding: 0.7rem;
+    border: 1px solid rgba(57, 43, 31, 0.14);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.82);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+}
+
+.project-mobile-toc a{
+    text-decoration: none;
+    color: #8f4f1f;
+    border: 1px solid rgba(143, 79, 31, 0.25);
+    border-radius: 999px;
+    padding: 0.25rem 0.6rem;
+    font-size: 0.85rem;
+}
+
 .related-projects{
     margin-top: 3rem;
     padding-top: 1.25rem;
@@ -159,5 +179,11 @@ h4 {
     .sources{
         gap: 20px;
         flex-wrap: wrap;
+    }
+
+    .project-mobile-toc{
+        position: sticky;
+        top: 0.5rem;
+        z-index: 15;
     }
 }

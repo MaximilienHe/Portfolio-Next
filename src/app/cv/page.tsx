@@ -1,5 +1,4 @@
-// /src/app/cv/page.tsx
-import "./style.css";
+﻿import "./style.css";
 import type { Metadata } from "next";
 import Quote from "./_sections/quote";
 import Xp from "./_sections/xp";
@@ -9,45 +8,53 @@ import Formations from "./_sections/formations";
 import Download from "./_sections/download";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { ExploreAlso } from "@/components/ExploreAlso";
+import { buildPageMetadata, getCanonicalUrl } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Maximilien Herr - CV",
-  description: "CV de Maximilien Herr : expériences, formations et compétences techniques.",
-  alternates: { canonical: "https://maximilienherr.fr/cv" },
-  openGraph: {
-    type: "profile",
-    url: "https://maximilienherr.fr/cv",
-    title: "Maximilien Herr - CV",
-    description: "Parcours, expériences et compétences de Maximilien Herr.",
-    images: [{
-      url: "https://maximilienherr.fr/banniere_dev_redac.png",
-      width: 1200,
-      height: 630,
-      alt: "Bannière CV Maximilien Herr",
-    }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Maximilien Herr - CV",
-    description: "Parcours, expériences et compétences de Maximilien Herr.",
-    images: ["https://maximilienherr.fr/banniere_dev_redac.png"],
-  },
-};
+const pagePath = "/cv";
+const pageUrl = getCanonicalUrl(pagePath);
+const pageTitle = "CV";
+
+export const metadata: Metadata = buildPageMetadata({
+  path: pagePath,
+  title: pageTitle,
+  description: "CV de Maximilien Herr : expériences, formations, compétences et domaines d'intérêt.",
+  ogTitle: "Maximilien Herr - CV",
+  type: "profile",
+  keywords: ["cv", "ingénieur logiciel", "journaliste tech", "compétences"],
+});
 
 export default function Cv() {
   const breadcrumbItems = [
-    { name: "Accueil", url: "https://maximilienherr.fr" },
-    { name: "CV", url: "https://maximilienherr.fr/cv" },
+    { name: "Accueil", url: getCanonicalUrl("/") },
+    { name: "CV", url: pageUrl },
   ];
+
   return (
     <>
       <Breadcrumb items={breadcrumbItems} />
+      <nav className="cv-quick-nav" aria-label="Navigation rapide CV">
+        <a href="#cv-xp">Expériences</a>
+        <a href="#cv-formations">Formation</a>
+        <a href="#cv-skills">Compétences</a>
+        <a href="#cv-interest">Centres d'intérêt</a>
+        <a href="#cv-download">Téléchargement</a>
+      </nav>
       <Quote />
-      <Xp />
-      <Formations />
-      <Skills />
-      <Interest />
-      <Download />
+      <div id="cv-xp">
+        <Xp />
+      </div>
+      <div id="cv-formations">
+        <Formations />
+      </div>
+      <div id="cv-skills">
+        <Skills />
+      </div>
+      <div id="cv-interest">
+        <Interest />
+      </div>
+      <div id="cv-download">
+        <Download />
+      </div>
       <ExploreAlso currentPath="/cv" />
     </>
   );

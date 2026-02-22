@@ -1,10 +1,10 @@
 const images = {
   droidsoftAppHorizontal: {
     id: 1,
-    image: "/images/Images/projects/droidsoft_app_horizontal.png",
+    image: "/images/Images/projects/droidsoft_app_horizontal.webp",
     name: "droidsoftAppHorizontal",
-    width: 5000,
-    height: 2813,
+    width: 1920,
+    height: 1080,
   },
   asciiArtIllustration: {
     id: 2,
@@ -295,3 +295,4 @@ const images = {
   },
 };
 export default images;
+

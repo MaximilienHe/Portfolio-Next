@@ -1,41 +1,86 @@
----
+﻿---
 title: "Twitch Tracker - Développement Web"
-description: "Découvrez mon projet de Twitch Tracker, réalisé en groupe."
+seoTitle: "Twitch Tracker : API, base de données et dashboard web"
+seoDescription: "Projet réalisé en équipe : collecte de données Twitch, stockage SQL, API PHP et interface de suivi des streamers."
+description: "Projet Twitch Tracker : collecte de données stream, stockage SQL et visualisation web."
 date: "2022-06-01"
+updated: "2026-02-22"
 priority: 2
 cover: "/images/Images/projects/TwitchTracking.png"
 canonical: "https://maximilienherr.fr/projets/twitch-tracker"
 tags: ["php", "mysql", "javascript", "api"]
 logos: ["htmlLogo", "cssLogo", "javascriptLogo", "phpLogo", "mysqlLogo"]
 draft: false
+faq:
+  - question: "Quel était l'objectif principal du projet ?"
+    answer: "Construire une chaîne complète de collecte, stockage et restitution de statistiques Twitch pour un suivi lisible."
+  - question: "Quelle est la principale limite identifiée ?"
+    answer: "Le rafraîchissement était majoritairement batch, ce qui limitait l'usage quasi temps réel sans couche de streaming."
 ---
 
-# Développement Web - Twitch Tracker
+# Twitch Tracker : suivi de streamers et analyse de données
+
+Ce projet avait un objectif simple : suivre des chaînes Twitch, historiser des indicateurs utiles et afficher des vues comparatives. Le scope couvrait la collecte de données, le stockage SQL et l'exposition via une interface web.
 
 <iframe
   width="auto"
   height="400"
   src="https://www.youtube-nocookie.com/embed/k-dUhISg9X4"
-  title="YouTube video player"
+  title="Démonstration Twitch Tracker"
   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
   allowFullScreen
 ></iframe>
 
-Vous connaissez peut-être le principe d'un Twitch Tracker, mais au cas-où, voici un rappel. L'objectif, c'est d'utiliser des données de streamer, qui sont en live sur la plateforme. Ces données, ça peut être le nombre de viewers moyen, le nombre maximal de viewers ƒ?Ý Ces données sont donc stockées dans une base de données, et l'objectif est de les récupérer, et les mettre en page.
+## Architecture fonctionnelle
 
-## Caractéristiques techniques du projet
+Le système est découpé en trois blocs :
 
-### Langages / technologies utilisés
+1. **Collecte** : scripts de récupération des métriques Twitch (viewer moyen, pic, sessions).
+2. **Stockage** : base MySQL structurée pour historiser les snapshots et faciliter les comparaisons.
+3. **Présentation** : interface web en JavaScript/PHP pour consulter les statistiques par streamer.
 
-Ce Twitch Tracker se base sur une base de données en MySQL, et les données sont traitées et récupérables via des points d'accès (end-points). Ce traitement se fait en PHP, et pour les mettre en forme, on a utilisé du JavaScript. Evidemment, il y a une base de HTML et CSS pour une mise en page simpliste.
+Le design retenu favorisait la simplicité : peu de couches intermédiaires, schéma SQL clair, endpoints lisibles.
 
-### Combien de temps, qui et quoi ?
+## Stack technique
 
-Le projet a duré une dizaine à vingtaine d'heures par personne, avec un temps important de formation. Il a été réalisé en groupe de 3, par [Lucas Chalmandrier](https://linkedin.com/in/lucas-chalmandrier), [Florian Mure](https://www.linkedin.com/in/florian-mure-9b335422b/) et moi-même, dans le cadre de notre formation du BUT Informatique Graphique.
+- **Backend** : PHP pour les endpoints de consultation et le traitement applicatif.
+- **Data** : MySQL pour l'historisation et les requêtes d'analyse.
+- **Frontend** : HTML/CSS/JavaScript pour les tableaux et la navigation.
+- **Versioning** : GitHub pour le partage de code et la revue en équipe.
 
-## Détails du projet
+## Choix d'implémentation
 
-Le projet est un peu basique, mais il faut bien commencer quelque part. Par ailleurs, nous avons utilisé GitHub pour ce projet, sur lequel vous pourrez trouver plus de détails et les sources du projet.
+### Modèle de données
+
+Nous avons privilégié un modèle orienté lecture :
+
+- table streamers (identifiants, metadata),
+- table snapshots (timestamp, viewers, pic, etc.),
+- index sur streamer + date pour accélérer les comparaisons.
+
+Ce choix a permis de garder des requêtes SQL simples et de limiter les coûts de jointure sur les vues principales.
+
+### Endpoints et logique métier
+
+La couche PHP expose des endpoints orientés besoin front. Le principe était de retourner des données déjà préparées pour limiter la logique côté navigateur.
+
+### Interface utilisateur
+
+L'interface met en avant la comparaison entre streamers et l'évolution des métriques dans le temps. Le parti pris : plus de lisibilité, moins d'effets visuels.
+
+## Limites identifiées
+
+- Pas de pipeline temps réel : la collecte reste batch et périodique.
+- Faible couverture de tests automatisés sur les scripts de collecte.
+- Gestion des erreurs API perfectible (retry, backoff, monitoring).
+
+## Ce que le projet m'a appris
+
+- Concevoir un schéma SQL orienté usage réel.
+- Transformer des données brutes en indicateurs utiles.
+- Structurer un projet équipe avec un partage de tâches clair.
+
+Ce socle m'a ensuite servi pour des projets plus complexes, notamment sur l'optimisation de flux data et la fiabilité d'API.
 
 <div className="logos">
   <img src="/images/logos/Dev Web/HTML5.png" alt="HTML5" className="logo" />

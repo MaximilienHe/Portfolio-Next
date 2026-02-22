@@ -1,0 +1,16 @@
+# Disavow file
+# Property: maximilienherr.fr
+# Generated: 2026-02-22
+# Source: report-23747.pdf toxic links section
+
+# Toxic domain cluster (automated spam pages)
+domain:blinks.sbs
+domain:blinks.monster
+domain:seol.store
+domain:seodomains.website
+domain:wants.cfd
+domain:takes.sbs
+domain:takes.homes
+
+# Additional low-quality domain from the same campaign
+domain:domains.com.bz
