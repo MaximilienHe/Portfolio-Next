@@ -9,7 +9,13 @@ WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN npm run build
+ARG TARGETARCH
+RUN if [ "$TARGETARCH" = "arm64" ]; then \
+      echo "Skipping CV generation on arm64 build"; \
+      node scripts/generate-version.mjs && npx next build; \
+    else \
+      npm run build; \
+    fi
 
 FROM node:22-alpine AS runner
 WORKDIR /app
