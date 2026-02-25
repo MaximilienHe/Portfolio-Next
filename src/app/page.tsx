@@ -13,8 +13,8 @@ const profilePageSchema = {
   mainEntity: {
     "@id": "https://maximilienherr.fr#person",
   },
-  dateCreated: "2023-01-01",
-  dateModified: "2026-02-18",
+  dateCreated: "2023-01-01T00:00:00Z",
+  dateModified: "2026-02-18T00:00:00Z",
   breadcrumb: {
     "@type": "BreadcrumbList",
     itemListElement: [
