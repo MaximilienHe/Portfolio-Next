@@ -53,12 +53,44 @@ const CONFIG = {
   },
 };
 
+const FETCH_TIMEOUT_MS = 8000;
+
+function isAbortError(error: unknown): boolean {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "name" in error &&
+    (error as { name?: string }).name === "AbortError"
+  );
+}
+
+async function fetchWithTimeout(url: string, init?: RequestInit): Promise<Response> {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+  try {
+    return await fetch(url, {
+      ...init,
+      signal: controller.signal,
+    });
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
 async function fetchJson<T>(url: string, init?: RequestInit): Promise<T> {
-  const r = await fetch(url, {
-    ...init,
-    next: { revalidate: 600 },
-    headers: { Accept: "application/json", ...(init?.headers || {}) },
-  });
+  let r: Response;
+  try {
+    r = await fetchWithTimeout(url, {
+      ...init,
+      next: { revalidate: 600 },
+      headers: { Accept: "application/json", ...(init?.headers || {}) },
+    });
+  } catch (error) {
+    if (isAbortError(error)) {
+      throw new Error(`Timeout after ${FETCH_TIMEOUT_MS}ms for ${url}`);
+    }
+    throw error;
+  }
   if (!r.ok) throw new Error(`${r.status} ${r.statusText} for ${url}`);
   return r.json() as Promise<T>;
 }
@@ -234,10 +266,18 @@ async function getFrandroidArticles(per = 10): Promise<Article[]> {
   const url = `https://www.frandroid.com/author/${encodeURIComponent(
     slug
   )}/feed`;
-  const r = await fetch(url, {
-    next: { revalidate: 600 },
-    headers: { Accept: "application/rss+xml" },
-  });
+  let r: Response;
+  try {
+    r = await fetchWithTimeout(url, {
+      next: { revalidate: 600 },
+      headers: { Accept: "application/rss+xml" },
+    });
+  } catch (error) {
+    if (isAbortError(error)) {
+      throw new Error(`Timeout after ${FETCH_TIMEOUT_MS}ms for ${url}`);
+    }
+    throw error;
+  }
   if (!r.ok) throw new Error(`${r.status} ${r.statusText} for ${url}`);
   const xml = await r.text();
   const items = parseFrandroidRss(xml);
@@ -262,20 +302,56 @@ export async function getAllLatestArticles(opts?: {
   } = opts || {};
 
   // Résolution des IDs auteurs WP au besoin
-  const droidsoftAuthorId =
-    CONFIG.droidsoft.authorId ??
-    (await resolveWpAuthorId(
-      CONFIG.droidsoft.base,
-      CONFIG.droidsoft.authorSlug
-    ));
-  const lcdgAuthorId =
-    CONFIG.lcdg.authorId ??
-    (await resolveWpAuthorId(CONFIG.lcdg.base, CONFIG.lcdg.authorSlug));
+  const droidsoftAuthorIdPromise = (CONFIG.droidsoft.authorId !== undefined
+    ? Promise.resolve(CONFIG.droidsoft.authorId)
+    : resolveWpAuthorId(CONFIG.droidsoft.base, CONFIG.droidsoft.authorSlug)
+  ).catch((error) => {
+    console.warn("[fetchArticles] droidsoft author lookup failed:", error);
+    return undefined;
+  });
+
+  const lcdgAuthorIdPromise = (CONFIG.lcdg.authorId !== undefined
+    ? Promise.resolve(CONFIG.lcdg.authorId)
+    : resolveWpAuthorId(CONFIG.lcdg.base, CONFIG.lcdg.authorSlug)
+  ).catch((error) => {
+    console.warn("[fetchArticles] lcdg author lookup failed:", error);
+    return undefined;
+  });
+
+  const [droidsoftAuthorId, lcdgAuthorId] = await Promise.all([
+    droidsoftAuthorIdPromise,
+    lcdgAuthorIdPromise,
+  ]);
+
+  const droidsoftPromise = droidsoftAuthorId
+    ? getWpPostsByAuthor(
+        CONFIG.droidsoft.base,
+        droidsoftAuthorId,
+        perDroidsoft
+      ).catch((error) => {
+        console.warn("[fetchArticles] droidsoft fetch failed:", error);
+        return [] as Article[];
+      })
+    : Promise.resolve([] as Article[]);
+
+  const lcdgPromise = lcdgAuthorId
+    ? getWpPostsByAuthor(CONFIG.lcdg.base, lcdgAuthorId, perLcdg).catch(
+        (error) => {
+          console.warn("[fetchArticles] lcdg fetch failed:", error);
+          return [] as Article[];
+        }
+      )
+    : Promise.resolve([] as Article[]);
+
+  const frandroidPromise = getFrandroidArticles(perFrandroid).catch((error) => {
+    console.warn("[fetchArticles] frandroid fetch failed:", error);
+    return [] as Article[];
+  });
 
   const [ds, lc, fr] = await Promise.all([
-    getWpPostsByAuthor(CONFIG.droidsoft.base, droidsoftAuthorId, perDroidsoft),
-    getWpPostsByAuthor(CONFIG.lcdg.base, lcdgAuthorId, perLcdg),
-    getFrandroidArticles(perFrandroid),
+    droidsoftPromise,
+    lcdgPromise,
+    frandroidPromise,
   ]);
 
   // Agrégation, dédup par URL, tri par date desc

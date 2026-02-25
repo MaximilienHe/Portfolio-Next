@@ -27,12 +27,17 @@ export default async function ArticlesPage() {
     { name: "Articles", url: pageUrl },
   ];
 
-  const all = await getAllLatestArticles({
-    perDroidsoft: 12,
-    perLcdg: 12,
-    perFrandroid: 12,
-    maxTotal: 60,
-  });
+  let all: Article[] = [];
+  try {
+    all = await getAllLatestArticles({
+      perDroidsoft: 12,
+      perLcdg: 12,
+      perFrandroid: 12,
+      maxTotal: 60,
+    });
+  } catch (error) {
+    console.warn("[articles/page] latest articles fetch failed:", error);
+  }
 
   const bySource = all.reduce<Record<string, Article[]>>((acc, a) => {
     (acc[a.source] ||= []).push(a);
