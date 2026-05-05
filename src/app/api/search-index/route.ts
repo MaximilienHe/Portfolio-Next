@@ -2,11 +2,14 @@
 // Dynamic search index based on real content files (plus stable static pages).
 
 import { NextResponse } from "next/server";
+import articleSections from "@/data/articleSections";
 import { getAllEntries } from "@/lib/content";
 import { getAllLatestArticles } from "@/lib/fetchArticles";
 
 export const runtime = "nodejs";
 export const revalidate = 600;
+
+const ARTICLE_INDEX_TIMEOUT_MS = 6500;
 
 export type SearchEntry = {
   title: string;
@@ -16,6 +19,8 @@ export type SearchEntry = {
   tags?: string[];
   date?: string;
 };
+
+let lastGoodArticleEntries: SearchEntry[] | null = null;
 
 const STATIC_PAGES: SearchEntry[] = [
   {
@@ -85,6 +90,24 @@ function uniqByUrl(entries: SearchEntry[]): SearchEntry[] {
   return unique;
 }
 
+function getCuratedArticleEntries(): SearchEntry[] {
+  return articleSections.flatMap((section) =>
+    section.articles.map((article) => ({
+      title: article.title,
+      description: `Article publie sur ${section.sourceName}.`,
+      url: article.href,
+      type: "article" as const,
+      tags: ["article", section.sourceName.toLowerCase()],
+    }))
+  );
+}
+
+function getArticleFallbackEntries(): SearchEntry[] {
+  return lastGoodArticleEntries?.length
+    ? lastGoodArticleEntries
+    : getCuratedArticleEntries();
+}
+
 function getDynamicProjectEntries(): SearchEntry[] {
   return getAllEntries("projets").map((project) => ({
     title: project.title,
@@ -109,25 +132,35 @@ function getDynamicBlogEntries(): SearchEntry[] {
 
 async function getDynamicArticleEntries(): Promise<SearchEntry[]> {
   const articlesPromise = getAllLatestArticles({
-    perDroidsoft: 6,
-    perLcdg: 6,
-    perFrandroid: 6,
-    maxTotal: 18,
+    perDroidsoft: 12,
+    perLcdg: 12,
+    perFrandroid: 12,
+    maxTotal: 60,
   })
-    .then((latestArticles) =>
-      latestArticles.map((article) => ({
+    .then((latestArticles) => {
+      const entries = latestArticles.map((article) => ({
         title: article.title,
         description: `Article ${article.source} publié le ${new Date(article.date).toLocaleDateString("fr-FR")}.`,
         url: article.url,
         type: "article" as const,
         tags: ["article", article.source.toLowerCase()],
         date: article.date,
-      }))
-    )
-    .catch(() => []);
+      }));
+
+      if (entries.length > 0) {
+        lastGoodArticleEntries = entries;
+        return entries;
+      }
+
+      return getArticleFallbackEntries();
+    })
+    .catch((error) => {
+      console.warn("[search-index] article fetch failed:", error);
+      return getArticleFallbackEntries();
+    });
 
   const timeoutPromise = new Promise<SearchEntry[]>((resolve) => {
-    setTimeout(() => resolve([]), 1500);
+    setTimeout(() => resolve(getArticleFallbackEntries()), ARTICLE_INDEX_TIMEOUT_MS);
   });
 
   return Promise.race([articlesPromise, timeoutPromise]);
@@ -143,5 +176,9 @@ export async function GET() {
     ...articleEntries,
   ]);
 
-  return NextResponse.json(index);
+  return NextResponse.json(index, {
+    headers: {
+      "Cache-Control": "public, max-age=0, s-maxage=600, stale-while-revalidate=86400",
+    },
+  });
 }
