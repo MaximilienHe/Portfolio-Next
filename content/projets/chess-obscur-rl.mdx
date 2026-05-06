@@ -1,0 +1,79 @@
+---
+title: "Chess Obscur RL - Agent PPO sur GPU"
+seoTitle: "Chess Obscur RL : reinforcement learning PPO avec PyTorch et CUDA"
+seoDescription: "Pipeline de reinforcement learning pour Chess Obscur : environnement vectorisé GPU, PPO, Actor-Critic ResNet, TensorBoard et intégration au serveur web."
+description: "Agent de reinforcement learning PPO sur GPU pour une variante d'échecs custom."
+date: "2026-03-20"
+updated: "2026-05-05"
+priority: 1
+cover: "/images/Projects/generated/charte/chess-obscur-rl.webp"
+canonical: "https://maximilienherr.fr/projets/chess-obscur-rl"
+tags: ["python", "pytorch", "cuda", "reinforcement-learning", "ppo", "machine-learning"]
+logos: ["pythonLogo", "dockerLogo", "gitLogo"]
+draft: false
+faq:
+  - question: "Quel algorithme est utilisé ?"
+    answer: "Le projet repose sur PPO avec GAE, bonus d'entropie, Actor-Critic ResNet et mixed precision."
+  - question: "Comment l'agent est-il relié au jeu web ?"
+    answer: "Un serveur HTTP expose le modèle entraîné pour que le serveur Chess Obscur Web puisse demander un coup à l'agent."
+---
+
+# Chess Obscur RL : entraîner un agent pour jouer à ma variante d'échecs
+
+Chess Obscur RL est la partie machine learning de mon écosystème Chess Obscur. L'objectif était d'entraîner un agent capable de jouer à une variante d'échecs que j'avais moi-même définie, avec des captures probabilistes, des phases défensives et des règles qui sortent du cadre classique.
+
+Le dépôt GitHub montre une période de travail concentrée entre février et mars 2026. C'est l'un des projets les plus techniques de mon portfolio, car il m'a obligé à traiter à la fois la modélisation du jeu, l'entraînement et l'intégration avec une application web jouable.
+
+![Univers Chess Obscur](/images/Projects/chess-obscur/chess-obscur.webp)
+
+## Caractéristiques techniques du projet
+
+- **Langage** : Python.
+- **Machine learning** : PyTorch, CUDA, PPO, Actor-Critic, ResNet.
+- **Entraînement** : self-play, league training, TensorBoard, checkpoints.
+- **Optimisation** : environnement vectorisé GPU, AMP mixed precision, tables de coups pré-calculées.
+- **Intégration** : serveur HTTP `ai_server.py` pour connecter le modèle au serveur web.
+
+## Détails du projet
+
+### Pourquoi c'est plus complexe qu'un jeu d'échecs classique
+
+Chess Obscur ajoute des mécaniques qui rendent l'apprentissage moins direct :
+
+- captures stochastiques ;
+- actions défensives comme le blocage ou la parade ;
+- règle des trois échecs ;
+- phases de jeu supplémentaires ;
+- historique utile pour détecter certaines répétitions.
+
+Un agent ne peut donc pas seulement apprendre "un bon coup d'échecs". Il doit aussi comprendre des états intermédiaires et des conséquences probabilistes.
+
+### Environnement vectorisé GPU
+
+Le coeur du projet est un environnement qui garde les états sous forme de tenseurs PyTorch sur CUDA. Les observations sont structurées en plans 8x8, et l'espace d'action regroupe les coups possibles ainsi que les décisions défensives.
+
+L'idée était d'éviter les allers-retours CPU/GPU dans le chemin critique du rollout. Même quand le projet reste personnel, ce genre de contrainte force à écrire un code beaucoup plus propre : les états, masques d'actions et rewards doivent être pensés par batch.
+
+### PPO et entraînement
+
+L'agent utilise PPO avec estimation d'avantage généralisée, bonus d'entropie et réseau Actor-Critic. J'ai aussi prévu un warmstart par behavioral cloning à partir des parties jouées sur le serveur web, afin de ne pas partir uniquement de parties aléatoires.
+
+Le projet contient aussi des scripts d'évaluation et de replay, utiles pour comprendre pourquoi l'agent prend certaines décisions.
+
+## Lien avec Chess Obscur Web
+
+Cette page présente uniquement la partie RL. Le jeu jouable en temps réel est détaillé dans la page [Chess Obscur Web](/projets/chess-obscur-web).
+
+Les deux projets sont liés : le serveur web peut exporter des parties, et l'agent entraîné peut ensuite être interrogé pour jouer contre des humains.
+
+## Ce que le projet m'a appris
+
+J'ai surtout appris que le reinforcement learning devient très vite un problème d'architecture logicielle, pas seulement de modèle. Avant même de parler de performance, il faut fiabiliser l'environnement, vérifier les masques d'actions, contrôler les rewards et garder un pipeline d'entraînement reproductible.
+
+## Auto-critique du résultat
+
+Le point faible principal est la démonstration. Sans GPU CUDA et sans courbes d'entraînement propres, le projet est plus difficile à comprendre pour quelqu'un qui le découvre. La prochaine amélioration évidente serait d'ajouter des graphiques TensorBoard ou une mesure d'évolution du niveau de l'agent.
+
+## Sources du projet
+
+Le dépôt est privé. Je peux présenter l'architecture et les choix d'entraînement, mais je ne publie pas le code source complet.

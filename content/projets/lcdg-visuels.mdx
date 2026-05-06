@@ -1,0 +1,61 @@
+---
+title: "LCDG Visuels - Générateur de visuels produits"
+seoTitle: "LCDG Visuels : génération d'images avec Canvas API et JavaScript"
+seoDescription: "Outil interne LCDG pour générer des visuels de notes produits : Canvas API, JavaScript vanilla, export ZIP, Docker et Nginx."
+description: "Générateur client-side de visuels de notes produit pour LCDG."
+date: "2026-02-15"
+updated: "2026-05-05"
+priority: 2
+cover: "/images/Projects/generated/charte/lcdg-visuels.webp"
+canonical: "https://maximilienherr.fr/projets/lcdg-visuels"
+tags: ["javascript", "canvas-api", "html", "css", "docker", "nginx"]
+logos: ["htmlLogo", "cssLogo", "javascriptLogo", "dockerLogo", "gitLogo"]
+draft: false
+faq:
+  - question: "Pourquoi avoir fait cet outil sans backend ?"
+    answer: "La génération pouvait se faire entièrement dans le navigateur avec Canvas API, ce qui simplifie le déploiement et évite de stocker les visuels côté serveur."
+  - question: "Quel est le résultat généré ?"
+    answer: "Un pack de visuels en plusieurs formats, exportable en ZIP, pour communiquer une note de test produit."
+---
+
+# LCDG Visuels : générer des visuels de notes produit
+
+LCDG Visuels est un outil interne pour l'association LCDG. Son rôle est de générer rapidement des visuels autour d'une note de test produit, afin de les envoyer aux marques ou de les utiliser dans la communication.
+
+Le dépôt GitHub visible contient un commit principal en février 2026. Le projet est volontairement simple côté stack, mais il répond à un besoin très concret.
+
+![Logo LCDG Visuels](/images/Projects/lcdg-visuels/logo_banner.webp)
+
+## Caractéristiques techniques du projet
+
+- **Frontend** : HTML, CSS, JavaScript vanilla.
+- **Génération d'image** : Canvas API.
+- **Export** : JSZip et FileSaver.
+- **Déploiement** : Docker, Nginx.
+- **Architecture** : zéro backend, traitement côté navigateur.
+
+## Détails du projet
+
+### Génération Canvas
+
+L'outil compose une image à partir de plusieurs éléments : photo produit, logo, note, habillage graphique et variations de format.
+
+La Canvas API est bien adaptée à ce besoin : on peut placer précisément les éléments, exporter le rendu et générer plusieurs versions sans dépendre d'un service serveur.
+
+### Formats générés
+
+Le projet génère plusieurs formats à partir d'une même saisie. L'objectif est de réduire le temps passé à refaire manuellement des visuels similaires, surtout quand une note doit être envoyée rapidement après publication d'un test.
+
+Une logique spéciale permet aussi de mettre en avant certains produits selon leur note.
+
+## Ce que le projet m'a appris
+
+Ce projet m'a rappelé qu'un bon outil n'a pas forcément besoin d'une stack lourde. Pour une tâche très précise, du JavaScript côté client et un export propre peuvent suffire à créer beaucoup de valeur.
+
+## Auto-critique du résultat
+
+Le code est probablement plus monolithique qu'une application plus ambitieuse. Si l'outil devait évoluer fortement, il faudrait mieux isoler les modèles de visuels, les règles de composition et la configuration des formats.
+
+## Sources du projet
+
+Le dépôt est privé, car il concerne un outil interne et des assets d'association.

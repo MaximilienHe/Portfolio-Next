@@ -1,0 +1,63 @@
+---
+title: "Paint Collaboratif - Dessin temps réel"
+seoTitle: "Paint Collaboratif : dessin multi-utilisateurs avec WebSocket"
+seoDescription: "Application de dessin collaboratif en temps réel : Node.js, WebSocket, MySQL, auth, invitations, undo/redo partagé et export PDF."
+description: "Application web de dessin collaboratif avec WebSocket, boards partagés et export PDF."
+date: "2025-05-07"
+updated: "2026-05-05"
+priority: 2
+cover: "/images/Projects/generated/charte/paint-collaboratif.webp"
+canonical: "https://maximilienherr.fr/projets/paint-collaboratif"
+tags: ["nodejs", "javascript", "websocket", "mysql", "temps-reel"]
+logos: ["nodeLogo", "javascriptLogo", "mysqlLogo", "gitLogo"]
+draft: false
+faq:
+  - question: "Quel était le contexte du projet ?"
+    answer: "Un projet académique de réseau autour d'une application web de dessin collaboratif en temps réel."
+  - question: "Quelle fonctionnalité est la plus intéressante ?"
+    answer: "Le partage des actions de dessin et de undo/redo entre plusieurs utilisateurs via WebSocket."
+---
+
+# Paint Collaboratif : dessiner à plusieurs en temps réel
+
+Paint Collaboratif est une application web de dessin multi-utilisateurs réalisée dans un contexte académique autour du réseau. Plusieurs personnes peuvent rejoindre un board, dessiner en même temps et retrouver leurs actions synchronisées.
+
+L'historique GitHub visible va de février à mai 2025, avec plusieurs contributeurs. Le projet est intéressant pour montrer un cas concret de WebSocket, au-delà d'un simple chat.
+
+## Caractéristiques techniques du projet
+
+- **Backend** : Node.js, Express.
+- **Temps réel** : WebSocket.
+- **Base de données** : MySQL.
+- **Frontend** : JavaScript, canvas HTML.
+- **Fonctionnalités** : auth, boards, invitations, undo/redo, export PDF.
+
+## Détails du projet
+
+### Dessin synchronisé
+
+Le coeur du projet consiste à transmettre les actions de dessin aux autres utilisateurs connectés au même board. Le client gère les outils et le canvas, tandis que le serveur relaie les événements aux bons participants.
+
+Cette logique demande de bien distinguer l'action locale, l'action reçue du réseau et l'état persistant.
+
+### Undo/redo partagé
+
+Le undo/redo est plus délicat dans une application collaborative que dans un outil local. Une action annulée doit rester cohérente pour tous les participants, sinon les canvas divergent.
+
+Même si le projet reste académique, cette fonctionnalité donne un vrai intérêt technique au sujet.
+
+### Gestion des boards
+
+L'application inclut aussi l'authentification, les boards multiples, les invitations et l'export PDF. Cela en fait une application complète, pas seulement une démo WebSocket isolée.
+
+## Ce que le projet m'a appris
+
+J'ai mieux compris les contraintes des applications temps réel : ordre des événements, état partagé, synchronisation et cas limites quand plusieurs utilisateurs agissent presque en même temps.
+
+## Auto-critique du résultat
+
+Le projet manque de démonstration visuelle. Un GIF de deux navigateurs dessinant sur le même board rendrait la valeur du projet beaucoup plus immédiate. Il faudrait aussi renforcer les tests autour des cas concurrents.
+
+## Sources du projet
+
+Le dépôt est privé. Je n'affiche donc pas de lien source public.
