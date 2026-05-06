@@ -1,0 +1,61 @@
+---
+title: "IZZIGame - Gestion de Game Jam"
+seoTitle: "IZZIGame : application Next.js et MySQL pour gérer une Game Jam"
+seoDescription: "Projet BDD ISIMA : application Next.js, TypeScript, MySQL, Sequelize, triggers et procédures stockées pour gérer une Game Jam."
+description: "Application de gestion de Game Jam avec Next.js, MySQL, Sequelize et SQL avancé."
+date: "2024-06-13"
+updated: "2026-05-05"
+priority: 2
+cover: "/images/Projects/generated/charte/izzigame.webp"
+canonical: "https://maximilienherr.fr/projets/izzigame"
+tags: ["typescript", "nextjs", "mysql", "sequelize", "docker", "sql"]
+logos: ["nextjsLogo", "mysqlLogo", "dockerLogo", "gitLogo"]
+draft: false
+faq:
+  - question: "Quel était l'objectif principal ?"
+    answer: "Concevoir une base de données complète et l'exploiter via une application web de gestion de Game Jam."
+  - question: "Quelle partie est la plus intéressante ?"
+    answer: "Le modèle MySQL, avec tables de liaison, héritage logique, triggers et procédures stockées."
+---
+
+# IZZIGame : gérer une Game Jam avec une vraie base de données
+
+IZZIGame est un projet de bases de données réalisé dans un contexte académique à l'ISIMA. L'objectif était de gérer une Game Jam : jeux, équipes, participants, établissements, visites scolaires, thèmes et classements.
+
+L'historique GitHub visible va de mars à juin 2024. Dans le portfolio, je le présente surtout comme un projet de modélisation et d'exploitation SQL, plus que comme une application web finalisée.
+
+![Classement IZZIGame](/images/Projects/izzigame/classement.webp)
+
+## Caractéristiques techniques du projet
+
+- **Application** : Next.js 14, TypeScript, App Router.
+- **Base de données** : MySQL.
+- **ORM** : Sequelize avec modèles typés.
+- **SQL avancé** : triggers, routines, procédures stockées.
+- **Déploiement local** : Docker Compose avec MySQL et application.
+
+## Détails du projet
+
+### Modèle de données
+
+Le modèle comporte une quinzaine de tables avec des relations entre jeux, équipes, personnes, manifestations, établissements et visites. Le projet utilise aussi un héritage logique autour des personnes : administrateurs, accompagnateurs, référents, etc.
+
+Cette partie était le coeur du travail. Il fallait concevoir une base qui permette à la fois la gestion métier et les requêtes de restitution.
+
+### Triggers et procédures
+
+Le projet inclut des routines SQL et des triggers pour automatiser certaines règles. Cela permet de déplacer une partie de la cohérence côté base, au lieu de tout reposer uniquement sur l'application.
+
+Ce choix est pertinent dans un projet de BDD, même si dans une application de production moderne il faudrait bien documenter ce qui vit dans la base et ce qui vit dans le backend.
+
+## Ce que le projet m'a appris
+
+IZZIGame m'a surtout fait pratiquer la conception SQL sur un cas plus riche qu'un CRUD. Les relations, tables de liaison et procédures obligent à penser les données avant l'interface.
+
+## Auto-critique du résultat
+
+L'interface reste secondaire et le README d'origine était trop proche d'un README Next.js par défaut. Pour rendre le projet plus fort, il faudrait documenter le modèle, ajouter un schéma lisible et quelques captures du parcours utilisateur.
+
+## Sources du projet
+
+Le dépôt est privé. Je ne publie donc pas de lien source sur la page.

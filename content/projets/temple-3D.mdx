@@ -1,9 +1,9 @@
----
+﻿---
 title: "Création d'un musée en 3D - 3D et Jeux Vidéo"
 description: "Découvrez mon projet de création d'un musée en 3D, réalisé en groupe."
 date: "2022-06-30"
 priority: 2
-cover: "/images/Images/projects/SAE3D.png"
+cover: "/images/Projects/generated/charte/temple-3d.webp"
 canonical: "https://maximilienherr.fr/projets/temple-3D"
 tags: ["3d", "unreal", "sae"]
 logos: ["threeDsMaxLogo", "substancePainterLogo", "unrealLogo", "gitLogo"]
@@ -43,13 +43,13 @@ Nous avons choisi Unreal Engine pour se défier avec un nouveau moteur de jeu. L
 
 Comme précisé au début, ce projet est celui de fin d'année. Il s'est déroulé sur 2 semaines de suite, à raison de 40 à 50 heures par personne.
 
-Nous étions 5 sur ce projet, ce qui représente donc près de 200 heures de travail, comprenant donc la modélisation, la création de textures, la création du jeu, mais aussi des réunions d'équipe ƒ?Ý Les 5 membres du projet sont : [Eliot Bianchin](https://www.linkedin.com/in/eliot-bianchin/), [Lucas Chalmandrier](https://www.linkedin.com/in/lucas-chalmandrier/), [Léo Ricard--Lissard](https://www.linkedin.com/in/l%C3%A9o-ricard-lissard-b358a9250/), [Florian Mure](https://www.linkedin.com/in/florian-mure-9b335422b/), et moi-même.
+Nous étions 5 sur ce projet, ce qui représente donc près de 200 heures de travail, comprenant la modélisation, la création de textures, la création du jeu, mais aussi des réunions d'équipe. Les 5 membres du projet sont : [Eliot Bianchin](https://www.linkedin.com/in/eliot-bianchin/), [Lucas Chalmandrier](https://www.linkedin.com/in/lucas-chalmandrier/), [Léo Ricard--Lissard](https://www.linkedin.com/in/l%C3%A9o-ricard-lissard-b358a9250/), [Florian Mure](https://www.linkedin.com/in/florian-mure-9b335422b/), et moi-même.
 
 Sur ce projet, pour la partie technique, je me suis chargé des textures des œuvres, une fois que les autres membres les avaient créées. De plus, je devais m'occuper des réunions d'équipe, de l'avancement, et de la bonne conduite du projet.
 
 ## Détails du projet
 
-L`objectif de notre temple est avant tout de rendre honneur aux artistes. En l`occurrence, nous avons été subjugués par le travail de Jean-Michel Othoniel, ainsi, nous avons préféré exploiter au maximum ces œuvres, et créer une scénographie autour de celles-ci. Pour la majorité des œuvres, nous avons utilisé une plane, dans la scène 3DsMax, pour avoir une idée en permanence du résultat à produire.
+L'objectif de notre temple est avant tout de rendre honneur aux artistes. En l'occurrence, nous avons été subjugués par le travail de Jean-Michel Othoniel. Nous avons donc préféré exploiter au maximum ces œuvres, et créer une scénographie autour de celles-ci. Pour la majorité des œuvres, nous avons utilisé une plane, dans la scène 3DsMax, pour avoir une idée en permanence du résultat à produire.
 
 ### Modélisation
 
@@ -57,22 +57,22 @@ Pour cette partie modélisation, je ne vais préciser que les œuvres que j'ai r
 
 #### “Le confident“, de Jean-Michel Othoniel
 
-- Utilisation de torus pour correspondre aux anneaux de l`œuvre
+- Utilisation de torus pour correspondre aux anneaux de l'œuvre
 - Duplication de ces anneaux selon une première bande verticale
-- Ajustements pour éviter de créer un motif n`étant pas présent dans l`œuvre
-- Duplication horizontale pour correspondre à la taille de l`œuvre
-- Dessin d`une ligne permettant de donner le tracé de la courbe de l`œuvre
+- Ajustements pour éviter de créer un motif n'étant pas présent dans l'œuvre
+- Duplication horizontale pour correspondre à la taille de l'œuvre
+- Dessin d'une ligne permettant de donner le tracé de la courbe de l'œuvre
 - Plane avec 2 modifications (shell pour la profondeur, et un path deform pour le suivi du tracé)
-- Ajout de deux planes correspondant aux soudures en haut et en bas de l`œuvre
-- Render des anneaux + planes, pour l`utiliser en tant que Bitmap sur la plane (qui suit le tracé)
-- Ajout des décorations sur le dessus de l`œuvre (suivant une ligne également)
-- Ajout d`un banc (que l`on pourrait exploiter dans le développement, sur Unreal)
+- Ajout de deux planes correspondant aux soudures en haut et en bas de l'œuvre
+- Render des anneaux + planes, pour l'utiliser en tant que Bitmap sur la plane (qui suit le tracé)
+- Ajout des décorations sur le dessus de l'œuvre (suivant une ligne également)
+- Ajout d'un banc (que l'on pourrait exploiter dans le développement, sur Unreal)
 
 ![le confident SAE 3D](/images/Images/projects/le%20confident%20SAE%203D.jpg)
 
 #### “Sans-titre“ (rebaptisée “boules suspendues“ par Eliot), de Jean-Michel Othoniel
 
-Cette œuvre est purement décorative, et se place à l`entrée de la salle principale du temple. Elle est par ailleurs composée de deux éléments principaux, les ¶® boules suspendues ¶¯, ainsi que le fil qui tient le tout.
+Cette œuvre est purement décorative, et se place à l'entrée de la salle principale du temple. Elle est par ailleurs composée de deux éléments principaux, les "boules suspendues", ainsi que le fil qui tient le tout.
 
 - Création d'un cylindre permettant la conduite des boules de l'œuvre
 - Ajout des boules de l'œuvre (chacune étant différente, pas possible de copier/coller)
@@ -83,7 +83,7 @@ Cette œuvre est purement décorative, et se place à l`entrée de la salle prin
 
 ### Texture
 
-Pour texturer les œuvres, l`essentiel a été fait via les textures proposées par Substance Painter. Il y a une exception sur les textures de verre, non proposées par Substance. Nous avons donc utilisé des ressources externes en ligne, dédiées à Unreal Engine 4/5.
+Pour texturer les œuvres, l'essentiel a été fait via les textures proposées par Substance Painter. Il y a une exception sur les textures de verre, non proposées par Substance. Nous avons donc utilisé des ressources externes en ligne, dédiées à Unreal Engine 4/5.
 
 Pour plus de détail sur la méthode d'export et de texturing, c'est toujours dans le compte rendu, dans le dossier “/Sujet et ressources initiales/Projet modélisation 3D - Compte Rendu.docx“ sur GitLab.
 
@@ -95,15 +95,15 @@ Pour travailler au mieux, et pour maintenir un avancement permettant de respecte
 
 #### Gestion de l'organisation
 
-L`objectif était d`avoir les différentes tâches prévues dans différentes listes du Trello. C`est une bonne visualisation de l`avancement du projet, en ayant notamment une liste prévue pour la liste des tâches terminées. Par ailleurs, la possibilité d`attribuer des étiquettes accroît cette visualisation du projet dans son entièreté.
+L'objectif était d'avoir les différentes tâches prévues dans différentes listes du Trello. C'est une bonne visualisation de l'avancement du projet, en ayant notamment une liste prévue pour la liste des tâches terminées. Par ailleurs, la possibilité d'attribuer des étiquettes accroît cette visualisation du projet dans son entièreté.
 
 #### Discussion et aide
 
-Pour pouvoir discuter et poser des problèmes, questionnementsƒ?Ý quelque part, nous avons utilisé Discord. Cela permettait de recenser les points de blocage (sur Discord ou Trello d`ailleurs), les ressources du projet, comme le lien vers le Trello, GitLabƒ?Ý Et bien évidemment, les discussions se faisaient aussi dans cet espace dédié.
+Pour pouvoir discuter et poser des problèmes ou questionnements quelque part, nous avons utilisé Discord. Cela permettait de recenser les points de blocage, sur Discord ou Trello d'ailleurs, et les ressources du projet, comme le lien vers le Trello ou GitLab. Et bien évidemment, les discussions se faisaient aussi dans cet espace dédié.
 
 #### Partage de fichiers
 
-Nous travaillons sur de nombreux fichiers, qui plus est, lourds. Ainsi, il est important d'avoir un bon système pour partager les fichiers entre nous. Cette obligation d'avoir chacun une ¶® casquette ¶¯ différente, entre Infographiste, gestion des textures, développeurƒ?Ý oblige d'avoir une bonne communication également. Donc, nous avons utilisé GitLab, avec une structure de dossiers, pour stocker nos fichiers de la meilleure des manières pour tout le monde.
+Nous travaillons sur de nombreux fichiers, qui plus est, lourds. Ainsi, il est important d'avoir un bon système pour partager les fichiers entre nous. Cette obligation d'avoir chacun une "casquette" différente, entre infographiste, gestion des textures et développeur, oblige d'avoir une bonne communication également. Donc, nous avons utilisé GitLab, avec une structure de dossiers, pour stocker nos fichiers de la meilleure des manières pour tout le monde.
 
 ![gitlab](/images/Images/projects/gitlab.png)
 

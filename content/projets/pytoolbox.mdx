@@ -1,0 +1,63 @@
+---
+title: "Pytoolbox - Toolbox Python auto-hébergeable"
+seoTitle: "Pytoolbox : toolbox Python avec FastAPI, Docker et plugins"
+seoDescription: "Boîte à outils Python auto-hébergeable : FastAPI, interface web Jinja2, architecture plugins, OCR, PDF, image resize, JSON viewer et Docker."
+description: "Toolbox Python locale avec système de plugins extensibles et interface web."
+date: "2026-01-18"
+updated: "2026-05-05"
+priority: 1
+cover: "/images/Projects/generated/charte/pytoolbox.webp"
+canonical: "https://maximilienherr.fr/projets/pytoolbox"
+tags: ["python", "fastapi", "docker", "plugin-architecture", "self-hosted"]
+logos: ["pythonLogo", "dockerLogo", "gitLogo"]
+draft: false
+faq:
+  - question: "Quelle est l'idée de Pytoolbox ?"
+    answer: "Regrouper de petits outils locaux dans une interface web auto-hébergeable, sans envoyer les fichiers vers des services tiers."
+  - question: "Comment ajoute-t-on un outil ?"
+    answer: "Le projet repose sur une classe de base, un registre et un scaffold CLI pour créer rapidement un nouveau plugin."
+---
+
+# Pytoolbox : une boîte à outils Python auto-hébergeable
+
+Pytoolbox est une toolbox personnelle auto-hébergeable. L'idée était de regrouper plusieurs petits outils que l'on utilise régulièrement, comme l'OCR, le merge de PDF ou le redimensionnement d'images, dans une interface web locale.
+
+L'historique GitHub va de septembre 2025 à janvier 2026. Le projet est intéressant moins pour chaque outil pris individuellement que pour son architecture de plugins.
+
+## Caractéristiques techniques du projet
+
+- **Backend** : Python, FastAPI.
+- **Interface** : Jinja2, templates simples.
+- **Déploiement** : Docker Compose.
+- **Architecture** : `BaseTool`, registry, scaffold CLI.
+- **Outils inclus** : OCR, merge PDF, extraction de texte PDF, resize image, JSON viewer, diagram editor.
+
+## Détails du projet
+
+### Pourquoi une toolbox locale
+
+Beaucoup d'outils en ligne rendent service, mais ils obligent à envoyer des fichiers à un tiers. Pour des PDF, images ou documents internes, ce n'est pas toujours acceptable.
+
+Pytoolbox garde donc tout en local. Le navigateur envoie le fichier à l'application auto-hébergée, puis le traitement se fait dans le container.
+
+### Système de plugins
+
+La partie la plus importante du projet est le système de plugins. Un outil est défini par une classe, des champs d'entrée, une fonction de traitement et une sortie.
+
+Le registre découvre les outils disponibles, et le scaffold CLI permet de créer rapidement un nouveau squelette. Cela évite que chaque outil devienne une page spéciale avec sa propre logique.
+
+### Interface web
+
+L'interface est volontairement simple : liste des outils, formulaire dynamique, résultat ou téléchargement. Pour une toolbox interne, la priorité est d'aller vite et de rester prévisible.
+
+## Ce que le projet m'a appris
+
+Ce projet m'a permis de travailler une abstraction utile sans tomber dans une architecture trop lourde. Le plugin system a un vrai intérêt : il rend l'ajout d'outils moins coûteux et limite la duplication.
+
+## Auto-critique du résultat
+
+L'interface pourrait être plus agréable et il manque des tests automatisés. Certains outils mériteraient aussi une meilleure gestion des erreurs, notamment pour les fichiers malformés ou trop lourds.
+
+## Sources du projet
+
+Le dépôt est privé pour le moment. La structure générale et les choix d'architecture sont présentés ici sans publier le code complet.

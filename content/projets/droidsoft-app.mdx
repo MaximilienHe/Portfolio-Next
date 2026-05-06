@@ -1,123 +1,109 @@
 ---
-title: "DroidSoft App - Application Mobile"
-description: "Découvrez mon projet d'application mobile, réalisé pour DroidSoft."
-date: "2023-03-31"
+title: "DroidSoft App - Application Android Kotlin"
+seoTitle: "DroidSoft App : application Android Kotlin, MVVM et API WordPress"
+seoDescription: "Application Android développée pour DroidSoft : Kotlin, MVVM, Paging 3, WordPress API, Firebase Messaging et API de fiches smartphones."
+description: "Application Android Kotlin pour DroidSoft, enrichie par une API de fiches smartphones."
+date: "2023-04-05"
+updated: "2026-05-05"
 priority: 1
-cover: "/images/Images/projects/droidsoft_app_horizontal.webp"
+cover: "/images/Projects/generated/charte/droidsoft-app.webp"
 canonical: "https://maximilienherr.fr/projets/droidsoft-app"
-tags: ["kotlin", "android", "api", "scraping"]
+tags: ["kotlin", "android", "mvvm", "api", "wordpress", "firebase"]
 logos: ["androidStudioLogo", "kotlinLogo", "javascriptLogo", "gitLogo"]
 draft: false
+faq:
+  - question: "Quel était le contexte du projet ?"
+    answer: "Un projet tutoré de deuxième année autour d'une application mobile pour DroidSoft, média spécialisé Android."
+  - question: "Qu'est-ce qui a été enrichi depuis l'ancienne page ?"
+    answer: "La page intègre maintenant l'audit du dépôt DroidApp : architecture MVVM, Paging 3, Firebase Messaging et travail sur l'application Android."
 ---
 
-# Application Mobile - DroidSoft App
+# DroidSoft App : application Android Kotlin pour DroidSoft
 
-A l'occasion du projet tutoré de 2e année, j'ai entrepris le développement d'une application mobile pour DroidSoft. DroidSoft est un média en ligne (sous WordPress), spécialisé dans les technologies autour du monde d'Android. Ce sont notamment les smartphones, les tablettes, les écouteurs, les montres connectées ƒ?Ý Ainsi, dédié à ces technologies, il était pertinent d'investir un support mobile intégré, et pas simplement la version mobile du site. C'est donc ça la genèse du projet, mais comment l'avons-nous fait ? ƒÏæ‹÷?
+A l'occasion du projet tutoré de deuxième année, nous avons développé une application mobile pour DroidSoft, un média en ligne spécialisé dans l'univers Android. L'idée était de proposer autre chose qu'une simple version mobile du site : une application native, avec un accès plus direct aux articles, aux contenus et à certaines données produits.
+
+Le projet s'est déroulé principalement entre fin 2022 et avril 2023. L'historique GitHub du dépôt DroidApp montre une activité entre janvier et avril 2023, avec plusieurs contributeurs. Nous étions quatre sur le projet, et j'ai notamment travaillé sur la coordination avec DroidSoft, l'application Android et la partie API autour des fiches produits.
 
 ![Logo DroidSoft App](/images/Images/projects/droidsoft_app_horizontal.webp)
 
 ## Caractéristiques techniques du projet
 
-### Langages / technologies utilisés
+### Application Android
 
-Ce projet étant assez important, plusieurs aspects sont travaillés. Il y a d'abord l'application en elle-même, qui utilise deux technologies :
+- **Android Studio** et **Kotlin**.
+- Architecture **MVVM**.
+- Repository pattern pour isoler l'accès aux données.
+- **Paging 3** pour le défilement progressif des articles.
+- **Retrofit** pour les appels réseau.
+- **Firebase Messaging** pour les notifications push.
+- Shimmer loading pour améliorer la perception de chargement.
 
-- **Android Studio**
-- **Kotlin**
+### API et données produits
 
-Le choix de Kotlin se justifie par une demande plus importante, et une modernité contrairement à Java.
+Une autre partie du projet concernait la création d'une API et d'une base de données de smartphones.
 
-D'autre part, nous avons une partie avec création d'API, pour récupérer et créer une base de données de smartphones. Cette API se base sur ces technologies :
+- Scripts JavaScript de scraping.
+- API Express.js pour exposer les données.
+- Base MySQL pour stocker marques, modèles et fiches techniques.
+- Endpoints de consultation pour les produits.
 
-- **Javascript** (scrapping avec Cheerio)
-- **Express.js** (Récupération des données scrappées par l'API, pour l'enregistrement dans la BDD)
-- **MySQL** pour la gestion de la BDD
-
-Pour expliquer brièvement le cheminement des données, elles sont scrappées et une création de route se fait selon les données scrappées. On récupère ensuite les données scrappées pour les remplir en base de données, et une autre API ouvre des endpoints pour récupérer les données enregistrées dans la base de données.
-
-### Combien de temps, qui et quoi ?
-
-Ce projet est le projet tutoré réalisé en 2e année, il s'est donc étalé de novembre 2022 jusqu'à fin mars 2023. En temps total alloué, on se place sur 150h environ par personne.
-
-Pour ce projet, nous étions 4 à le réaliser : [Lucas Chalmandrier](https://www.linkedin.com/in/lucas-chalmandrier/), [Eliot Bianchin](https://www.linkedin.com/in/eliot-bianchin/), [Quentin Detré](https://www.linkedin.com/in/quentin-detr%C3%A9/) et moi-même.
-
-Etant à l'origine partagée avec les responsables de DroidSoft de ce projet, j'étais en charge des relations avec le média. Pour bien entreprendre le travail, cela me tenait à c"ur de m'occuper de la gestion de l'équipe du projet, ce que j'ai donc fais. Et en partie technique, je me suis concentré sur le développement de l'application dans un premier temps, puis je suis parti sur la création de l'API pour la base de données.
+Cette partie a ensuite alimenté d'autres projets autour de DroidSoft, comme le [Comparateur DroidSoft](/projets/comparateur-droidsoft).
 
 ## Détails du projet
 
-Ce projet se concentre donc autour de 4 piliers majeurs. Il y a d'une part toute une recherche sur le design, pour intégrer au mieux les notions d'UI et d'UX pour rendre l'application ergonome. Aussi, il était important de maitriser la communication avec des APIs, en particulier celle de WordPress, qui nous permet la récupération des articles, des commentaires ƒ?Ý Le développement de l'application est aussi au centre du projet, avec des technologies nouvelles (Android Studio et Kotlin) au début du projet. C'était un pari plus risqué, mais réussi. Et enfin, la création de l'API et de la base de données est le 4e pilier de ce projet.
+### Organisation du travail
 
-### Design / UI & UX
+Le projet était mené avec un contexte proche d'un vrai client. DroidSoft avait une attente produit, et nous devions avancer avec des retours réguliers. J'étais en charge d'une partie de la relation avec le média, ce qui m'a amené à faire le lien entre les besoins exprimés, les choix de design et les contraintes techniques.
 
-Je n'ai pas crée directement le design, pour cette partie là, j'étais en charge de faire des retours aux clients sur ce qui était fait, pour adapter en conséquence le design. Connaissant l'ambition du projet, j'ai par ailleurs aidé la personne en charge, afin qu'elle sache quoi faire, et lui donner les éléments de la charte graphique du site.
+Nous avons utilisé GitHub pour partager le code et Trello pour suivre les tâches. Le travail était réparti entre design, développement Android et API.
 
-![design DroidSoft App](/images/Images/projects/design.webp)
+![Exemple de suivi projet Trello](/images/Images/projects/gif%20trello.gif)
 
-<div id="GreenIT"></div>
+### Design et UX
 
-### La petite touche Green IT & Numérique Responsable
+Le design devait rester cohérent avec l'identité DroidSoft, tout en tenant compte des usages mobiles. J'ai surtout travaillé les retours et l'ajustement des écrans, pour que les choix graphiques restent compatibles avec les contraintes de développement.
 
-Pour axer notre projet autour de la sensibilisation au Green IT que l'on a en cours, nous avons placé le design au centre de cette réflexion Numérique Responsable.
+![Design DroidSoft App](/images/Images/projects/design.webp)
 
-Un peu de contexte d'abord. Sur le marché des smartphones, une technologie d'écran domine le marché, à savoir l'OLED. Cette technologie d'affiche fait en sorte que chaque pixel de l'écran s'allume ou s'éteigne individuellement. Ainsi, dans le cas de l'affichage d'un pixel noir, le pixel associé s'éteindra.
+### Numérique responsable
 
-C'est pourquoi, nous avons opté pour deux designs, un _Light Mode_ et un _Dark Mode_. Le _Dark Mode_ peut utiliser des teintes de couleurs sombres, ou simplement un fond noir. Et si le design est justement réellement noir, et non pas une teinte colorée, cela permet d'éteindre les pixels affichés, ce qui augmente le contraste d'ailleurs. Le bénéfice est donc à la fois pour l'environnement, mais aussi pour l'accessibilité.
+Nous avons aussi intégré une réflexion autour du mode sombre. Sur les écrans OLED, un noir réel peut réduire la consommation, car les pixels concernés sont éteints. Ce n'était pas l'argument principal de l'application, mais cela donnait du sens au travail sur les thèmes clair et sombre.
 
-![Oled design vs Not Oled design](/images/Images/projects/design%20OLED.webp)
+![Design OLED DroidSoft](/images/Images/projects/design%20OLED.webp)
 
-### Communication avec l'API WordPress
+### Communication avec WordPress
 
-Au sein de l'application, il a fallu intégrer la communication avec l'API de WordPress, qui est très exhaustive et complète. C'était l'avantage, nous avions une base solide pour interagir avec les données du site.
+DroidSoft étant un média WordPress, l'application devait communiquer avec l'API du site pour récupérer les articles, commentaires et métadonnées utiles. Cette intégration était centrale : l'application n'avait de valeur que si elle restait branchée sur les contenus existants.
 
-### Développement de l'application
+### Base smartphones et scraping
 
-Comme précisé plus haut, on est parti sur un développement en Kotlin, sous Android Studio. Dans ce développement, deux choses étaient à réaliser, la partie fonctionnelle, et la partie graphique de l'application. Sur l'ensemble de l'application, je me suis placé sur les deux aspects de celle-ci.
+La partie API produits reposait sur un flux de scraping puis d'enregistrement en base. L'objectif était de transformer des fiches techniques en données exploitables par une API.
 
-L'intérêt de ce projet était d'expérimenter un aspect de la formation que nous n'avions pas vu, le développement d'applications. Par ailleurs, en se plaçant sur des technologies plus récentes et plus demandées, cela permet d'avoir un rendu presque professionnel.
+![Endpoints API produits](/images/Images/projects/endpoints.webp)
 
-Nous avons aussi profité de ce projet pour travailler en mode `“entreprise“`. Cela passe par l'utilisation de Git (GitHub) pour le partage de code, avec une rigueur dans son usage. Le partage de tâche s'est fait selon une `“spécialité“`, design, app ou création de l'API / BDD.
+Le modèle reposait sur des endpoints comme `/brands`, `/brand/{url}` et `/device/{url}` pour naviguer entre marques, produits et fiches détaillées.
 
-### Création d'API et BDD
+## Ce que le projet m'a appris
 
-Comme précisé plus haut aussi, la création de cette API se fait en javascript pour le _scraping_, mais aussi pour l'interaction avec la base de données. Celle-ci est d'ailleurs gérée en MySQL, avec une conception réfléchie pour améliorer la rapidité. Le _scraping_ récupère des données sous un format initial, se basant sur un triplet de chemins d'accès.
+Ce projet a été une vraie transition entre travaux scolaires et logique client. Nous avons dû apprendre Kotlin, comprendre l'API WordPress, gérer une équipe, tenir compte des retours de DroidSoft et livrer quelque chose de présentable.
 
-![endpoints](/images/Images/projects/endpoints.webp)
-
-On a le `/brands` qui nous donne les marques, le `/brand/{url}` qui nous donne tous les produits d'une marque, et le `/device/{url}` qui nous donne les détails techniques de ce téléphone. Un premier script était en charge de récupérer ces données, et de les stocker dans une base de données. Ensuite, tous les jours, un second script doit comparer pour trouver les nouvelles données, et les enregistrer.
-
-## En résumé
-
-Ce projet a donc été une porte ouverte sur le travail en entreprise. Nous avons à la fois travaillé en groupe, à travers des outils professionnels (Git, Trello ...), mais aussi selon un cahier des charges, et des tâches définies. Chacun travaillant sur un pannel de tâches défini, c'est plus favorable à une amélioration de ses capacités dans ce domaine. Enfin, sur des projets en entreprise, il est tout à fait possible de ne pas connaitre les technologies utilisées, c'est pourquoi, nous sommes partis dans l'inconnu, avec Android Studio et Kotlin, que nous n'avions jamais travaillé ou vu auparavant.
+Sur le plan technique, j'ai surtout progressé sur le développement Android, la communication API et la structuration d'un projet mobile plus ambitieux qu'un TP.
 
 ## Auto-critique du résultat
 
-Pour parler un peu plus du résultat du projet, il est nécessaire d'inclure les retours que l'on a eu de la part de DroidSoft, qui commanditait le projet. Si nous reprenons les éléments dans l'ordre, nous avons commencé à partir du design. Celui-ci a donc été réalisé au jour le jour, avec des retours au jour le jour également. L'objectif était clair, ne pas aller droit dans le mur, et se baser sur les envies et les appréciations de l'équipe de DroidSoft. Cette partie communication était aisée, simplement des messages sur Slack avec les éléments de design produits, en demandant de valider ou non.
+Avec le recul, nous aurions pu réduire le périmètre pour livrer plus vite certaines fonctionnalités. L'application était fonctionnelle, mais chaque bloc demandait un apprentissage : Android, Kotlin, API WordPress, scraping, base de données.
 
-Pour la partie développement de l'application, bien que nous partions sur une base solide, sur laquelle, nous devions ajouter plein d'éléments, tout en se formant, ça a manqué de rapidité. Nous aurions pu réaliser plus de fonctionnalité, avec des deadlines plus courtes. Mais dans l'ensemble, à la première date butoir, nous avions une application fonctionnelle, et qui répondait aux critères minimaux d'une application de ce type (_media player_ pour Android).
-
-Enfin, pour la partie création de l'API des smartphones (avec base de données), étant donné que cela s'étalait aussi sur mon projet de stage, j'ai repris en main cette partie là sur le 3e sprint. Etant donné qu'il y avait beaucoup d'intermédiaires (le site que l'on scrappe, une API tampon ƒ?Ý) cela impliquait des contre-temps. Mais dans l'ensemble, le résultat est bon. Comme je viens de le dire, c'est lié à mon stage, donc j'en reparlerai dans le projet `“Stage“` qui arrivera à la fin de celui-ci sur ce site !
-
-<div className="logos">
-  <img src="/images/logos/Dev Logiciels/Kotlin.png" alt="kotlin" className="logo" />
-  <img src="/images/logos/Dev Logiciels/AndroidStudio.png" alt="AndroidStudio" className="logo" />
-  <img src="/images/logos/Dev Web/JavaScript.png" alt="JavaScript" className="logo" />
-  <img src="/images/logos/Dev Logiciels/git.png" alt="Git" className="logo" />
-</div>
+La partie API produits était prometteuse, mais dépendait de beaucoup d'intermédiaires. Pour la rendre plus robuste, il aurait fallu mieux gérer les erreurs de scraping, les changements de structure du site source et l'observabilité des scripts.
 
 ## Sources du projet
 
 <div className="sources">
   <a href="https://github.com/MaximilienHe/DroidApp" target="_blank" rel="noopener">
-    <p>Sources de l'application</p>
-    <img src="/images/logos/Dev Web/logo-sources-projet.png" alt="Sources du projet" className="logo" />
-  </a>
-  <a href="https://github.com/MaximilienHe/DroidApp" target="_blank" rel="noopener">
-    <p>Sources de l'API de scrapping</p>
+    <p>Sources de l'application Android</p>
     <img src="/images/logos/Dev Web/logo-sources-projet.png" alt="Sources du projet" className="logo" />
   </a>
   <a href="https://github.com/MaximilienHe/Phone-API-BDD" target="_blank" rel="noopener">
-    <p>Sources des scripts liés à l'API base de données</p>
+    <p>Sources des scripts liés à l'API produits</p>
     <img src="/images/logos/Dev Web/logo-sources-projet.png" alt="Sources du projet" className="logo" />
   </a>
 </div>
-

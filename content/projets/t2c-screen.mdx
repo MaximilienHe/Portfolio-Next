@@ -1,20 +1,28 @@
 ---
-
-title: "T2C-Screen : affichage temps réel sur matrice LED (API + ESP32 + app)"
-description: "Projet complet d’affichage des prochains départs T2C à Clermont-Ferrand : serveur Node/Express (GTFS + GTFS-RT), API sécurisée par clés, interface web de configuration, firmware ESP32 pour matrice HUB75, et scripts Python pour envoyer des bitmaps."
+title: "T2C-Screen - Affichage temps réel T2C"
+seoTitle: "T2C-Screen : API GTFS, ESP32 et widget Android"
+seoDescription: "Projet complet autour des transports T2C : API Node/Express GTFS + GTFS-RT, matrice LED ESP32, frontend panneau, scripts Python et widget Android Kotlin."
+description: "Affichage temps réel des prochains départs T2C avec API Node.js, ESP32 et widget Android."
 date: "2026-01-12"
-updated: "2026-01-12"
-tags: ["nodejs", "express", "gtfs", "gtfs-rt", "esp32", "platformio", "iot", "docker"]
-cover: "/images/Projects/t2c-screen/hero.webp"
-canonical: "https://maximilienherr.fr/projets/t2c-screen"
+updated: "2026-05-05"
 priority: 1
-logos: ["nodeLogo", "dockerLogo", "esp32Logo", "gitLogo"]
+cover: "/images/Projects/generated/charte/t2c-screen.webp"
+canonical: "https://maximilienherr.fr/projets/t2c-screen"
+tags: ["nodejs", "express", "gtfs", "gtfs-rt", "esp32", "iot", "android", "docker"]
+logos: ["nodeLogo", "dockerLogo", "esp32Logo", "kotlinLogo", "gitLogo"]
 draft: false
-------------
+faq:
+  - question: "Quelles données sont utilisées ?"
+    answer: "Le projet combine GTFS statique et GTFS-RT Trip Updates du réseau T2C de Clermont-Ferrand."
+  - question: "Quels clients consomment l'API ?"
+    answer: "Un frontend mode panneau, un firmware ESP32 pour matrice LED et un widget Android Kotlin consomment l'API."
+---
 
-# T2C-Screen : affichage temps réel sur matrice LED (API + ESP32 + app)
+# T2C-Screen : afficher les prochains départs T2C partout
 
-T2C-Screen est un projet « bout en bout » pour afficher les prochains départs du réseau T2C (Clermont-Ferrand) sur un panneau LED piloté par ESP32. Le cœur repose sur un serveur Node/Express qui télécharge et indexe un flux **GTFS statique** (ZIP), puis combine ces données avec **GTFS-RT Trip Updates** pour calculer des départs « temps réel ». Une API HTTP expose les lignes, les arrêts et les départs, et l’ESP32 consomme directement cette API pour afficher deux directions sur une matrice HUB75 (deux panneaux 64×32 chaînés). Le projet inclut aussi une interface web légère (SPA) pour configurer la ligne et l’arrêt, ainsi que des scripts Python pour envoyer des bitmaps personnalisés vers l’écran.
+T2C-Screen est un projet personnel autour des transports de Clermont-Ferrand. L'objectif était de récupérer les données du réseau T2C, calculer les prochains départs en temps réel, puis les afficher sur plusieurs supports : navigateur, matrice LED pilotée par ESP32 et widget Android.
+
+L'historique GitHub visible s'étend de novembre 2025 à janvier 2026 pour le backend et le widget. Le projet est l'un des plus complets de mon portfolio parce qu'il relie données publiques, backend, IoT, application mobile et déploiement Docker.
 
 ![T2C-Screen cover](/images/Projects/t2c-screen/hero.webp)
 
@@ -22,192 +30,91 @@ T2C-Screen est un projet « bout en bout » pour afficher les prochains départs
 
 ## Caractéristiques techniques du projet
 
-### Langages et technologies
-
-* **Backend** : Node.js (Express), parsing CSV (`csv-parse`), gestion ZIP (`adm-zip`), Protobuf GTFS-RT (`gtfs-realtime-bindings`).
-* **Sécurité API** : clés API + scopes, comparaison **SHA-256** timing-safe.
-* **Déploiement** : Docker (Node 22 Alpine) + `docker-compose` (volumes, variables d’environnement).
-* **Frontend** : SPA statique (HTML/CSS/JS) servie par Express (archivée, utile pour config / debug).
-* **Firmware** : ESP32 (Arduino via PlatformIO), bibliothèque HUB75 DMA (ESP32-HUB75-MatrixPanel-I2S-DMA), serveur HTTP local.
-* **Outils** : scripts Python (Pillow) pour convertir des images en **RGB565** et les envoyer à l’ESP.
-
-### Périmètre fonctionnel
-
-* Téléchargement et indexation du GTFS statique (routes, stops, trips, stop_times).
-* Lecture GTFS-RT (TripUpdates), cache court côté serveur pour limiter la charge.
-* Calcul des prochains départs par ligne/arrêt, regroupés par direction (headsign/directionId).
-* API HTTP sous `/api` :
-
-  * `GET /api/routes`
-  * `GET /api/stops?route=A[&q=jaude]`
-  * `GET /api/departures?route=A&stopId=...&max=2` (ou `stopName`)
-  * Health : `GET /api/_health/live`, `GET /api/_health/ready`
-* Affichage sur matrice LED 128×32 (2× 64×32) : 2 directions, terminus défilant si trop long.
-* Messages personnalisés sur l’écran via HTTP local ESP32 : texte, bitmap, clear, luminosité.
-
-### Combien de temps, qui, et quoi
-
-Le projet a été développé de manière itérative, avec une approche pragmatique : d’abord un serveur monolithique (`server.js`) pour valider le parsing GTFS et le calcul des départs, puis une refonte en modules (`src/*`) avec services dédiés (GTFS statique, GTFS-RT, clés API, calcul departures) et middlewares (requestId, auth, errors).
-
-Côté matériel, l’objectif était d’obtenir un rendu « panneau d’arrêt » : deux panneaux P5 64×32 chaînés, alimentation dédiée 5V 10A, ESP32 DevKit et câblage HUB75.
-
-## Détails du projet
+- **Backend** : Node.js, Express.
+- **Données transport** : GTFS statique, GTFS-RT Trip Updates, parsing ZIP/CSV et Protobuf.
+- **Sécurité API** : clés API, scopes, hash SHA-256, comparaison timing-safe.
+- **Déploiement** : Docker, Docker Compose, configuration pour NAS ou serveur personnel.
+- **Frontend** : SPA statique servie par Express, avec mode panneau plein écran.
+- **IoT** : ESP32, PlatformIO, matrice LED HUB75.
+- **Mobile** : widget Android Kotlin configurable.
+- **Outils** : scripts Python pour convertir et envoyer des bitmaps vers l'écran.
 
 <div id="t2c-architecture"></div>
 
 ## Architecture globale
 
-Le projet se découpe en quatre blocs qui communiquent via HTTP.
+Le projet est découpé en plusieurs clients autour d'une même API.
 
-1. **Serveur Node/Express**
-
-   * Télécharge le GTFS statique, parse les fichiers et construit des index en mémoire.
-   * Interroge GTFS-RT TripUpdates, met en cache quelques secondes.
-   * Expose une API sécurisée par clé + scopes.
-
-2. **Frontend statique (SPA)**
-
-   * Sert d’outil de configuration et de visualisation.
-   * Mode « display » plein écran via query string (utile sur tablette/TV).
-
-3. **ESP32 + matrice HUB75**
-
-   * Consomme l’API `/api/departures` toutes les 30 s.
-   * Affiche deux directions, avec défilement si le terminus dépasse la largeur disponible.
-   * Propose un serveur HTTP local pour pousser des messages (texte / bitmap).
-
-4. **Scripts Python**
-
-   * Convertissent une image (PNG/JPG/GIF) vers un flux RGB565 (hex).
-   * Envoient un JSON à l’ESP32 via `POST /message/bitmap`.
-
+1. **Serveur Node/Express** : télécharge le GTFS statique, construit les index, interroge le GTFS-RT et expose les endpoints.
+2. **Frontend panneau** : affiche les prochains départs dans une vue web simple, utile pour debug ou écran permanent.
+3. **ESP32 + matrice HUB75** : consomme l'API et affiche deux directions sur une matrice LED.
+4. **Widget Android** : affiche les prochains départs directement sur l'écran d'accueil.
+5. **Scripts Python** : envoient des images ou bitmaps vers l'écran ESP32.
 
 <div id="t2c-backend"></div>
 
 ## Backend Node/Express
 
-### Chargement GTFS statique et indexation
+Le backend parse les données GTFS statiques, puis les combine avec le flux GTFS-RT. Il expose ensuite des endpoints comme :
 
-Le service `GtfsStaticService` télécharge régulièrement un ZIP GTFS, lit `routes.txt`, `stops.txt`, `trips.txt` et `stop_times.txt`, et construit des index pour répondre rapidement aux requêtes.
+- `GET /api/routes`
+- `GET /api/stops?route=A`
+- `GET /api/departures?route=A&stopId=...`
+- `GET /api/_health/live`
+- `GET /api/_health/ready`
 
-Index principaux :
+Le service GTFS statique construit des index en mémoire. Le rechargement est fait par swap atomique : si une mise à jour échoue, l'ancien snapshot reste disponible.
 
-* `routeByShortName` : code ligne (ex `A`) vers `{route_id, color, longName}`.
-* `stopsByName` : nom normalisé vers liste de `stop_id`.
-* `routeStopsByRouteId` : ensemble des arrêts desservis par la route.
-* `tripInfoById` : `trip_id` vers `{headsign, directionId, routeId}`.
-* `canonicalHeadsignByRouteDir` : terminus « majoritaire » par sens.
-* `stopDirsByRouteStop` : directions possibles par `stop_id` (si unique, utilisée en fallback).
+Le service GTFS-RT met en cache le flux quelques secondes pour éviter de refaire un appel externe à chaque requête.
 
-Le rechargement est fait par « swap atomique » du snapshot en mémoire : si une refresh échoue, l’ancien snapshot reste disponible.
+## Sécurité de l'API
 
-### Lecture GTFS-RT avec cache court
+Les endpoints de données sont protégés par des clés API à scopes.
 
-`GtfsRtService` récupère un flux Protobuf GTFS-RT, le décode et le met en cache quelques secondes. Cela évite de refetch à chaque requête quand plusieurs clients interrogent l’API (ESP32 + navigateur + app).
+Le client peut envoyer une clé via `Authorization: Bearer <token>` ou `X-API-Key`. Le serveur compare le hash SHA-256 de la clé avec les valeurs stockées dans un fichier de configuration.
 
-### Calcul des départs
-
-L’endpoint `GET /api/departures` :
-
-* Valide la ligne (`route`), puis résout l’arrêt par `stopId` (recommandé) ou `stopName`.
-* Parcourt les entités `TripUpdate` du feed.
-* Filtre sur `routeId`, puis cherche les `stopTimeUpdate` correspondant au stop.
-* Construit une liste triée par sens (directionId si connu), et renvoie `inMinutes` + `timeIso`.
-
-Le code privilégie l’information **GTFS statique** (directionId/headsign) avant GTFS-RT, et prévoit des fallback si certaines infos sont absentes.
-
-## Sécurité : clés API + scopes
-
-Les endpoints de données (`/routes`, `/stops`, `/departures`) sont protégés par un middleware `requireScopes`.
-
-* Le client envoie une clé via `Authorization: Bearer <token>` ou `X-API-Key: <token>`.
-* Le serveur calcule `sha256(token)` et compare au `tokenSha256` stocké dans `keys.json`.
-* Chaque clé possède des scopes. Exemple :
-
-  * app / navigateur : `routes:read`, `stops:read`, `departures:read`
-  * ESP32 : `departures:read`
-
-`keys.json` est monté dans le container en **read-only** et exclu de Git.
-
-## Frontend statique (outil de config)
-
-Le dossier `public/` contient une SPA minimale :
-
-* Suggestion des lignes via `GET /api/routes`.
-* Suggestion des arrêts filtrée par ligne via `GET /api/stops?route=...&q=...`.
-* Rendu de deux cartes, une par sens, avec l’« imminence » (À quai / Dans X min).
-* Mode plein écran : `?mode=display&route=A&stop=Jaude&max=2` (idéalement `stopId`).
-
-Ce frontend est volontairement simple : il sert d’outil de debug/validation et de configuration rapide, sans dépendances.
+Cela permet de créer des clés différentes selon l'usage : frontend de debug, ESP32, widget Android ou client personnel.
 
 <div id="t2c-firmware"></div>
 
-## ESP32 + matrice HUB75
+## ESP32 et matrice LED
 
-Le firmware (PlatformIO / Arduino) :
+La partie ESP32 vise un affichage physique, proche d'un petit panneau d'arrêt. Le firmware interroge régulièrement l'API et affiche les prochains départs sur une matrice HUB75.
 
-* Se connecte au WiFi.
-* Interroge `GET /api/departures` toutes les 30 secondes.
-* Affiche deux lignes (2 directions) sur une matrice 128×32.
-* Défile le terminus si la chaîne dépasse la zone prévue.
+L'ESP32 expose aussi quelques endpoints locaux pour :
 
-### Serveur HTTP local sur l’ESP32
+- changer la configuration route/arrêt ;
+- envoyer un message texte ;
+- envoyer un bitmap ;
+- vider l'affichage ;
+- régler la luminosité.
 
-L’ESP32 expose aussi un serveur HTTP (port 80) pour piloter l’affichage :
+Les scripts Python convertissent des images en RGB565 pour les pousser vers l'écran.
 
-* `POST /config` : changer `route` / `stop`.
-* `POST /message/text` : pousser un message texte (avec couleurs, défilement si long).
-* `POST /message/bitmap` : pousser un bitmap RGB565 (payload hex).
-* `POST /message/clear` : vider la file de messages.
-* `POST /display/brightness` : luminosité (0 à 255).
+## Widget Android
 
-Le rendu alterne entre le mode T2C et les messages personnalisés via une petite machine à états, avec expiration (`validityHours`) côté messages.
+Le dépôt `t2c-widget` complète le backend. Il contient un widget Android Kotlin configurable, avec choix de ligne et arrêt, préférences locales et mise à jour au déverrouillage.
 
-## Scripts Python : envoi de bitmaps
+Ce composant est intéressant parce qu'il montre que l'API n'a pas été pensée pour un seul écran. Le même backend peut servir un navigateur, un objet connecté et un widget mobile.
 
-Les scripts `python-send-image/*.py` utilisent Pillow pour :
+## Ce que le projet m'a appris
 
-* Charger une image.
-* La redimensionner en 128×32 (ou 128×64 selon variante).
-* Convertir chaque pixel RGB888 en RGB565.
-* Sérialiser un flux hex et l’envoyer à `POST /message/bitmap`.
+T2C-Screen m'a fait travailler sur un vrai flux de données publiques, avec les problèmes classiques qui vont avec : format GTFS, temps réel partiel, cache, erreurs réseau, normalisation des arrêts et robustesse du parsing.
 
-Cela permet de pousser rapidement un logo, une image ou un GIF aplati (dans l’état, le script traite une image à la fois).
+J'ai aussi appris à concevoir une API simple mais suffisamment propre pour être consommée par plusieurs clients très différents.
 
-<div id="t2c-deploy"></div>
+## Auto-critique du résultat
 
-## Déploiement
+Le projet gagnerait à avoir davantage de tests automatisés, surtout sur le calcul des départs et les fallbacks GTFS/GTFS-RT. Côté ESP32, la configuration pourrait être plus persistante et l'affichage pourrait mieux gérer les noms longs.
 
-### Docker / NAS
-
-Le projet se déploie via `docker-compose.yaml` :
-
-* Port externe mappé (ex `8086:8080`).
-* Variables d’environnement pour GTFS/GTFS-RT, timeouts et logs.
-* Volume read-only pour `keys.json`.
-
-Le serveur écoute sur `APP_PORT` pour éviter certains environnements qui injectent `PORT` (cas observé sur NAS).
-
-## Auto-critique et pistes d’amélioration
-
-* **Authentification frontend** : le frontend statique ne doit pas embarquer une clé en dur. Si usage navigateur nécessaire, préférer un proxy interne non exposé, ou une auth navigateur dédiée (session/cookie), ou rendre ces endpoints publics et garder l’auth pour les clients « privés ».
-* **StopId par défaut** : la résolution par `stopName` reste un fallback. Un mode « sélection » qui stocke systématiquement `stopId` est plus robuste.
-* **Animation / layout** : le rendu ESP32 est optimisé pour la lisibilité, mais pourrait intégrer une meilleure hiérarchie typographique (icônes, alignements) et une gestion plus fine des noms longs.
-* **Messages bitmap** : ajouter un endpoint « playlist » ou support d’animations (frames) permettrait d’afficher des GIF réellement animés.
-* **Persistance** : conserver la config route/stop dans NVS (ESP32) éviterait de reconfigurer après reboot.
-
-<div className="logos">
-  <img src="/images/logos/Dev Web/node.png" alt="Node.js" className="logo" />
-  <img src="/images/logos/Dev Web/docker.png" alt="Docker" className="logo" />
-  <img src="/images/logos/Dev Logiciels/esp32.png" alt="ESP32" className="logo" />
-  <img src="/images/logos/Dev Logiciels/git.png" alt="Git" className="logo" />
-</div>
+Le widget Android mérite aussi un README et une capture d'écran pour être immédiatement compréhensible.
 
 ## Sources du projet
 
-<a href="https://github.com/MaximilienHe/t2c-backend" target="_blank" rel="noopener">
-  <img src="/images/logos/Dev Web/logo-sources-projet.png" alt="Sources du projet" className="logo" />
-</a>
-
----
-
+<div className="sources">
+  <a href="https://github.com/MaximilienHe/t2c-backend" target="_blank" rel="noopener">
+    <p>Sources du backend T2C-Screen</p>
+    <img src="/images/logos/Dev Web/logo-sources-projet.png" alt="Sources du projet" className="logo" />
+  </a>
+  <p>Le widget Android est dans un dépôt privé, mais il est intégré au périmètre technique présenté sur cette page.</p>
+</div>

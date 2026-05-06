@@ -1,0 +1,62 @@
+---
+title: "Miam'Map - App mobile Flutter et FastAPI"
+seoTitle: "Miam'Map : application Flutter, FastAPI, PostGIS et MinIO"
+seoDescription: "Application mobile de suivi de restaurants : Flutter, FastAPI, PostgreSQL/PostGIS, MinIO, OpenStreetMap et Docker."
+description: "Application mobile de suivi de restaurants avec carte, visites, photos et backend géospatial."
+date: "2026-01-03"
+updated: "2026-05-05"
+priority: 2
+cover: "/images/Projects/generated/charte/miammap.webp"
+canonical: "https://maximilienherr.fr/projets/miammap"
+tags: ["flutter", "dart", "fastapi", "postgresql", "postgis", "docker"]
+logos: ["pythonLogo", "dockerLogo", "gitLogo"]
+draft: false
+faq:
+  - question: "Pourquoi regrouper frontend et backend sur une seule page ?"
+    answer: "La valeur du projet vient du produit complet : application mobile Flutter, API FastAPI, PostGIS, stockage média et ingestion OpenStreetMap."
+  - question: "Quel était le statut du projet ?"
+    answer: "Il s'agit d'un PoC avancé, avec architecture propre, mais sans publication Play Store."
+---
+
+# Miam'Map : historiser ses restaurants sur une carte
+
+Miam'Map est une application mobile de suivi de restaurants. L'idée était de garder un historique de ses visites, notes, photos et restaurants favoris, avec une carte comme point d'entrée principal.
+
+Le projet est réparti entre un backend FastAPI et une application Flutter. L'historique GitHub visible est concentré autour de janvier 2026, ce qui ressemble davantage à un PoC avancé qu'à un produit longuement maintenu.
+
+![Logo Miam'Map](/images/Projects/miammap/logo.webp)
+
+## Caractéristiques techniques du projet
+
+- **Mobile** : Flutter, Dart, architecture feature-based.
+- **Backend** : Python, FastAPI.
+- **Base de données** : PostgreSQL avec PostGIS.
+- **Médias** : MinIO compatible S3 pour les photos.
+- **Données externes** : ingestion OpenStreetMap.
+- **Déploiement** : Docker, migrations SQL, CI Android.
+
+## Détails du projet
+
+### Application mobile
+
+Côté Flutter, le code est organisé par fonctionnalités : authentification, home, recherche, détail restaurant, profil et visites. Le repository pattern permet de travailler avec un backend réel ou un mock client.
+
+Cette séparation est utile pour développer l'interface sans dépendre constamment de l'API.
+
+### Backend géospatial
+
+Le backend utilise PostGIS pour gérer les restaurants et leur position. Une ingestion OpenStreetMap permet d'initialiser les lieux, puis l'application peut ajouter des visites et médias.
+
+MinIO sert au stockage des photos. C'est un bon compromis pour un PoC : on teste une logique proche de S3 sans dépendre directement d'un service cloud.
+
+## Ce que le projet m'a appris
+
+Le projet m'a permis de travailler une architecture mobile + backend plus complète qu'un simple CRUD. La géolocalisation, les médias et les données OSM ajoutent des contraintes concrètes.
+
+## Auto-critique du résultat
+
+Le projet manque de README et de screenshots. Il a une base technique intéressante, mais il faudrait le documenter et stabiliser quelques parcours pour en faire une démonstration vraiment convaincante.
+
+## Sources du projet
+
+Les dépôts backend et frontend sont privés. La page présente donc le produit complet sans lien public vers le code.

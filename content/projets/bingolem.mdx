@@ -1,0 +1,79 @@
+---
+title: "Bingolem - Bingo temps réel collaboratif"
+seoTitle: "Bingolem : bingo temps réel avec Socket.IO et TypeScript"
+seoDescription: "Application fullstack TypeScript de bingo collaboratif : grilles uniques, vote collectif, scoring en direct, Socket.IO, Prisma et Docker."
+description: "Bingo collaboratif en temps réel avec grilles uniques, votes collectifs et scoring."
+date: "2026-01-28"
+updated: "2026-05-05"
+priority: 1
+cover: "/images/Projects/generated/charte/bingolem.webp"
+canonical: "https://maximilienherr.fr/projets/bingolem"
+tags: ["typescript", "react", "socket.io", "nodejs", "postgresql", "docker"]
+logos: ["nodeLogo", "dockerLogo", "gitLogo"]
+draft: false
+faq:
+  - question: "Quel était l'objectif de Bingolem ?"
+    answer: "Construire un jeu de bingo collaboratif jouable en temps réel, avec des grilles uniques par joueur et une validation collective des mots."
+  - question: "Pourquoi ce projet est intéressant techniquement ?"
+    answer: "Il combine logique de jeu, événements temps réel Socket.IO, persistance PostgreSQL/Prisma et séparation nette entre backend, frontend et règles métier."
+---
+
+# Bingolem : bingo temps réel et collaboratif
+
+Bingolem part d'une idée assez simple : transformer un discours, une présentation ou une réunion en partie de bingo collective. Chaque joueur rejoint une partie, reçoit sa propre grille de mots et coche ce qu'il entend. La différence avec un bingo classique vient du vote collectif : un mot coché peut être soumis aux autres joueurs avant d'être réellement validé.
+
+Le dépôt visible dans l'historique GitHub est concentré sur janvier 2026. Il ressemble à un projet personnel construit rapidement, mais avec une structure de code pensée pour aller plus loin qu'un simple prototype.
+
+![Logo Bingolem](/images/Projects/bingolem/logolem.webp)
+
+## Caractéristiques techniques du projet
+
+Le projet est organisé en monorepo avec deux blocs principaux.
+
+- **API** : Node.js, TypeScript, Express, Socket.IO, Prisma et PostgreSQL.
+- **Web** : React, Vite, TypeScript, Tailwind CSS et Zustand pour les états côté client.
+- **Déploiement** : Docker Compose pour lancer l'API, le frontend et la base.
+- **Authentification admin** : OAuth Discord pour accéder aux écrans de gestion.
+
+La partie qui m'intéressait le plus était la logique de jeu. Elle est isolée dans des modules dédiés : génération des grilles, scoring, validation des mots, état des parties et transitions entre les phases.
+
+## Détails du projet
+
+### Gameplay
+
+Chaque joueur reçoit une grille unique de 20 mots. Quand un mot est entendu, il peut être coché localement, puis soumis à une validation collective. Le scoring prend en compte plusieurs situations : mots validés, mots en attente, bingo, grille complète et score final.
+
+Ce découpage oblige à bien distinguer l'état local du joueur, l'état partagé de la partie et l'état persistant enregistré en base.
+
+### Temps réel
+
+Socket.IO sert à synchroniser les actions entre les joueurs :
+
+- arrivée et départ d'un joueur ;
+- démarrage d'une partie ;
+- check d'un mot ;
+- passage en review collective ;
+- validation ou refus ;
+- mise à jour du scoreboard.
+
+J'ai gardé un état live en mémoire côté serveur. C'est volontaire pour rester simple et rapide à développer, mais cela limite le déploiement à une seule instance serveur sans Redis ou autre couche de synchronisation distribuée.
+
+### Architecture
+
+Le backend sépare les routes HTTP, les sockets et la logique métier. C'est ce qui rend le code intéressant pour le portfolio : les règles du jeu ne sont pas mélangées directement avec les callbacks Socket.IO.
+
+Le frontend suit la même logique avec des pages dédiées pour rejoindre une partie, jouer, administrer et gérer le retour OAuth.
+
+## Ce que le projet m'a appris
+
+Ce projet m'a permis de travailler sur une problématique très concrète : garder un jeu temps réel lisible dans le code. Les événements Socket.IO deviennent vite difficiles à suivre si chaque callback modifie directement l'état global. Ici, j'ai préféré isoler la mécanique métier pour pouvoir raisonner sur le jeu indépendamment du transport réseau.
+
+## Auto-critique du résultat
+
+Le principal compromis est l'état live en mémoire. Pour un usage personnel ou une petite partie entre amis, c'est suffisant. Pour un vrai déploiement scalable, il faudrait externaliser l'état des parties ou au minimum synchroniser les événements via Redis.
+
+Il manque aussi des tests automatisés sur la logique de scoring. C'est typiquement le genre de projet où quelques tests unitaires auraient beaucoup de valeur, car une petite erreur de règle se voit immédiatement en partie.
+
+## Sources du projet
+
+Le code source est dans un dépôt privé. Je peux en présenter la structure, les choix techniques et les extraits pertinents, mais je ne l'affiche pas publiquement sur le portfolio.

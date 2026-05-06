@@ -1,0 +1,61 @@
+---
+title: "Collecto-Bot - Avis anonymes Discord"
+seoTitle: "Collecto-Bot : bot Discord, Django et OAuth2"
+seoDescription: "Bot Discord pour collecter des avis anonymes avec votes, threads et dashboard Django sécurisé par OAuth2 Discord."
+description: "Bot Discord de collecte d'avis anonymes avec dashboard web et export."
+date: "2026-01-11"
+updated: "2026-05-05"
+priority: 2
+cover: "/images/Projects/generated/charte/collecto-bot.webp"
+canonical: "https://maximilienherr.fr/projets/collecto-bot"
+tags: ["python", "discord", "django", "oauth2", "docker"]
+logos: ["pythonLogo", "dockerLogo", "gitLogo"]
+draft: false
+faq:
+  - question: "Quel problème Collecto-Bot cherche-t-il à résoudre ?"
+    answer: "Permettre de collecter des avis anonymes sur Discord, puis de les consulter et exporter depuis un dashboard."
+  - question: "Quelle est la principale limite du projet ?"
+    answer: "Le projet manque de captures et de tests automatisés, et un point de sécurité signalé dans le README doit être traité avant publication large."
+---
+
+# Collecto-Bot : collecter des avis anonymes depuis Discord
+
+Collecto-Bot est un bot Discord conçu pour collecter des avis anonymes sur des matières, sujets ou retours d'expérience. Le projet associe un bot, des votes persistants, des threads de discussion et un dashboard web.
+
+L'historique GitHub visible se concentre sur janvier 2026. Le projet a une valeur intéressante pour le portfolio parce qu'il combine une intégration Discord concrète avec une interface d'administration.
+
+![Bannière Collecto-Bot](/images/Projects/collecto-bot/hero_header.webp)
+
+## Caractéristiques techniques du projet
+
+- **Bot** : Python, discord.py, slash commands.
+- **Interactions** : boutons persistants, votes +1/-1, threads.
+- **Dashboard** : Django, auth Discord OAuth2, whitelist.
+- **Exports** : filtrage, tri et export des avis.
+- **Déploiement** : Docker Compose.
+
+## Détails du projet
+
+### Côté Discord
+
+Le bot permet de configurer un serveur, créer des matières ou sujets, puis poster des avis anonymes. Les autres utilisateurs peuvent réagir par vote et discuter dans des threads associés.
+
+L'anonymat est le point sensible du projet : il faut donner assez de contexte pour que l'avis soit utile, mais ne pas exposer l'auteur dans les messages publics.
+
+### Dashboard web
+
+Le dashboard Django sert à consulter les retours de manière plus structurée que dans Discord. L'authentification Discord OAuth2 et la whitelist permettent de limiter l'accès aux personnes autorisées.
+
+Cette partie rend le projet plus complet : Discord est pratique pour collecter, mais moins adapté pour analyser ou exporter.
+
+## Ce que le projet m'a appris
+
+J'ai travaillé sur une intégration API événementielle, avec des interactions utilisateur qui ne ressemblent pas à une application web classique. Les boutons persistants, threads et permissions Discord demandent une logique différente d'un simple formulaire.
+
+## Auto-critique du résultat
+
+La stack est un peu hétérogène, avec bot Discord, Django et une alternative Streamlit. Le README signale aussi un point de sécurité à traiter. Avant une mise en avant plus publique, il faudrait régénérer les secrets concernés, ajouter des captures du dashboard et renforcer les tests.
+
+## Sources du projet
+
+Le dépôt est privé. Je présente donc le fonctionnement et l'architecture sans lien public vers le code.

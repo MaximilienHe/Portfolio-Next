@@ -1,0 +1,78 @@
+---
+title: "Chess Obscur Web - Jeu temps réel avec Socket.IO"
+seoTitle: "Chess Obscur Web : serveur de jeu temps réel Node.js et Socket.IO"
+seoDescription: "Serveur web pour une variante d'échecs custom : règles originales, QTE défensif, Socket.IO, exports PGN/NDJSON, tests et intégration d'un agent RL."
+description: "Serveur web temps réel pour une variante d'échecs avec QTE, parade et agent RL."
+date: "2026-02-11"
+updated: "2026-05-05"
+priority: 1
+cover: "/images/Projects/generated/charte/chess-obscur-web.webp"
+canonical: "https://maximilienherr.fr/projets/chess-obscur-web"
+tags: ["nodejs", "socket.io", "javascript", "docker", "jeu", "tests"]
+logos: ["nodeLogo", "javascriptLogo", "dockerLogo", "gitLogo"]
+draft: false
+faq:
+  - question: "Qu'est-ce que Chess Obscur ?"
+    answer: "C'est une variante d'échecs avec captures probabilistes, QTE défensif, parade et règle des trois échecs."
+  - question: "Quel est le lien avec Chess Obscur RL ?"
+    answer: "Le serveur web peut exporter des parties et interroger l'agent RL pour faire jouer un bot entraîné."
+---
+
+# Chess Obscur Web : serveur jouable pour une variante d'échecs
+
+Chess Obscur Web est le serveur de jeu de mon projet Chess Obscur. L'idée était de créer une variante d'échecs originale, puis de la rendre jouable dans un navigateur avec des parties en temps réel.
+
+L'historique GitHub du dépôt se concentre sur février 2026. Le projet va plus loin qu'un simple plateau : il contient un moteur de règles, un orchestrateur Socket.IO, de la persistance et des exports pour alimenter le projet [Chess Obscur RL](/projets/chess-obscur-rl).
+
+![Univers Chess Obscur](/images/Projects/chess-obscur/chess-obscur.webp)
+
+## Caractéristiques techniques du projet
+
+- **Backend** : Node.js, Express, Socket.IO.
+- **Moteur de jeu** : JavaScript fonctionnel, règles isolées dans un module dédié.
+- **Persistance** : fichiers JSON, index de parties, exports PGN et NDJSON.
+- **Tests** : moteur de règles, serveur et stockage.
+- **Déploiement** : Docker Compose.
+- **IA** : client HTTP vers l'agent RL.
+
+## Détails du projet
+
+### Règles du jeu
+
+Chess Obscur reprend la base des échecs, mais ajoute plusieurs mécaniques :
+
+- captures probabilistes selon les forces des pièces ;
+- QTE défensif pour tenter de bloquer ou parer une attaque ;
+- parade qui peut donner temporairement le contrôle d'une pièce adverse ;
+- règle des trois échecs ;
+- export des parties pour analyse et entraînement.
+
+Ces règles créent des phases supplémentaires dans une partie. Le serveur ne peut pas simplement appliquer un coup et passer au joueur suivant : il doit parfois ouvrir une phase défensive, attendre une décision, résoudre la capture, puis reprendre le fil normal.
+
+### Architecture serveur
+
+Le projet sépare trois responsabilités principales :
+
+- `chess.js` pour le moteur de règles pur ;
+- `server.js` pour l'orchestration Socket.IO et les phases de partie ;
+- `store.js` pour la persistance, les exports et l'index des parties.
+
+Cette séparation m'a permis de tester une partie des règles sans lancer tout le serveur web.
+
+### Intégration avec l'agent RL
+
+Le serveur peut exporter les parties dans un format exploitable par le pipeline RL. Dans l'autre sens, il peut aussi interroger un serveur d'IA pour obtenir un coup et faire jouer un bot contre un humain.
+
+C'est ce lien entre application web et machine learning qui rend le projet intéressant : les deux dépôts ont été pensés pour fonctionner ensemble.
+
+## Ce que le projet m'a appris
+
+Ce projet m'a montré qu'un jeu temps réel devient surtout un problème de transitions d'état. Les règles custom rendent le jeu plus intéressant, mais elles obligent aussi à être très strict sur les phases, les validations et les événements envoyés aux clients.
+
+## Auto-critique du résultat
+
+La persistance en JSON est suffisante pour expérimenter et exporter des parties, mais elle ne serait pas idéale pour une plateforme ouverte à beaucoup de joueurs. Le README principal mériterait aussi d'être plus démonstratif, avec captures ou GIF, car le dépôt contient une bonne architecture mais ne la rend pas immédiatement visible.
+
+## Sources du projet
+
+Le code source est dans un dépôt privé. La page reste donc centrée sur l'architecture et les choix techniques.

@@ -1,0 +1,79 @@
+---
+title: "Slack Bot LCDG - Bot et back-office web"
+seoTitle: "Slack Bot LCDG : bot Slack, FastAPI, PostgreSQL et back-office"
+seoDescription: "Outil interne LCDG en production : commandes Slack, back-office FastAPI/Jinja2, PostgreSQL, sécurité applicative, Docker et CI/CD."
+description: "Bot Slack et back-office web pour gérer des marques et produits en contexte associatif."
+date: "2026-03-13"
+updated: "2026-05-05"
+priority: 1
+cover: "/images/Projects/generated/charte/slack-bot-lcdg.webp"
+canonical: "https://maximilienherr.fr/projets/slack-bot-lcdg"
+tags: ["python", "fastapi", "postgresql", "docker", "slack-api", "ci-cd"]
+logos: ["pythonLogo", "dockerLogo", "gitLogo"]
+draft: false
+faq:
+  - question: "Le projet est-il utilisé en production ?"
+    answer: "Oui, il a été conçu comme un outil interne pour l'association LCDG, avec déploiement Docker et CI/CD."
+  - question: "Pourquoi le dépôt n'est-il pas public ?"
+    answer: "Le projet manipule un contexte associatif réel et des données internes, donc il reste privé."
+---
+
+# Slack Bot LCDG : un outil interne Slack avec back-office
+
+Ce projet est un bot Slack développé pour LCDG, avec un back-office web associé. L'objectif était d'aider l'association à gérer plus facilement des marques, des produits, des référents et des exports depuis Slack, sans obliger tout le monde à passer par une interface dédiée.
+
+L'historique GitHub s'étend de novembre 2025 à mars 2026. C'est un projet important dans mon portfolio parce qu'il a été pensé pour un usage réel : sécurité, déploiement, administration, API et CI/CD.
+
+## Caractéristiques techniques du projet
+
+- **Backend** : Python, FastAPI, Uvicorn.
+- **Base de données** : PostgreSQL, SQLAlchemy 2.
+- **Interface admin** : templates Jinja2.
+- **Slack** : slash commands, modales, signature verification.
+- **Sécurité** : sessions en base, cookies HttpOnly, CSRF, verrouillage après tentatives, clés API hachées.
+- **Déploiement** : Docker, GitHub Actions, image GHCR.
+
+## Détails du projet
+
+### Commandes Slack
+
+Le bot expose plusieurs commandes utiles dans le quotidien de l'association :
+
+- recherche de marque ;
+- création de marque via une modale en plusieurs étapes ;
+- recherche de produit ;
+- suivi des marques associées à un membre ;
+- export CSV.
+
+La difficulté n'était pas seulement de répondre à une commande. Il fallait garder un parcours fluide dans Slack, gérer les erreurs proprement et ne pas exposer d'informations internes à des utilisateurs non autorisés.
+
+### Back-office
+
+Le back-office permet de gérer les marques, les produits, les utilisateurs et les clés API. Il sert aussi de point de contrôle quand une opération est plus confortable dans une interface web que dans Slack.
+
+J'ai volontairement gardé une stack simple : FastAPI, Jinja2, PostgreSQL. Pour ce type d'outil interne, une interface robuste et claire vaut mieux qu'un frontend lourd.
+
+### Sécurité
+
+Le projet intègre plusieurs protections concrètes :
+
+- vérification des signatures Slack ;
+- protection CSRF côté admin ;
+- sessions stockées en base ;
+- cookies HttpOnly et SameSite ;
+- verrouillage après tentatives échouées ;
+- hachage des clés API.
+
+Ce sont des sujets que l'on peut facilement négliger sur un projet interne. Ici, ils faisaient partie du périmètre dès que l'outil devait être réellement utilisé.
+
+## Ce que le projet m'a appris
+
+J'ai surtout travaillé la frontière entre outil interne rapide et application maintenable. Un bot Slack peut devenir un enchaînement de handlers difficiles à suivre. Le back-office et la base structurée permettent de garder une logique applicative propre.
+
+## Auto-critique du résultat
+
+Le projet reste lié à un contexte privé. Pour le rendre public, il faudrait anonymiser certaines données, retirer toute configuration sensible et enrichir le README avec une présentation plus haute niveau, pas seulement opérationnelle.
+
+## Sources du projet
+
+Le code source n'est pas public, car il concerne un outil interne d'association et des données réelles.

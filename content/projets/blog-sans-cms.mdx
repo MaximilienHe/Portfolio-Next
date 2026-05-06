@@ -1,9 +1,9 @@
----
+﻿---
 title: "Création d'un blog sans CMS - Développement Web"
 description: "Découvrez mon projet de blog sans CMS, réalisé avec VueJS et KoaJS."
 date: "2022-12-15"
 priority: 2
-cover: "/images/Images/projects/blog_sans_CMS.png"
+cover: "/images/Projects/generated/charte/blog-sans-cms.webp"
 canonical: "https://maximilienherr.fr/projets/blog-sans-cms"
 tags: ["vuejs", "mysql", "redis"]
 logos: ["vuejsLogo", "mysqlLogo", "redisLogo", "gitLogo"]
@@ -27,7 +27,7 @@ Dans le monde du Web, il existe de nombreux CMS qui peuvent permettre la créati
 
 ### Langages / technologies utilisés
 
-Il y a une double facette autour de ce projet. D'une part, il y a une partie front end (la partie visible du site, style ƒ?Ý) qui doit être gérée. D'autre part, la partie backend (les "rouages" du site) doit gérer le stockage des articles, des likes, des favoris, des commentaires, des informations des utilisateursƒ?Ý
+Il y a une double facette autour de ce projet. D'une part, il y a une partie front end, c'est-à-dire la partie visible du site, qui doit être gérée. D'autre part, la partie backend doit gérer le stockage des articles, des likes, des favoris, des commentaires et des informations des utilisateurs.
 
 Pour ce faire, le backend se base sur quelques technologies et un framework :
 
@@ -41,7 +41,7 @@ Aussi, la partie front quant à elle se base sur un simple framework, **VueJS**.
 
 Ce projet s'inscrit dans les cours de Web dispensés durant mon BUT Informatique. L'ambition était ainsi de réaliser ce blog sans CMS, comme précisé plus haut. Nous étions 2 sur le projet, [Farouk Abidi](https://www.linkedin.com/in/farouk-abidi/) et moi-même. Lui s'est occupé de la partie backend, et moi la partie frontend.
 
-Ce projet s'est étalé sur 2 mois environ, à raison d'une trentaine d'heures. Cela comprend la réalisation concrète du projet, mais aussi le temps de formation, pour ma part sur VueJS (utilisation du framework, router ƒ?Ý).
+Ce projet s'est étalé sur 2 mois environ, à raison d'une trentaine d'heures. Cela comprend la réalisation concrète du projet, mais aussi le temps de formation, pour ma part sur VueJS, notamment l'utilisation du framework et du router.
 
 ## Détails du projet
 
@@ -51,7 +51,7 @@ Ce projet s'articule sous différents points. Il y a tout d'abord une partie au 
 
 L'objet principal de ce blog, c'est afficher tous les articles à la suite, pouvoir les filtrer par catégorie, et lire un article. Ainsi, sur la page principale, vous pouvez voir tous les derniers articles, par chronologie inversée de parution (plus récents en premier, plus anciens en dernier). En haut de la page principale, on peut choisir une catégorie d'articles en particulier. Ici, ce sont "Actualités", "Tests", "Dossier" et "Guide".
 
-Ensuite, une fois que l'on s'intéresse à un article spécialement, on peut le lire. La structure de celui-ci est comme une page Web classique. Cela veut donc dire que l'on a une miniature principale avec le titre, l'auteurƒ?Ý Mais le contenu en lui-même, ce sont des titres, 2 ou 3, des paragraphesƒ?Ý Cela passe par un WYSIWYG pour obtenir cette structure, mais j'y reviendrai plus tard.
+Ensuite, une fois que l'on s'intéresse à un article spécialement, on peut le lire. La structure de celui-ci est comme une page Web classique. Cela veut donc dire que l'on a une miniature principale avec le titre et l'auteur. Mais le contenu en lui-même repose sur des titres, deux ou trois niveaux, et des paragraphes. Cela passe par un WYSIWYG pour obtenir cette structure, mais j'y reviendrai plus tard.
 
 ![Blog sans CMS illustration HomePage](/images/Images/projects/blog_sans_CMS.png)
 
@@ -63,7 +63,7 @@ En effet, on peut ainsi s'identifier et se créer des comptes sur le site, mais 
 
 Autrement, une autre action possible de l'utilisateur, c'est de rajouter un article en favori. Une fois que celui-ci est dans la liste des favoris de l'utilisateur, il peut être consulté depuis un onglet "Favori" en haut à droite de l'affichage. Tout l'affichage relevant du fait que l'on soit connecté ou non est dynamique. Ainsi, si vous n'êtes pas connecté, vous ne voyez qu'un bouton vous invitant à vous login. Si vous êtes effectivement connecté, ce bouton disparaît, pour laisser la possibilité de vous déconnecter, ou consulter vos favoris.
 
-Enfin, la partie administrateur. Si êtes un privilégié sur le site, vous pouvez ajouter des articles pour le blog. Cela passe donc par un WYSIWYG, comme précisé plus haut. On doit donc renseigner d'abord des champs, dont le titre, l'image, les catégoriesƒ?Ý Mais pour le contenu, on peut écrire de manière naturelle, avec une hiérarchisation de l'information possible (H2, H3, p ƒ?Ý).
+Enfin, la partie administrateur. Si vous êtes un utilisateur privilégié sur le site, vous pouvez ajouter des articles pour le blog. Cela passe donc par un WYSIWYG, comme précisé plus haut. On doit d'abord renseigner des champs, dont le titre, l'image et les catégories. Pour le contenu, on peut écrire de manière naturelle, avec une hiérarchisation de l'information possible (H2, H3, paragraphe).
 
 ## Auto-critique du résultat
 
