@@ -7,7 +7,12 @@ import { Breadcrumb } from "@/components/Breadcrumb";
 import { ExploreAlso } from "@/components/ExploreAlso";
 import { buildPageMetadata, getCanonicalUrl } from "@/lib/seo";
 
-const { photoProfilMaximilien, linkedin, github } = images;
+const { linkedin, github } = images;
+const profilePhoto = {
+  src: "/images/profil-maximilien.jpg",
+  width: 400,
+  height: 400,
+};
 const pagePath = "/contact";
 const pageUrl = getCanonicalUrl(pagePath);
 const pageTitle = "Contact";
@@ -67,12 +72,12 @@ export default function Contact() {
         <section className="contact">
           <div className="photoProfil">
             <Image
-              src={photoProfilMaximilien.image}
-              width={photoProfilMaximilien.width}
-              height={photoProfilMaximilien.height}
-              quality={72}
+              src={profilePhoto.src}
+              width={profilePhoto.width}
+              height={profilePhoto.height}
+              quality={80}
               alt="Portrait de Maximilien Herr"
-              sizes="(max-width: 767px) 72vw, 300px"
+              sizes="(max-width: 767px) 72vw, 280px"
               priority={false}
               loading="lazy"
               decoding="async"

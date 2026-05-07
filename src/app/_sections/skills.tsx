@@ -1,131 +1,103 @@
 // /src/app/_sections/skills.tsx
 import Link from "next/link";
-import Image from "next/image";
-import logos from "@/data/logos";
 
-const {
-  htmlLogo,
-  javascriptLogo,
-  phpLogo,
-  mysqlLogo,
-  cLogo,
-  cppLogo,
-  csLogo,
-  visualStudioLogo,
-  unityLogo,
-  unrealLogo,
-  cssLogo,
-} = logos;
+const rows: { cat: string; tags: string[] }[] = [
+  {
+    cat: "Web & Backend",
+    tags: [
+      "Next.js",
+      "TypeScript",
+      "React",
+      "Node.js",
+      "Express",
+      "Django",
+      "FastAPI",
+      "Vue.js",
+      "PHP",
+      "HTML / CSS",
+    ],
+  },
+  {
+    cat: "Bases de données & Infra",
+    tags: [
+      "PostgreSQL",
+      "MySQL",
+      "Redis",
+      "MongoDB",
+      "Docker",
+      "CI/CD",
+      "S3",
+      "Sequelize",
+      "Nginx",
+    ],
+  },
+  {
+    cat: "Logiciel",
+    tags: ["C", "C++", "C#", "Python", "Java", "Kotlin", "Rust"],
+  },
+  {
+    cat: "Data & IA",
+    tags: [
+      "Machine Learning",
+      "Deep Learning",
+      "PyTorch",
+      "CUDA",
+      "IA générative",
+      "Reinforcement Learning",
+      "Q-Learning",
+      "DQN",
+      "PPO",
+      "SAC",
+    ],
+  },
+  {
+    cat: "Mobile & IoT",
+    tags: ["Android", "Kotlin", "Flutter / Dart", "ESP32", "Firebase"],
+  },
+  {
+    cat: "3D & Jeu vidéo",
+    tags: ["Unity", "Unreal Engine", "3ds Max", "Substance Painter", "Blender"],
+  },
+  {
+    cat: "Plume",
+    tags: [
+      "Tests produits",
+      "News",
+      "Dossiers",
+      "Guides d’achat",
+      "Salons tech",
+      "Lancements produits",
+      "Interviews",
+      "Longs formats",
+      "SEO éditorial",
+    ],
+  },
+];
 
 export default function Skills() {
   return (
     <section className="skills" aria-labelledby="skills-title">
-      <span
-        className="section-label"
-        style={{ color: "var(--caramel)" }}
-      >
-        05 · L&apos;atelier
-      </span>
-      <h2 id="skills-title">Outils, langages, terrains.</h2>
+      <div className="skills__inner">
+        <span className="section-label">05 · L&apos;atelier</span>
+        <h2 id="skills-title">Outils, langages, terrains.</h2>
 
-      <div className="skills-row">
-        <h3>Web</h3>
-        <div className="logos">
-          <Image
-            src={htmlLogo.image}
-            width={htmlLogo.width}
-            height={htmlLogo.height}
-            alt="Logo HTML5, technologie maîtrisée"
-            className="logo"
-          />
-          <Image
-            src={cssLogo.image}
-            width={cssLogo.width}
-            height={cssLogo.height}
-            alt="Logo CSS3, compétence front-end"
-            className="logo"
-          />
-          <Image
-            src={javascriptLogo.image}
-            width={javascriptLogo.width}
-            height={javascriptLogo.height}
-            alt="Logo JavaScript, langage utilisé pour des interfaces web"
-            className="logo"
-          />
-          <Image
-            src={phpLogo.image}
-            width={phpLogo.width}
-            height={phpLogo.height}
-            alt="Logo PHP, langage back-end"
-            className="logo"
-          />
-          <Image
-            src={mysqlLogo.image}
-            width={mysqlLogo.width}
-            height={mysqlLogo.height}
-            alt="Logo MySQL, base de données maîtrisée"
-            className="logo"
-          />
-        </div>
+        {rows.map((row) => (
+          <div key={row.cat} className="skills-row">
+            <p className="cat">{row.cat}</p>
+            <div className="tags">
+              {row.tags.map((t) => (
+                <span key={t} className="tag">
+                  {t}
+                </span>
+              ))}
+            </div>
+          </div>
+        ))}
+
+        <Link href="/cv" className="button">
+          Découvrir toutes les technos et langages
+        </Link>
       </div>
-
-      <div className="skills-row">
-        <h3>Logiciel</h3>
-        <div className="logos">
-          <Image
-            src={cLogo.image}
-            width={cLogo.width}
-            height={cLogo.height}
-            alt="Logo langage C, compétence en développement logiciel"
-            className="logo"
-          />
-          <Image
-            src={cppLogo.image}
-            width={cppLogo.width}
-            height={cppLogo.height}
-            alt="Logo C++, langage de programmation maîtrisé"
-            className="logo"
-          />
-          <Image
-            src={csLogo.image}
-            width={csLogo.width}
-            height={csLogo.height}
-            alt="Logo C#, technologie logicielle utilisée"
-            className="logo"
-          />
-          <Image
-            src={visualStudioLogo.image}
-            width={visualStudioLogo.width}
-            height={visualStudioLogo.height}
-            alt="Logo Visual Studio, environnement de développement"
-            className="logo"
-          />
-        </div>
-      </div>
-
-      <div className="skills-row">
-        <h3>3D &amp; Jeu vidéo</h3>
-        <div className="logos">
-          <Image
-            src={unityLogo.image}
-            width={unityLogo.width}
-            height={unityLogo.height}
-            alt="Logo Unity, moteur de jeu"
-            className="logo"
-          />
-          <Image
-            src={unrealLogo.image}
-            width={unrealLogo.width}
-            height={unrealLogo.height}
-            alt="Logo Unreal Engine, compétence 3D"
-            className="logo"
-          />
-        </div>
-      </div>
-
-      <Link href="/cv" className="button">
-        Découvrir toutes les technos et langages
-      </Link>
     </section>
   );
 }

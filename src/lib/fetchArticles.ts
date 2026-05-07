@@ -8,6 +8,7 @@ export type Article = {
   url: string;
   date: string; // ISO
   cover?: string | null;
+  excerpt?: string | null;
 };
 
 type WpMedia = {
@@ -26,6 +27,7 @@ type WpPost = {
   date_gmt: string;
   link: string;
   title: { rendered: string };
+  excerpt?: { rendered: string };
   jetpack_featured_media_url?: string;
   _embedded?: { "wp:featuredmedia"?: WpMedia[] };
   yoast_head_json?: YoastHeadJson;
@@ -33,7 +35,7 @@ type WpPost = {
 
 // On veut Yoast + _embed pour récupérer une cover fiable (thumbnailUrl en priorité)
 const WP_PARAMS =
-  "_embed=1&_fields=id,date_gmt,link,title,jetpack_featured_media_url,yoast_head_json,_embedded";
+  "_embed=1&_fields=id,date_gmt,link,title,excerpt,jetpack_featured_media_url,yoast_head_json,_embedded";
 
 // A adapter si tu connais déjà les IDs auteurs
 const CONFIG = {
@@ -93,6 +95,19 @@ async function fetchJson<T>(url: string, init?: RequestInit): Promise<T> {
   }
   if (!r.ok) throw new Error(`${r.status} ${r.statusText} for ${url}`);
   return r.json() as Promise<T>;
+}
+
+function extractExcerpt(html: string | null | undefined, maxLength = 180): string | null {
+  if (!html) return null;
+  const stripped = html
+    .replace(/\[\&hellip;\]|\[…\]/g, "…")
+    .replace(/<[^>]+>/g, " ");
+  const text = decodeHtml(stripped).replace(/\s+/g, " ").trim();
+  if (!text) return null;
+  if (text.length <= maxLength) return text;
+  const sliced = text.slice(0, maxLength);
+  const lastSpace = sliced.lastIndexOf(" ");
+  return (lastSpace > 0 ? sliced.slice(0, lastSpace) : sliced) + "…";
 }
 
 function decodeHtml(input: string): string {
@@ -204,6 +219,7 @@ async function getWpPostsByAuthor(
     url: p.link,
     date: new Date(p.date_gmt + "Z").toISOString(),
     cover: pickWpCover(p, base),
+    excerpt: extractExcerpt(p.excerpt?.rendered),
   }));
 }
 
@@ -243,6 +259,7 @@ function parseFrandroidRss(xml: string): Article[] {
   return itemBlocks.map((it) => {
     const rawTitle = pickCdata(it, "title");
     const rawLink = pick(it, "link");
+    const rawDescription = pickCdata(it, "description");
     const pubDate = pick(it, "pubDate");
     const iso = pubDate
       ? new Date(pubDate).toISOString()
@@ -257,6 +274,7 @@ function parseFrandroidRss(xml: string): Article[] {
       url: link,
       date: iso,
       cover,
+      excerpt: extractExcerpt(rawDescription),
     };
   });
 }

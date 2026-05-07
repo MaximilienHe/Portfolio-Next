@@ -33,13 +33,15 @@ export default function Cv() {
     <>
       <Breadcrumb items={breadcrumbItems} />
       <h1 className="cv-page-title">CV de Maximilien Herr</h1>
-      <nav className="cv-quick-nav" aria-label="Navigation rapide CV">
-        <a href="#cv-xp">Expériences</a>
-        <a href="#cv-formations">Formation</a>
-        <a href="#cv-skills">Compétences</a>
-        <a href="#cv-interest">Centres d&apos;intérêt</a>
-        <a href="#cv-download">Téléchargement</a>
-      </nav>
+      <div className="cv-quick-nav-wrap">
+        <nav className="cv-quick-nav" aria-label="Navigation rapide CV">
+          <a href="#cv-xp">Expériences</a>
+          <a href="#cv-formations">Formation</a>
+          <a href="#cv-skills">Compétences</a>
+          <a href="#cv-interest">Centres d&apos;intérêt</a>
+          <a href="#cv-download">Téléchargement</a>
+        </nav>
+      </div>
       <Quote />
       <div id="cv-xp">
         <Xp />
