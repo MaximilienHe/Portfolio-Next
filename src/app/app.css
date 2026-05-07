@@ -75,6 +75,7 @@
   letter-spacing: -0.01em;
   margin: 0;
   white-space: nowrap;
+  min-width: 0;
 }
 .masthead .brand-name em {
   font-style: italic;
@@ -1409,23 +1410,74 @@ section {
    ============================================================ */
 
 @media (max-width: 900px) {
+  /* === HOME ARTICLES — pile verticale, plus de span 2x2 === */
+  .multiArticles {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+    padding-top: 1.5rem;
+  }
+  .singleArticle:first-child {
+    grid-column: auto;
+    grid-row: auto;
+  }
+  .singleArticle:first-child h3 {
+    font-size: 1.25rem;
+    -webkit-line-clamp: 4;
+  }
+  .singleArticle:first-child .articleExcerpt {
+    -webkit-line-clamp: 3;
+  }
+  .singleArticle .articleImgWrapper {
+    aspect-ratio: 16/9;
+  }
+
+  /* === BUTTON — width fluide pour les libellés longs === */
+  .button {
+    width: auto;
+    min-height: 44px;
+  }
+
   /* Header — masthead stacké, nav burger */
   .masthead {
     grid-template-columns: 1fr;
-    gap: 0.6rem;
+    gap: 0.5rem;
     text-align: center;
-    padding: 1rem var(--gutter) 0.8rem;
+    padding: 0.9rem var(--gutter) 0.7rem;
   }
   .masthead .meta-left,
   .masthead .meta-right {
     text-align: center;
-    font-size: 0.62rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
   }
-  .masthead .brand { justify-content: center; }
+  .masthead .brand {
+    justify-content: center;
+    max-width: 100%;
+    overflow: hidden;
+  }
+  .masthead .brand-logo { width: 32px; }
+  .masthead .brand-name {
+    font-size: 0.95rem;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.3;
+  }
+  /* Le tagline italique passe sur 2 lignes ou se masque */
+  .masthead .brand-name em {
+    display: block;
+    font-size: 0.7rem;
+    margin-top: 0.15rem;
+    letter-spacing: 0.04em;
+  }
   .nav {
-    flex-wrap: wrap;
-    padding: 0.7rem var(--gutter);
+    flex-wrap: nowrap;
+    padding: 0.6rem var(--gutter);
     position: relative;
+    gap: 0.6rem;
   }
   .nav-toggle {
     display: inline-flex;
@@ -1434,9 +1486,10 @@ section {
   .nav-links {
     display: none;
     width: 100%;
+    order: 3;
     flex-direction: column;
     gap: 0;
-    padding: 1rem 0;
+    padding: 0.5rem 0 0.8rem;
     border-top: 1px solid var(--rule-soft);
     margin-top: 0.6rem;
   }
@@ -1447,21 +1500,26 @@ section {
     padding: 0.7rem 0;
     border-bottom: 1px solid var(--rule-soft);
     width: 100%;
+    box-sizing: border-box;
   }
   .nav-links > a:last-child { border-bottom: none; }
   .nav-links > a.nav-cta {
-    margin-top: 0.5rem;
+    margin-top: 0.6rem;
     align-self: flex-start;
     width: auto;
+    padding: 0.7rem 1.3rem !important;
   }
   .nav-actions {
     margin-left: auto;
-    gap: 0.6rem;
+    gap: 0.5rem;
+    flex-shrink: 0;
   }
-  .search-trigger-text { display: none; }
+  .search-trigger-text,
+  .search-kbd { display: none; }
   .search-trigger {
     padding: 0.5rem;
     border-radius: 999px;
+    flex-shrink: 0;
   }
 
   /* Home — landing stacké */

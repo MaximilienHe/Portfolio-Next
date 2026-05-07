@@ -507,52 +507,97 @@
 
 /* ============ Responsive ============ */
 @media (max-width: 900px) {
-  .cv-page-title { font-size: clamp(2rem, 7vw, 2.8rem); }
+  .cv-page-title {
+    font-size: clamp(2rem, 7vw, 2.8rem);
+    margin: 1rem auto 1rem;
+  }
   .cv-section-title { font-size: clamp(1.5rem, 5vw, 2rem); }
 
+  /* Quick-nav : pleine largeur, scrollable horizontalement */
+  .cv-quick-nav-wrap {
+    padding: 0;
+    margin: 0 0 1.5rem;
+    width: 100%;
+  }
   .cv-quick-nav {
-    top: 0;
-    margin: 0.5rem var(--gutter) 1.5rem;
-    padding: 0.4rem;
+    top: 0.5rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0.4rem 0.6rem;
     border-radius: var(--radius-md);
     overflow-x: auto;
     flex-wrap: nowrap;
     scrollbar-width: none;
+    align-self: stretch;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
   }
   .cv-quick-nav::-webkit-scrollbar { display: none; }
   .cv-quick-nav a {
-    font-size: 0.65rem;
+    font-size: 0.7rem;
     padding: 0.4rem 0.7rem;
     white-space: nowrap;
+    flex-shrink: 0;
   }
 
-  .quote { margin: 2rem 0 3rem; }
-  .quote p { font-size: 1.2rem; }
+  .quote { margin: 2rem 0 3rem; padding: 0 var(--gutter); }
+  .quote p { font-size: 1.15rem; }
 
+  /* XP : 1 carte par ligne sur mobile */
+  .XP { padding: 2rem 0 3rem !important; }
+  .XP .inner .experiences {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem;
+    padding-top: 1.5rem;
+  }
   .XP .inner .experiences > .singleXP {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+    padding: 1.4rem;
     text-align: left;
-    padding-bottom: 2rem;
   }
   .XP .inner .experiences > .singleXP img {
-    width: 140px;
-    margin-bottom: 0;
+    width: 56px;
+    height: 56px;
+    margin-bottom: 0.4rem;
   }
 
-  .formation { padding: 3rem 0; }
+  .formation { padding: 2.5rem 0; margin-top: 2rem; }
+  .formation .inner { gap: 1.5rem; padding: 0 var(--gutter); }
   .formation .inner .singleXP {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+    grid-template-columns: 1fr !important;
+    gap: 0.8rem;
     text-align: left;
     padding-bottom: 1.5rem;
   }
   .formation .singleXP img {
-    width: 140px;
+    width: 120px;
     margin: 0 0 0.5rem 0;
+    align-self: flex-start;
+  }
+  .formation .singleXP .contentFormation {
+    max-width: 100%;
   }
 
-  .interest { margin: 3rem 0; }
+  /* CV skills text rows : stack categorie + tags */
+  .cv-skills { padding: 2.5rem 0 !important; }
+  .cv-skills-row {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+    padding: 1.1rem 0;
+  }
+  .cv-skills-row .tags {
+    gap: 0.3rem 0.9rem;
+  }
+  .cv-skills-row .tag {
+    font-size: 0.85rem;
+  }
+
+  .cv-interest-title {
+    margin: 2.5rem auto 1rem;
+  }
+  .interest { margin: 0 0 3rem; }
   .interest .inner {
     grid-template-columns: 1fr;
     gap: 1rem;
@@ -562,6 +607,7 @@
     max-width: 100%;
   }
 
-  .download { margin: 3rem 0 4rem; padding: 2.5rem var(--gutter); }
+  .download { margin: 2.5rem 0 3rem; padding: 2.5rem var(--gutter); }
   .download iframe { height: 40vh; }
+  .download .inner { max-width: 100%; }
 }
