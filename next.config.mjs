@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 //   output: 'export',
+  poweredByHeader: false,
   async redirects() {
     return [
       {
@@ -42,6 +43,27 @@ const nextConfig = {
   async headers() {
     return [
       {
+        source: "/:path*",
+        headers: [
+          {
+            key: "Referrer-Policy",
+            value: "strict-origin-when-cross-origin",
+          },
+          {
+            key: "X-Content-Type-Options",
+            value: "nosniff",
+          },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=()",
+          },
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=31536000",
+          },
+        ],
+      },
+      {
         source: "/images/:path*",
         headers: [
           {
@@ -50,6 +72,17 @@ const nextConfig = {
           },
         ],
       },
+      ...["/favicon.ico", "/photo.jpg", "/banniere_dev_redac.png", "/cv-generated.pdf"].map(
+        (source) => ({
+          source,
+          headers: [
+            {
+              key: "Cache-Control",
+              value: "public, max-age=31536000, immutable",
+            },
+          ],
+        }),
+      ),
     ];
   },
   trailingSlash: false, // ou true si tu veux des URL finissant par /

@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import "./app.css";
-import "../assets/Product Sans/stylesheet.css";
 import Header from "@/common/header";
 import Footer from "@/common/footer";
 import { DEFAULT_OG_IMAGE, SITE_URL } from "@/lib/seo";
@@ -93,7 +92,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default:
-      "Maximilien Herr — Ingénieur Logiciel & Journaliste Tech | Portfolio",
+      "Maximilien Herr | Ingénieur Logiciel & Journaliste Tech | Portfolio",
     template: "%s | Maximilien Herr",
   },
   description:
@@ -108,7 +107,7 @@ export const metadata: Metadata = {
         url: DEFAULT_OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: "Bannière portfolio Maximilien Herr — Ingénieur logiciel et journaliste tech",
+        alt: "Bannière portfolio Maximilien Herr, ingénieur logiciel et journaliste tech",
       },
     ],
   },

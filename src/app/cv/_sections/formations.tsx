@@ -14,7 +14,7 @@ export default function Formations() {
   return (
     <section className="formation">
       <div className="inner">
-        <h1>Formation</h1>
+        <h2 className="cv-section-title">Formation</h2>
 
         <div className="singleXP">
           <Image

@@ -1,6 +1,6 @@
 "use client";
 // src/app/recherche/page.tsx
-// Page de résultats de recherche — full client-side
+// Page de résultats de recherche, full client-side
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState, Suspense } from "react";

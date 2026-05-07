@@ -51,6 +51,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       type: "article",
       image: getMetaImage(project.cover),
       keywords: project.tags,
+      robots: project.noindex ? { index: false, follow: true } : undefined,
     });
   } catch {
     return {};

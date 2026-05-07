@@ -7,7 +7,7 @@ ul {
 
 
 h4 {
-    font-family: ProductSans !important;
+    font-family: var(--font-ui) !important;
     font-size: 18px;
     font-weight: bold;
     color: black !important;
@@ -43,15 +43,21 @@ h4 {
     max-width: 100%;
     width: auto;
     height: auto;
-    border-radius: 8px;
+    border-radius: 0;
     display: block;
 }
 
 .mdx-content img{
     max-width: 100%;
     height: auto;
-    border-radius: 8px;
+    border-radius: 0;
     display: block;
+}
+
+.article-page .article-hero,
+.article-page .article-hero-media,
+.article-page .article-hero-media img{
+    border-radius: 0 !important;
 }
 
 .mdx-content .logos{

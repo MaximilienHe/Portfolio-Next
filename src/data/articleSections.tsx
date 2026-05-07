@@ -26,7 +26,7 @@ const articleSections: SectionConfig[] = [
       },
       {
         id: 2,
-        title: "TEST – Motorola Razr 2022, la modernité prend le pas sur la nostalgie",
+        title: "TEST : Motorola Razr 2022, la modernité prend le pas sur la nostalgie",
         href: "https://droidsoft.fr/2023/02/11/test-motorola-razr-2022-la-modernite-prend-le-pas-sur-la-nostalgie/",
         imageKey: "MotorolaRazrTest",
         alt: "Illustration du test Motorola Razr 2022 par Maximilien Herr sur DroidSoft",
@@ -46,7 +46,7 @@ const articleSections: SectionConfig[] = [
     articles: [
       {
         id: 4,
-        title: "Test – Asus Zenbook Fold : les PC pliants ont de l’avenir !",
+        title: "Test : Asus Zenbook Fold, les PC pliants ont de l’avenir !",
         href: "https://lecafedugeek.fr/test-asus-zenbook-fold/",
         imageKey: "asusZenbookFoldTest",
         alt: "Illustration du test Asus Zenbook Fold redige par Maximilien Herr",

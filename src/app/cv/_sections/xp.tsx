@@ -23,7 +23,7 @@ export default function Xp() {
   return (
     <section className="XP">
       <div className="inner">
-        <h1>Expériences</h1>
+        <h2 className="cv-section-title">Expériences</h2>
         <div className="experiences">
 
           <div className="singleXP">

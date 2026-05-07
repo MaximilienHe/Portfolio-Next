@@ -5,7 +5,7 @@ export default function Download() {
   return (
     <section className="download">
       <div className="inner">
-        <h1>Télécharger mon CV</h1>
+        <h2 className="cv-section-title">Télécharger mon CV</h2>
         <a
           href="/cv-generated.pdf"
           className="button"

@@ -25,6 +25,16 @@ function runChecks(): CheckResult[] {
 
   const contactPage = readFile("src/app/contact/page.tsx");
   const nrPage = readFile("src/app/nr/page.tsx");
+  const cvPageTree = [
+    "src/app/cv/page.tsx",
+    "src/app/cv/_sections/xp.tsx",
+    "src/app/cv/_sections/formations.tsx",
+    "src/app/cv/_sections/skills.tsx",
+    "src/app/cv/_sections/download.tsx",
+    "src/app/cv/_sections/interest.tsx",
+  ]
+    .map(readFile)
+    .join("\n");
 
   checks.push({
     name: "Contact has exactly one H1",
@@ -36,6 +46,12 @@ function runChecks(): CheckResult[] {
     name: "NR has exactly one H1",
     ok: countMatches(nrPage, /<h1[\s>]/g) === 1,
     details: `count=${countMatches(nrPage, /<h1[\s>]/g)}`,
+  });
+
+  checks.push({
+    name: "CV page tree has exactly one H1",
+    ok: countMatches(cvPageTree, /<h1[\s>]/g) === 1,
+    details: `count=${countMatches(cvPageTree, /<h1[\s>]/g)}`,
   });
 
   const metadataFiles = [
@@ -68,11 +84,48 @@ function runChecks(): CheckResult[] {
     details: fileExists("src/lib/seo.ts") ? "present" : "missing",
   });
 
+  const mdxComponents = readFile("src/lib/mdxComponents.tsx");
+  checks.push({
+    name: "MDX H1 is demoted under article hero",
+    ok: mdxComponents.includes("h1: MdxH1"),
+    details: mdxComponents.includes("h1: MdxH1") ? "ok" : "missing h1 override",
+  });
+
   const robots = readFile("src/app/robots.ts");
   checks.push({
     name: "Robots points to canonical sitemap",
     ok: robots.includes("sitemap: `${SITE_URL}/sitemap.xml`"),
     details: robots.includes("SITE_URL") ? "ok" : "missing SITE_URL",
+  });
+
+  const sitemap = readFile("src/app/sitemap.ts");
+  checks.push({
+    name: "Sitemap excludes noindex content",
+    ok: sitemap.includes(".filter((p) => !p.noindex)"),
+    details: sitemap.includes("noindex") ? "ok" : "missing noindex filter",
+  });
+
+  const blogConstruction = readFile("content/blog/blog-en-construction.mdx");
+  checks.push({
+    name: "Placeholder blog post is noindex",
+    ok: blogConstruction.includes("noindex: true"),
+    details: blogConstruction.includes("noindex: true") ? "ok" : "missing noindex",
+  });
+
+  const nextConfig = readFile("next.config.mjs");
+  checks.push({
+    name: "Next powered-by header disabled",
+    ok: nextConfig.includes("poweredByHeader: false"),
+    details: nextConfig.includes("poweredByHeader: false") ? "ok" : "missing",
+  });
+
+  checks.push({
+    name: "Security headers configured",
+    ok:
+      nextConfig.includes("Referrer-Policy") &&
+      nextConfig.includes("X-Content-Type-Options") &&
+      nextConfig.includes("Permissions-Policy"),
+    details: nextConfig.includes("Referrer-Policy") ? "ok" : "missing",
   });
 
   const legacyImageReferences = [

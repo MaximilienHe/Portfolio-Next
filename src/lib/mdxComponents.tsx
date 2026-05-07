@@ -3,6 +3,7 @@ import React from "react";
 
 type ImageItem = { src: string; alt?: string; width?: number; height?: number };
 type MdxImgProps = React.ImgHTMLAttributes<HTMLImageElement>;
+type HeadingProps = React.HTMLAttributes<HTMLHeadingElement>;
 
 function toPositiveNumber(value: string | number | undefined): number | undefined {
   if (typeof value === "number" && Number.isFinite(value) && value > 0) return value;
@@ -63,7 +64,12 @@ function MdxImage({ src, alt, className, width, height }: MdxImgProps) {
   );
 }
 
+function MdxH1({ children, ...props }: HeadingProps) {
+  return <h2 {...props}>{children}</h2>;
+}
+
 export const mdxComponents = {
+  h1: MdxH1,
   img: MdxImage,
   Callout: ({ title, children }: { title?: string; children: React.ReactNode }) => (
     <div

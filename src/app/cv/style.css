@@ -43,14 +43,24 @@ h5 {
     margin: 5vh 0;
 }
 
+.cv-page-title {
+    margin: 2.5rem auto 1rem;
+    text-align: center;
+}
+
+.cv-section-title {
+    text-align: center;
+    margin: 0 0 2vh;
+}
+
 /* Experiences section */
 
 .XP {
     padding-top: 5vh !important;
 }
 
-.XP h1 {
-    line-height: 0px;
+.XP .cv-section-title {
+    line-height: 1.1;
     margin-bottom: 12vh;
 }
 /* Expériences : layout en flex et alternance image ↔ texte */
@@ -120,7 +130,7 @@ h5 {
     margin: 0 2vw;
 }
 
-.formation h1 {
+.formation .cv-section-title {
     margin: 0;
     margin-bottom: 2vh;
     text-align: center;
@@ -182,7 +192,7 @@ h5 {
     padding-top: 5vh; /* ton réglage existant */
   }
 
-.skills h1,
+.skills .cv-section-title,
 .skills h2 {
   text-align: center;
 }
@@ -281,7 +291,7 @@ iframe {
     height: 40vh;
 }
 @media (max-width:767px) {
-    .skills h1{
+    .skills .cv-section-title{
         line-height: normal;
     }
     .quote{

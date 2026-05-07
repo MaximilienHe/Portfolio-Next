@@ -22,6 +22,7 @@ export type EntryMeta = {
   logos?: string[];
   priority?: number;
   draft?: boolean;
+  noindex?: boolean;
 };
 
 export type Entry = EntryMeta & { body: string };
@@ -65,6 +66,7 @@ export function getAllEntries(type: ContentType): EntryMeta[] {
       logos,
       priority: Number.isNaN(priority) ? undefined : priority,
       draft: Boolean(data.draft ?? false),
+      noindex: Boolean(data.noindex ?? false),
     } satisfies EntryMeta;
   });
 
@@ -116,6 +118,7 @@ export function getEntry(type: ContentType, slug: string): Entry {
     logos,
     priority: Number.isNaN(priority) ? undefined : priority,
     draft: Boolean(data.draft ?? false),
+    noindex: Boolean(data.noindex ?? false),
     body: content,
   };
 }

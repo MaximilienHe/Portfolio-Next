@@ -118,12 +118,18 @@ html {
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
+	max-width: 100%;
+	overflow-x: hidden;
+	overflow-x: clip;
 }
 .layout-content {
 	flex: 1;
 	display: flex;
 	flex-direction: column;
 	position: relative;
+	max-width: 100%;
+	overflow-x: hidden;
+	overflow-x: clip;
 }
 .landing,
 .XP,
@@ -1526,10 +1532,12 @@ a:hover{
 /* ─── Explore Also (maillage interne en bas de page) ─── */
 
 .explore-also{
+  width: 100%;
   max-width: var(--container);
   margin: 6vh auto 0;
   padding: 0 16px 4vh;
   overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 .explore-also h2{
@@ -1550,6 +1558,7 @@ a:hover{
   scroll-snap-type: x proximity;
   overscroll-behavior-x: contain;
   -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
 }
 
 .explore-card{
@@ -1564,6 +1573,7 @@ a:hover{
   text-decoration: none;
   scroll-snap-align: start;
   transition: transform .15s ease, box-shadow .15s ease;
+  box-sizing: border-box;
 }
 
 .explore-card:hover{
@@ -1591,17 +1601,17 @@ a:hover{
   }
 
   .explore-grid{
-    padding-right: 12px;
+    padding: 0 0 6px;
     scroll-padding-left: 12px;
   }
 
   .explore-card{
-    flex-basis: clamp(220px, 78vw, 320px);
+    flex-basis: clamp(220px, 78%, 320px);
   }
 }
 
 /* ═══════════════════════════════════════════════════════
-   SEARCH — Ajouter en fin de app.css
+    SEARCH : Ajouter en fin de app.css
    ═══════════════════════════════════════════════════════ */
 
 /* ─── Trigger button (dans le header) ─── */
@@ -1698,18 +1708,16 @@ a:hover{
   background: rgba(20, 14, 10, 0.45);
   backdrop-filter: blur(4px);
   animation: searchFadeIn 0.15s ease;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 @media (max-width: 991px) {
   .search-overlay {
-    padding-top: 72px;
+    padding: 72px 10px 0;
     background: transparent;
     backdrop-filter: none;
-  }
-
-  .search-modal {
-    width: min(640px, calc(100vw - 20px));
-    max-height: calc(100dvh - 84px);
   }
 }
 
@@ -1724,6 +1732,7 @@ a:hover{
 
 .search-modal {
   width: min(600px, 92vw);
+  max-width: calc(100vw - 20px);
   max-height: 70vh;
   display: flex;
   flex-direction: column;
@@ -1733,6 +1742,15 @@ a:hover{
     0 0 0 1px rgba(57, 43, 31, 0.08);
   overflow: hidden;
   animation: searchSlideUp 0.2s ease;
+  box-sizing: border-box;
+}
+
+@media (max-width: 991px) {
+  .search-modal {
+    width: min(640px, 100%);
+    max-width: 100%;
+    max-height: calc(100dvh - 84px);
+  }
 }
 
 @keyframes searchSlideUp {
@@ -1754,6 +1772,7 @@ a:hover{
   gap: 10px;
   padding: 16px 20px;
   border-bottom: 1px solid rgba(57, 43, 31, 0.08);
+  box-sizing: border-box;
 }
 
 .search-input-icon {
@@ -1763,6 +1782,7 @@ a:hover{
 
 .search-input {
   flex: 1;
+  min-width: 0;
   border: none;
   outline: none;
   font-size: 17px;
@@ -1910,7 +1930,7 @@ a:hover{
 }
 
 /* ═══════════════════════════════════════════════════════
-   PAGE /recherche — Résultats pleine page
+    PAGE /recherche : Résultats pleine page
    ═══════════════════════════════════════════════════════ */
 
 .recherche-page {

@@ -58,7 +58,7 @@ export function buildPageMetadata(input: BuildPageMetadataInput): Metadata {
           url: image,
           width: 1200,
           height: 630,
-          alt: input.imageAlt ?? `Apercu ${ogTitle}`,
+          alt: input.imageAlt ?? `Aperçu ${ogTitle}`,
         },
       ],
     },

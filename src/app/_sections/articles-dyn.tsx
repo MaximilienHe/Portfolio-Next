@@ -1,5 +1,5 @@
 // src/app/_sections/articles-dyn.tsx
-// Server Component — le contenu est dans le HTML initial (visible par Googlebot)
+// Server Component : le contenu est dans le HTML initial (visible par Googlebot)
 import Image from "next/image";
 import { getAllLatestArticles } from "@/lib/fetchArticles";
 

@@ -109,25 +109,29 @@ function getArticleFallbackEntries(): SearchEntry[] {
 }
 
 function getDynamicProjectEntries(): SearchEntry[] {
-  return getAllEntries("projets").map((project) => ({
-    title: project.title,
-    description: project.description || "",
-    url: `/projets/${project.slug}`,
-    type: "projet" as const,
-    tags: project.tags ?? [],
-    date: project.date || undefined,
-  }));
+  return getAllEntries("projets")
+    .filter((project) => !project.noindex)
+    .map((project) => ({
+      title: project.title,
+      description: project.description || "",
+      url: `/projets/${project.slug}`,
+      type: "projet" as const,
+      tags: project.tags ?? [],
+      date: project.date || undefined,
+    }));
 }
 
 function getDynamicBlogEntries(): SearchEntry[] {
-  return getAllEntries("blog").map((post) => ({
-    title: post.title,
-    description: post.description || "",
-    url: `/blog/${post.slug}`,
-    type: "blog" as const,
-    tags: post.tags ?? [],
-    date: post.date || undefined,
-  }));
+  return getAllEntries("blog")
+    .filter((post) => !post.noindex)
+    .map((post) => ({
+      title: post.title,
+      description: post.description || "",
+      url: `/blog/${post.slug}`,
+      type: "blog" as const,
+      tags: post.tags ?? [],
+      date: post.date || undefined,
+    }));
 }
 
 async function getDynamicArticleEntries(): Promise<SearchEntry[]> {

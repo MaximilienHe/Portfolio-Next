@@ -42,7 +42,7 @@ export default function Skills() {
     <>
       <section className="skills">
         <div className="inner">
-          <h1>Logiciels et technologies utilisées</h1>
+          <h2 className="cv-section-title">Logiciels et technologies utilisées</h2>
           <h2>Web & API</h2>
           <div className="logos">
             <Image
@@ -262,8 +262,7 @@ export default function Skills() {
         </div>
       </section>
 
-      {/* heading */}
-      <h1>Centres d&apos;intérêt</h1>
+      <h2 className="cv-section-title">Centres d&apos;intérêt</h2>
     </>
   );
 }

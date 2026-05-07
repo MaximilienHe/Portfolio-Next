@@ -25,7 +25,7 @@ export const metadata: Metadata = buildPageMetadata({
 });
 
 export default function BlogIndex() {
-  const posts = getAllEntries("blog");
+  const posts = getAllEntries("blog").filter((post) => !post.noindex);
   const breadcrumbItems = [
     { name: "Accueil", url: getCanonicalUrl("/") },
     { name: "Blog", url: pageUrl },

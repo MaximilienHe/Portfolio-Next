@@ -4,7 +4,7 @@ h1 {
 }
 
 h4 {
-    font-family: ProductSans !important;
+    font-family: var(--font-ui) !important;
     font-size: 24px;
     font-weight: bold;
     color: black !important;
@@ -41,7 +41,7 @@ h4 {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: 0;
     transition: transform 0.15s ease-in-out, opacity 0.15s ease-in-out;
 }
 
@@ -52,7 +52,7 @@ h4 {
     aspect-ratio: 16 / 9;
     height: auto;
     background: #f2f2f2;
-    border-radius: 10px;
+    border-radius: 0;
     flex-shrink: 0;
 }
 
@@ -187,7 +187,7 @@ h4 {
 }
 
 .projectCard{
-  border-radius: 18px;
+  border-radius: 0;
   border: 1px solid rgba(57,43,31,0.14);
   box-shadow: var(--shadow-1);
   box-sizing: border-box;
@@ -211,6 +211,42 @@ h4 {
   max-width: 45%;
   aspect-ratio: 16 / 9;
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: 0;
+}
+
+.projectCardImage img{
+  border-radius: 0 !important;
+}
+
+@media (max-width:767px) {
+    .projectCard{
+        flex-direction: column;
+        flex-wrap: nowrap;
+        gap: 16px;
+        padding: 0;
+        overflow: hidden;
+    }
+
+    .projectCardImage{
+        flex: none;
+        width: 100%;
+        max-width: none;
+        aspect-ratio: 16 / 9;
+    }
+
+    .projectCardPlaceholder{
+        flex: none;
+        width: 100%;
+        max-width: none;
+        height: auto;
+        aspect-ratio: 16 / 9;
+    }
+
+    .projectContent{
+        width: 100%;
+        margin: 0;
+        padding: 0 1rem 1rem;
+        box-sizing: border-box;
+    }
 }
 

@@ -51,6 +51,7 @@ export async function generateMetadata(
       type: "article",
       image: getMetaImage(post.cover),
       keywords: post.tags,
+      robots: post.noindex ? { index: false, follow: true } : undefined,
     });
   } catch {
     return {};

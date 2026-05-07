@@ -18,10 +18,10 @@ export default function Xp() {
             />
             <div className="contentRight">
               <h2>Ingénieur logiciel</h2>
-              <h4>
+              <p>
                 Je me suis lancé à fond dans le dev pour mes études, et ce,
                 à travers différents projets.
-              </h4>
+              </p>
               <Link href="/cv" className="button">
                 Plus de détails sur mon CV
               </Link>
@@ -30,10 +30,10 @@ export default function Xp() {
           <div className="singleXP">
             <div className="contentLeft">
               <h2>Journaliste</h2>
-              <h4>
+              <p>
                 Cela fait depuis 2020 que je suis journaliste tech à côté de mes
                 études.
-              </h4>
+              </p>
               <Link href="/articles" className="button">
                 Lire quelques articles
               </Link>

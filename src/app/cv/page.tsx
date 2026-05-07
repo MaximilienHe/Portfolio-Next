@@ -32,6 +32,7 @@ export default function Cv() {
   return (
     <>
       <Breadcrumb items={breadcrumbItems} />
+      <h1 className="cv-page-title">CV de Maximilien Herr</h1>
       <nav className="cv-quick-nav" aria-label="Navigation rapide CV">
         <a href="#cv-xp">Expériences</a>
         <a href="#cv-formations">Formation</a>
