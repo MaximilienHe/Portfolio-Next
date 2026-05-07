@@ -33,49 +33,52 @@ export default async function ArticlesDyn() {
   }
 
   return (
-    <section className="articles" id="articles">
-      <div className="container">
-        <h2>Mes derniers articles</h2>
-        <div className="multiArticles two-column" style={{ flexWrap: "wrap" }}>
-          {data.map((a) => {
-            const coverSrc = normalizeCoverSrc(a.cover);
-            const isExternalCover = isExternalUrl(coverSrc);
+    <section className="articles" id="articles" aria-labelledby="articles-title">
+      <span className="section-label">04 · Sur le kiosque</span>
+      <h2 id="articles-title">Mes derniers articles parus.</h2>
+      <p className="articles__lead">
+        Sélection issue de Frandroid, Droidsoft et Le Café du Geek — branchée
+        sur les flux RSS, mise à jour automatiquement.
+      </p>
+      <div className="multiArticles">
+        {data.map((a) => {
+          const coverSrc = normalizeCoverSrc(a.cover);
+          const isExternalCover = isExternalUrl(coverSrc);
 
-            return (
-              <a
-                key={a.id}
-                href={a.url}
-                target="_blank"
-                rel="noopener"
-                className="singleArticle"
-              >
-                <div className="article">
-                  <div className="articleImgWrapper">
-                    <Image
-                      src={coverSrc ?? "/images/articles/placeholder.webp"}
-                      alt={coverSrc ? a.title : ""}
-                      fill
-                      sizes="(max-width: 767px) 100vw, 320px"
-                      style={{ objectFit: "cover" }}
-                      unoptimized={isExternalCover}
-                      loading="lazy"
-                      priority={false}
-                      fetchPriority="auto"
-                      decoding="async"
-                    />
-                  </div>
-                  <div className="articleDetail">
-                    <h3>{a.title}</h3>
-                    <p style={{ color: "#fff" }}>
-                      {a.source} -{" "}
-                      {new Date(a.date).toLocaleDateString("fr-FR")}
-                    </p>
-                  </div>
+          return (
+            <a
+              key={a.id}
+              href={a.url}
+              target="_blank"
+              rel="noopener"
+              className="singleArticle"
+            >
+              <div className="article">
+                <div className="articleImgWrapper">
+                  <Image
+                    src={coverSrc ?? "/images/articles/placeholder.webp"}
+                    alt={coverSrc ? a.title : ""}
+                    fill
+                    sizes="(max-width: 767px) 100vw, 320px"
+                    style={{ objectFit: "cover" }}
+                    unoptimized={isExternalCover}
+                    loading="lazy"
+                    priority={false}
+                    fetchPriority="auto"
+                    decoding="async"
+                  />
                 </div>
-              </a>
-            );
-          })}
-        </div>
+                <div className="articleDetail">
+                  <h3>{a.title}</h3>
+                  <p>
+                    {a.source} ·{" "}
+                    {new Date(a.date).toLocaleDateString("fr-FR")}
+                  </p>
+                </div>
+              </div>
+            </a>
+          );
+        })}
       </div>
     </section>
   );

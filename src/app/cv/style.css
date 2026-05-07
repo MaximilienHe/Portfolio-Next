@@ -1,363 +1,544 @@
-/* .yellowQuote {
-    filter: invert(92%) sepia(13%) saturate(3016%) hue-rotate(325deg) brightness(103%) contrast(98%);
-    width: 100px;
-    position: absolute;
-    top: 8vh;
-    left: 16vw;
-} */
-/* /src/app/cv/style.css */
+/* /src/app/cv/style.css — CV en édition éditoriale */
 
 .inner {
-    max-width: 1240px;   /* ou la largeur qui te convient */
-    width: 100%;
-    margin: 0 auto;      /* centre horizontalement */
-    padding: 0 1rem;     /* petit padding latéral */
-    box-sizing: border-box;
+  max-width: var(--max);
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  box-sizing: border-box;
 }
 
-ul {
-    font-family: var(--font-ui);
-    font-size: 24px;
-    font-weight: normal;
-    color: #000000;
-}
-
-h5 {
-    font-family: var(--font-ui);
-    font-size: 20px;
-    font-weight: bold;
-    color: #000000;
-}
-
-/* Quote Section */
-
-.quote p {
-    font-family: var(--font-ui);
-    font-size: 32px;
-    font-weight: normal;
-    color: #000000;
-    text-align: center;
-}
-
-.quote {
-    margin: 5vh 0;
-}
-
+/* ============ Titre & quick nav ============ */
 .cv-page-title {
-    margin: 2.5rem auto 1rem;
-    text-align: center;
+  font-family: var(--font-serif);
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  text-align: left;
+  margin: 1.5rem auto 1.5rem;
+  max-width: var(--max);
+  padding: 0 var(--gutter);
+  color: var(--cacao);
 }
 
 .cv-section-title {
-    text-align: center;
-    margin: 0 0 2vh;
-}
-
-/* Experiences section */
-
-.XP {
-    padding-top: 5vh !important;
-}
-
-.XP .cv-section-title {
-    line-height: 1.1;
-    margin-bottom: 12vh;
-}
-/* Expériences : layout en flex et alternance image ↔ texte */
-.XP .inner .experiences > .singleXP {
-    display: flex;
-    align-items: flex-start;
-    gap: 2rem;
-    margin-bottom: 4rem;
-    /* remet l’ordre par défaut */
-    flex-direction: row !important;
-}
-
-.XP .inner .experiences > .singleXP img {
-    align-self: flex-start;
-}
-
-.XP .inner .experiences > .singleXP .contentRight {
-    text-align: left;
-}
-  
-  /* Inverse la 2ᵉ, 4ᵉ, 6ᵉ… expérience */
-  .XP .inner .experiences > .singleXP:nth-of-type(2n) {
-    flex-direction: row-reverse !important;
-  }
-  /* ─── Sur les items pairs (2ᵉ, 4ᵉ…) on inverse le padding pour coller le texte à gauche ─── */
-.XP .experiences > .singleXP:nth-of-type(2n) .contentLeft {
-    padding-right: 0 !important;
-  }
-  .XP .experiences > .singleXP:nth-of-type(2n) .contentRight {
-    padding-right: 5vw !important;  /* au lieu de padding-left */
-    padding-left: 0 !important;
-  }
-  
-  
-  /* Mobile : empile tout */
-  @media (max-width: 767px) {
-    .XP .inner .experiences > .singleXP {
-      flex-direction: column !important;
-      text-align: center;
-    }
-    .XP .inner .experiences > .singleXP img {
-      margin-bottom: 1.5rem;
-    }
-  }
-.contentLeft h4,
-.contentRight h4,
-.contentLeft p,
-.contentRight p {
-    margin: 0;
-}
-
-/* Formation Section */
-
-.contentFormation ul {
-    list-style-type: none;
-}
-
-.formation {
-    background-color: #F7F7F7;
-    margin-top: 15vh;
-    padding: 5vh 0;
-}
-
-.formation .singleXP img {
-    width: auto;
-    height: 100px;
-    margin: 0 2vw;
-}
-
-.formation .cv-section-title {
-    margin: 0;
-    margin-bottom: 2vh;
-    text-align: center;
-}
-
-
-/* ─── Formation : texte à gauche, logo à droite ─── */
-.formation .inner .singleXP {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    flex-direction: row-reverse; /* on inverse l’ordre de base (logo, texte → texte, logo) */
-    gap: 1rem !important;
-    margin-bottom: 4rem;
-    width: 100%;
-  }
-
-  .formation .inner{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2.5rem;
-    max-width: 960px;
-    margin: 0 auto;
-  }
-  
-  /* Texte prend tout l’espace restant */
-  .formation .singleXP .contentFormation {
-    flex: 1 1 auto;
-    margin-right: 1rem !important; /* ajustez à votre goût */
-    max-width: 640px;
-  }
-  
-  /* Logo dimensionné et collé à droite */
-  .formation .singleXP img {
-    flex: 0 0 200px;   /* logo toujours à 100px de large */
-    width: 200px;
-    height: auto;
-    object-fit: contain;
-    align-self: center;
-  }
-  
-  /* Sur mobile, on repasse en colonne et on recentre */
-  @media (max-width: 767px) {
-    .formation .inner .singleXP {
-      flex-direction: column;
-      text-align: center;
-    }
-    .formation .singleXP img {
-      margin: 0 auto 1.5rem;
-    }
-  }
-  
-.skills {
-    /* pour centrer tout le contenu en colonne */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 5vh; /* ton réglage existant */
-  }
-
-.skills .cv-section-title,
-.skills h2 {
-  text-align: center;
-}
-
-.skills .logos {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 4rem;
-
-  /* ← Ajout : */
-  margin: 0 auto;
-  padding-bottom: 5rem;
-}
-
-/* Interest section */
-
-.download .inner {
-    text-align: center; /* centre tout son contenu inline */
-  }
-  
-  .download .button {
-    display: inline-block; /* ou garde `inline` si tu n’as pas besoin de margin auto */
-    margin-top: 2rem;      /* juste une marge‑haute si tu veux */
-  }
-
-.interestCard img {
-    width: 50px;
-    height: 50px;
-    border-radius: 100px;
-}
-
-.interestCard {
-    /* height: 300px; */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: left;
-    width: 300px;
-    padding: 2vh 1vw;
-    border-radius: 20px;
-    box-shadow: 0 .796841278193901px 2.3905238345817033px -.625px #0000000d,0 2.413677098392273px 7.2410312951768185px -1.25px #0000000d,0 6.3802836426702925px 19.140850928010877px -1.875px #0000000d,0 20px 60px -2.5px #0000000d;}
-
-.interestCard .title {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: left;
-    gap: 30px;
-}
-/* Pour les images de la section Expériences */
-.singleXP img {
-    /* supprime width/height fixes */
-    max-width: 100%;    /* jamais plus large que son parent */
-    height: auto;       /* ajuste la hauteur automatiquement */
-    object-fit: contain;/* optionnel : pour éviter tout crop */
-  }
-  
-  /* Pour tes logos de compétences */
-  .logo {
-    max-width: 80px;    /* ou la taille max que tu souhaites */
-    width: auto;
-    height: auto;
-    object-fit: contain;
-  }
-  
-
-.interest {
-    margin: 10vh 0;
-    overflow: visible;
-    padding: 0;
-    position: relative;
-}
-
-.interest .inner {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;      /* ou wrap si tu veux laisser coller */
-    gap: 40px;
-    justify-content: center;
-    align-items: flex-start;
-}
-
-/* Download section */
-
-.download {
-    margin: 10vh 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-iframe {
-    height: 40vh;
-}
-@media (max-width:767px) {
-    .skills .cv-section-title{
-        line-height: normal;
-    }
-    .quote{
-        margin: 3vh 6vw;
-    }
-    .formation {
-        padding: 2rem 1rem;
-    }
-    .contentRight{
-        padding: 0;
-    }
-    .contentFormation ul li{ margin-bottom: 1rem;}
-    .contentFormation ul{
-        padding: 0;
-        line-height: 1.5;
-    }
-    .interest{
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    .interest .inner{
-        flex-direction: column;
-        align-items: center;
-        gap: 1.25rem;
-    }
-    .interestCard{
-        padding: 1rem;
-        width: 100%;
-        max-width: 320px;   
-    }
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  margin: 0 0 2.5rem;
+  text-align: left;
 }
 
 .cv-quick-nav {
   position: sticky;
-  top: 0.5rem;
+  top: 1rem;
   z-index: 20;
-  margin: 1rem auto 0;
-  max-width: 960px;
+  margin: 0 auto 2rem;
+  max-width: var(--max);
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  justify-content: center;
-  padding: 0.65rem;
-  border: 1px solid rgba(57, 43, 31, 0.14);
+  gap: 0.4rem;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--cacao);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(8px);
+  background: var(--bg);
+  box-shadow: 0 4px 18px -8px rgba(45, 31, 20, 0.18);
+  width: max-content;
+  max-width: calc(100% - 2 * var(--gutter));
+  margin-left: var(--gutter);
+  margin-right: var(--gutter);
 }
 
 .cv-quick-nav a {
   text-decoration: none;
-  font-size: 0.9rem;
-  color: #5c3014;
-  padding: 0.25rem 0.6rem;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--cacao);
+  padding: 0.45rem 0.9rem;
   border-radius: 999px;
+  transition: background 0.2s ease, color 0.2s ease;
 }
-
 .cv-quick-nav a:hover {
-  background: rgba(143, 79, 31, 0.12);
+  background: var(--cacao);
+  color: var(--creme);
 }
 
-@media (max-width: 767px) {
+/* ============ Quote ============ */
+.quote {
+  margin: 4rem 0 5rem;
+  padding: 0 var(--gutter);
+}
+.quote .inner {
+  border-left: 3px solid var(--caramel);
+  padding: 1rem 0 1rem 2rem;
+  max-width: 760px;
+  margin: 0 auto;
+}
+.quote p {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--mocha);
+  text-align: left;
+  margin: 0;
+}
+
+/* ============ Section XP ============ */
+.XP {
+  padding: 3rem 0 4rem !important;
+}
+.XP .inner .experiences {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  border-top: 1px solid var(--cacao);
+  padding-top: 2.5rem;
+}
+.XP .inner .experiences > .singleXP {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  align-items: start;
+  gap: 2rem;
+  margin: 0;
+  flex-direction: row !important;
+  border-bottom: 1px solid var(--rule-soft);
+  padding-bottom: 3rem;
+}
+.XP .inner .experiences > .singleXP:last-child { border-bottom: none; padding-bottom: 0; }
+.XP .inner .experiences > .singleXP:nth-of-type(2n) {
+  flex-direction: row !important;
+}
+.XP .inner .experiences > .singleXP img {
+  align-self: flex-start;
+  max-width: 100%;
+  width: 180px;
+  height: auto;
+  object-fit: contain;
+  filter: grayscale(0.05);
+  border-radius: var(--radius-sm);
+}
+.XP .inner .experiences > .singleXP .contentRight,
+.XP .inner .experiences > .singleXP .contentLeft {
+  text-align: left !important;
+  padding: 0 !important;
+}
+.XP .experiences > .singleXP:nth-of-type(2n) .contentLeft,
+.XP .experiences > .singleXP:nth-of-type(2n) .contentRight {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+/* Titre du poste (h2 dans XP) */
+.XP .contentLeft h2,
+.XP .contentRight h2 {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.4rem;
+  color: var(--cacao);
+  line-height: 1.2;
+  text-align: left;
+}
+/* Date (p juste après le h2) */
+.XP .contentLeft h2 + p,
+.XP .contentRight h2 + p {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--caramel);
+  margin: 0 0 0.6rem;
+  letter-spacing: 0.04em;
+}
+/* Entreprise (h4 sous-titre) */
+.XP .contentLeft h4,
+.XP .contentRight h4 {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin: 0 0 1rem;
+  color: var(--mocha);
+}
+/* Liste à puces du contenu */
+.XP .contentLeft ul,
+.XP .contentRight ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--espresso);
+  line-height: 1.65;
+}
+.XP .contentLeft ul li,
+.XP .contentRight ul li {
+  margin-bottom: 0.45rem;
+  position: relative;
+  padding-left: 1.1rem;
+}
+.XP .contentLeft ul li::before,
+.XP .contentRight ul li::before {
+  content: "·";
+  position: absolute;
+  left: 0;
+  color: var(--caramel);
+  font-weight: 700;
+}
+
+.contentLeft p,
+.contentRight p {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--espresso);
+  margin: 0 0 0.5rem;
+}
+
+/* ============ Formations ============ */
+.formation {
+  background: var(--ivoire);
+  border-top: 1px solid var(--cacao);
+  border-bottom: 1px solid var(--cacao);
+  margin-top: 3rem;
+  padding: 4rem 0;
+}
+.formation .cv-section-title {
+  margin: 0 0 2rem;
+}
+.formation .inner {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  max-width: 960px;
+  margin: 0 auto;
+}
+.formation .inner .singleXP {
+  display: grid;
+  grid-template-columns: 1fr 200px;
+  align-items: center;
+  gap: 2rem;
+  margin: 0;
+  width: 100%;
+  flex-direction: row !important;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.formation .inner .singleXP:last-child { border-bottom: none; padding-bottom: 0; }
+.formation .singleXP .contentFormation {
+  flex: 1 1 auto;
+  margin-right: 0 !important;
+  max-width: 640px;
+}
+/* Titre du diplôme (h2) */
+.formation .singleXP .contentFormation h2 {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin: 0 0 0.4rem;
+  text-align: left;
+  color: var(--cacao);
+}
+/* Date juste après le h2 */
+.formation .singleXP .contentFormation h2 + p {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--caramel);
+  margin: 0 0 0.6rem;
+  letter-spacing: 0.04em;
+}
+/* Établissement (h4) */
+.formation .singleXP .contentFormation h4 {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mocha);
+  margin: 0 0 1rem;
+}
+.formation .singleXP .contentFormation ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--espresso);
+  line-height: 1.7;
+}
+.formation .singleXP .contentFormation ul li {
+  margin-bottom: 0.3rem;
+  position: relative;
+  padding-left: 1rem;
+}
+.formation .singleXP .contentFormation ul li::before {
+  content: "·";
+  position: absolute;
+  left: 0;
+  color: var(--caramel);
+  font-weight: 700;
+}
+.formation .singleXP img {
+  flex: 0 0 200px;
+  width: 200px;
+  height: auto;
+  object-fit: contain;
+  align-self: center;
+  filter: grayscale(0.1);
+}
+
+/* ============ Skills ============ */
+.skills {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 4rem 0 !important;
+  background: var(--bg) !important;
+  color: var(--cacao) !important;
+}
+.skills .cv-section-title {
+  text-align: left;
+  color: var(--cacao);
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  margin-bottom: 2.5rem;
+}
+/* Sous-catégories : "Web & API", "Logiciel"… */
+.skills h2:not(.cv-section-title) {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: var(--mocha);
+  text-align: left;
+  margin: 1.8rem 0 0.8rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.skills h2:not(.cv-section-title):first-of-type { margin-top: 0; }
+
+.skills .logos {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  margin: 0 0 1.5rem;
+  padding-bottom: 0;
+}
+.skills .logos .logo,
+.skills .logo {
+  max-width: 56px;
+  max-height: 56px;
+  height: auto;
+  width: auto;
+  object-fit: contain;
+  opacity: 0.85;
+  transition: opacity 0.2s ease;
+}
+.skills .logos .logo:hover,
+.skills .logo:hover { opacity: 1; }
+
+/* ============ Interest ============ */
+.interest {
+  margin: 5rem 0;
+  padding: 0;
+}
+.interest .cv-section-title {
+  text-align: left;
+  margin-bottom: 2.5rem;
+}
+.interest .inner {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: stretch;
+  align-items: stretch;
+}
+
+.interestCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 1.5rem;
+  border-radius: var(--radius-md);
+  background: var(--ivoire);
+  border: 1px solid var(--rule-soft);
+  box-shadow: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+.interestCard:hover {
+  border-color: var(--caramel);
+  box-shadow: 0 12px 28px -10px rgba(45, 31, 20, 0.18);
+  transform: translateY(-2px);
+}
+
+.interestCard img {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  object-fit: cover;
+}
+
+.interestCard .title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  margin-bottom: 0.7rem;
+}
+.interestCard .title h4,
+.interestCard .title h5,
+.interestCard h4,
+.interestCard h5 {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  margin: 0;
+  color: var(--cacao);
+}
+.interestCard p {
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--espresso);
+  margin: 0;
+}
+
+/* ============ Download ============ */
+.download {
+  margin: 5rem 0 6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  padding: 3rem var(--gutter);
+  background: var(--cacao);
+  color: var(--creme);
+}
+.download .inner {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto;
+}
+.download .cv-section-title {
+  color: var(--creme);
+  text-align: center;
+}
+.download p {
+  color: var(--sable);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+.download .button {
+  display: inline-flex;
+  margin-top: 1.5rem;
+  background: var(--creme);
+  color: var(--cacao);
+  border-color: var(--creme);
+}
+.download .button:hover {
+  background: var(--caramel);
+  border-color: var(--caramel);
+  color: var(--cacao);
+}
+.download iframe {
+  height: 50vh;
+  width: 100%;
+  max-width: 600px;
+  margin: 1.5rem auto 0;
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--creme);
+  display: block;
+}
+
+/* ============ Logos sizes globaux ============ */
+.singleXP img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+.logo {
+  max-width: 80px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* ============ Responsive ============ */
+@media (max-width: 900px) {
+  .cv-page-title { font-size: clamp(2rem, 7vw, 2.8rem); }
+  .cv-section-title { font-size: clamp(1.5rem, 5vw, 2rem); }
+
   .cv-quick-nav {
     top: 0;
-    margin-top: 0.5rem;
-    border-radius: 14px;
-    padding: 0.6rem;
+    margin: 0.5rem var(--gutter) 1.5rem;
+    padding: 0.4rem;
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    scrollbar-width: none;
   }
+  .cv-quick-nav::-webkit-scrollbar { display: none; }
+  .cv-quick-nav a {
+    font-size: 0.65rem;
+    padding: 0.4rem 0.7rem;
+    white-space: nowrap;
+  }
+
+  .quote { margin: 2rem 0 3rem; }
+  .quote p { font-size: 1.2rem; }
+
+  .XP .inner .experiences > .singleXP {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    text-align: left;
+    padding-bottom: 2rem;
+  }
+  .XP .inner .experiences > .singleXP img {
+    width: 140px;
+    margin-bottom: 0;
+  }
+
+  .formation { padding: 3rem 0; }
+  .formation .inner .singleXP {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    text-align: left;
+    padding-bottom: 1.5rem;
+  }
+  .formation .singleXP img {
+    width: 140px;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .interest { margin: 3rem 0; }
+  .interest .inner {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .interestCard {
+    padding: 1.2rem;
+    max-width: 100%;
+  }
+
+  .download { margin: 3rem 0 4rem; padding: 2.5rem var(--gutter); }
+  .download iframe { height: 40vh; }
 }

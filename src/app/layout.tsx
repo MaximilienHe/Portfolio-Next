@@ -1,91 +1,25 @@
 // src/app/layout.tsx
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { Lora, Poppins } from "next/font/google";
 import "./globals.css";
 import "./app.css";
 import Header from "@/common/header";
 import Footer from "@/common/footer";
 import { DEFAULT_OG_IMAGE, SITE_URL } from "@/lib/seo";
 
-const inter = localFont({
-  src: [
-    {
-      path: "../assets/Product Sans/product_sans_regular-webfont.woff2",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "../assets/Product Sans/product_sans_italic-webfont.woff2",
-      weight: "400",
-      style: "italic",
-    },
-    {
-      path: "../assets/Product Sans/product_sans_bold-webfont.woff2",
-      weight: "700",
-      style: "normal",
-    },
-    {
-      path: "../assets/Product Sans/product_sans_bold_italic-webfont.woff2",
-      weight: "700",
-      style: "italic",
-    },
-  ],
+const lora = Lora({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-lora",
   display: "swap",
-  variable: "--font-inter",
 });
 
-const spaceGrotesk = localFont({
-  src: [
-    {
-      path: "../assets/Product Sans/product_sans_regular-webfont.woff2",
-      weight: "500",
-      style: "normal",
-    },
-    {
-      path: "../assets/Product Sans/product_sans_bold-webfont.woff2",
-      weight: "600",
-      style: "normal",
-    },
-    {
-      path: "../assets/Product Sans/product_sans_bold-webfont.woff2",
-      weight: "700",
-      style: "normal",
-    },
-  ],
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-poppins",
   display: "swap",
-  variable: "--font-space-grotesk",
-});
-
-const montserrat = localFont({
-  src: [
-    {
-      path: "../assets/Product Sans/product_sans_regular-webfont.woff2",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "../assets/Product Sans/product_sans_regular-webfont.woff2",
-      weight: "500",
-      style: "normal",
-    },
-    {
-      path: "../assets/Product Sans/product_sans_bold-webfont.woff2",
-      weight: "600",
-      style: "normal",
-    },
-    {
-      path: "../assets/Product Sans/product_sans_bold-webfont.woff2",
-      weight: "700",
-      style: "normal",
-    },
-    {
-      path: "../assets/Product Sans/product_sans_bold-webfont.woff2",
-      weight: "800",
-      style: "normal",
-    },
-  ],
-  display: "swap",
-  variable: "--font-montserrat",
 });
 
 export const metadata: Metadata = {
@@ -96,7 +30,7 @@ export const metadata: Metadata = {
     template: "%s | Maximilien Herr",
   },
   description:
-    "Maximilien Herr, ingénieur logiciel chez Smartfluence et journaliste tech (Frandroid, DroidSoft, Le Café du Geek). Découvrez mon portfolio : projets, CV, compétences et articles.",
+    "Maximilien Herr, ingénieur logiciel et journaliste tech (Frandroid, DroidSoft, Le Café du Geek). Découvrez mon portfolio : projets, CV, compétences et articles.",
   openGraph: {
     type: "website",
     url: SITE_URL,
@@ -249,7 +183,7 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
-      className={`${inter.variable} ${spaceGrotesk.variable} ${montserrat.variable}`}
+      className={`${lora.variable} ${poppins.variable}`}
     >
       <body className="layout-root">
         <Header />
@@ -273,4 +207,3 @@ export default function RootLayout({
     </html>
   );
 }
-

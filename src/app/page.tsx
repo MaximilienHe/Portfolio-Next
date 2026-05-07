@@ -1,20 +1,20 @@
 import Landing from "./_sections/landing";
+import Sommaire from "./_sections/sommaire";
 import Xp from "./_sections/xp";
 import Projets from "./_sections/projets";
-import Articles from "./_sections/articles";
 import Skills from "./_sections/skills";
 import ArticlesDyn from "./_sections/articles-dyn";
 
 const profilePageSchema = {
   "@context": "https://schema.org",
   "@type": "ProfilePage",
-  name: "Maximilien Herr \u2014 Portfolio",
+  name: "Maximilien Herr — Portfolio",
   url: "https://maximilienherr.fr",
   mainEntity: {
     "@id": "https://maximilienherr.fr#person",
   },
   dateCreated: "2023-01-01T00:00:00Z",
-  dateModified: "2026-02-18T00:00:00Z",
+  dateModified: "2026-05-07T00:00:00Z",
   breadcrumb: {
     "@type": "BreadcrumbList",
     itemListElement: [
@@ -38,9 +38,9 @@ export default function Home() {
         }}
       />
       <Landing />
+      <Sommaire />
       <Xp />
       <Projets />
-      {/* <Articles /> */}
       <ArticlesDyn />
       <Skills />
     </>

@@ -1,0 +1,2431 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Wireframe — Home · 3 propositions · Maximilien Herr</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   TOKENS — d'après Charte Graphique MH (mai 2026)
+   ========================================================= */
+:root {
+  --cacao: #2D1F14;
+  --espresso: #3D2817;
+  --mocha: #6B4F35;
+  --caramel: #A8865E;
+  --sable: #C4A687;
+  --ivoire: #F8F0E8;
+  --creme: #F5EBDC;
+
+  --serif: "Lora", Georgia, serif;
+  --sans: "Poppins", -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --gutter: 1.5rem;
+  --max: 1280px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  font-weight: 400;
+  background: var(--creme);
+  color: var(--cacao);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+/* =========================================================
+   SWITCHER — barre flottante haute, hors propositions
+   ========================================================= */
+.switcher {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: inline-flex;
+  align-items: center;
+  background: var(--cacao);
+  border-radius: 999px;
+  padding: 0.4rem;
+  box-shadow: 0 12px 40px -10px rgba(45, 31, 20, 0.45);
+  gap: 0.25rem;
+}
+.switcher button {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--sable);
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.switcher button:hover { color: var(--creme); }
+.switcher button[aria-current="true"] {
+  background: var(--creme);
+  color: var(--cacao);
+}
+.switcher .dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  margin-right: 0.45rem;
+  vertical-align: middle;
+  background: currentColor;
+}
+.switcher .sep {
+  width: 1px;
+  height: 22px;
+  background: rgba(245, 235, 220, 0.18);
+  margin: 0 0.3rem;
+  display: inline-block;
+}
+.switcher .view-btn[aria-pressed="true"] {
+  background: var(--caramel);
+  color: var(--cacao);
+}
+@media (max-width: 600px) {
+  .switcher button { padding: 0.55rem 0.7rem; font-size: 0.7rem; }
+  .switcher .label { display: none; }
+  .switcher .view-btn .label { display: inline; }
+}
+
+/* Aperçu mobile — frame téléphone */
+#mobile-view { display: none; }
+body.view-mobile .proposal { display: none !important; }
+body.view-mobile #mobile-view { display: block; }
+body.frame-mobile .switcher { display: none; }
+body.frame-mobile #mobile-view { display: none !important; }
+
+#mobile-view {
+  background: var(--ivoire);
+  padding: 5.5rem 1rem 4rem;
+  min-height: 100vh;
+  position: relative;
+}
+.mobile-view-meta {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-family: var(--serif);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mocha);
+}
+.mobile-view-meta .label {
+  display: block;
+  font-style: italic;
+  font-size: 1rem;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--cacao);
+  margin-bottom: 0.3rem;
+}
+.phone-frame {
+  width: 414px;
+  max-width: calc(100vw - 2rem);
+  height: 868px;
+  max-height: calc(100vh - 8rem);
+  margin: 0 auto;
+  background: var(--cacao);
+  border-radius: 44px;
+  padding: 14px;
+  box-shadow:
+    0 30px 80px -10px rgba(45, 31, 20, 0.4),
+    inset 0 0 0 2px var(--mocha);
+  position: relative;
+}
+.phone-frame::before {
+  content: "";
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 110px;
+  height: 24px;
+  background: var(--cacao);
+  border-radius: 0 0 16px 16px;
+  z-index: 5;
+}
+.phone-frame iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: var(--creme);
+  border-radius: 32px;
+  display: block;
+}
+
+/* État mock */
+.proposal { display: none; }
+.proposal.is-active { display: block; }
+
+/* =========================================================
+   PROPOSITION A — "ÉDITION MAI 2026" (Magazine éditorial)
+   Fond crème, layout sommaire, hiérarchie typographique forte.
+   ========================================================= */
+#prop-a {
+  background: var(--creme);
+  color: var(--cacao);
+}
+.a-shell { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+
+.a-masthead {
+  border-bottom: 1px solid var(--cacao);
+  padding: 5rem var(--gutter) 1rem;
+  max-width: var(--max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: end;
+  gap: 1rem;
+}
+.a-masthead .meta-l, .a-masthead .meta-r {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mocha);
+}
+.a-masthead .meta-r { text-align: right; }
+.a-masthead .logo {
+  width: 56px; height: auto;
+  filter: none;
+}
+.a-wordmark {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(1.6rem, 3vw, 2.6rem);
+  line-height: 1;
+  text-align: center;
+  letter-spacing: -0.01em;
+  margin-top: 0.6rem;
+  grid-column: 1 / -1;
+  padding-top: 1rem;
+}
+
+/* Nav — reproduit le menu du site actuel, traité en éditorial */
+.a-nav {
+  border-bottom: 1px solid var(--cacao);
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 1rem var(--gutter);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+.a-nav ul {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.a-nav a {
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cacao);
+  font-weight: 500;
+  position: relative;
+  padding: 0.3rem 0;
+  transition: color 0.2s ease;
+  white-space: nowrap;
+}
+.a-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -1px;
+  width: 0; height: 1px;
+  background: var(--caramel);
+  transition: width 0.3s ease;
+}
+.a-nav a:hover { color: var(--mocha); }
+.a-nav a:hover::after { width: 100%; }
+.a-nav .nav-cta {
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--creme);
+  background: var(--cacao);
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+  font-weight: 500;
+  transition: background 0.2s ease, transform 0.2s ease;
+  white-space: nowrap;
+}
+.a-nav .nav-cta::after { display: none; }
+.a-nav .nav-cta:hover { background: var(--mocha); color: var(--creme); transform: translateY(-1px); }
+
+.a-hero {
+  padding: 4rem var(--gutter) 5rem;
+  max-width: var(--max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.7fr 1fr;
+  gap: 3rem;
+  align-items: end;
+}
+.a-hero .num {
+  font-family: var(--serif);
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--caramel);
+  margin-bottom: 1.5rem;
+  display: block;
+}
+.a-hero h1 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(2.4rem, 5.2vw, 4.6rem);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  margin-bottom: 2rem;
+  word-spacing: 0.02em;
+}
+.a-hero h1 em {
+  font-style: italic;
+  color: var(--mocha);
+  font-weight: 400;
+}
+.a-hero h1 .word-cycle {
+  font-style: italic;
+  color: var(--caramel);
+  display: inline-block;
+  transition: opacity 0.25s ease;
+  position: relative;
+}
+.a-hero h1 .word-cycle::after {
+  content: ".";
+  color: var(--caramel);
+  font-style: normal;
+}
+.a-hero .lead {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  line-height: 1.55;
+  font-style: italic;
+  color: var(--espresso);
+  max-width: 38ch;
+}
+.a-hero-art {
+  aspect-ratio: 4/5;
+  background: linear-gradient(135deg, var(--cacao) 0%, var(--mocha) 35%, var(--caramel) 65%, var(--sable) 100%);
+  filter: blur(0.4px) contrast(1.05);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+.a-hero-art::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 30%, rgba(245,235,220,0.4) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(45,31,20,0.5) 0%, transparent 60%);
+  mix-blend-mode: overlay;
+}
+.a-hero-art .arch {
+  position: absolute;
+  bottom: 1.5rem; right: 1.5rem;
+  width: 70px; height: auto;
+  opacity: 0.95;
+}
+
+/* Sommaire */
+.a-sommaire {
+  border-top: 1px solid var(--cacao);
+  border-bottom: 1px solid var(--cacao);
+  padding: 3rem var(--gutter);
+  max-width: var(--max);
+  margin: 0 auto;
+}
+.a-sommaire h2 {
+  font-family: var(--serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--mocha);
+  margin-bottom: 2.5rem;
+  font-weight: 500;
+}
+.a-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+.a-summary-grid .item .num {
+  font-family: var(--serif);
+  font-size: 2.2rem;
+  font-weight: 400;
+  color: var(--caramel);
+  display: block;
+  line-height: 1;
+}
+.a-summary-grid .item .title {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  margin-top: 0.4rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+}
+.a-summary-grid .item p {
+  font-size: 0.85rem;
+  color: var(--mocha);
+  line-height: 1.5;
+}
+
+/* XP — 2 expertises en colonnes éditoriales */
+.a-xp {
+  padding: 6rem var(--gutter);
+  max-width: var(--max);
+  margin: 0 auto;
+}
+.a-xp .label {
+  font-family: var(--serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--caramel);
+  margin-bottom: 1rem;
+}
+.a-xp h2 {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin-bottom: 4rem;
+  max-width: 16ch;
+  line-height: 1.05;
+}
+.a-xp h2 em { font-style: italic; color: var(--mocha); }
+.a-xp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  border-top: 1px solid var(--cacao);
+  padding-top: 3rem;
+}
+.a-xp-grid .col h3 {
+  font-family: var(--serif);
+  font-size: 1.8rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  letter-spacing: -0.01em;
+}
+.a-xp-grid .col .role {
+  font-family: var(--serif);
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--caramel);
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.02em;
+}
+.a-xp-grid .col .dropcap {
+  font-family: var(--serif);
+  float: left;
+  font-size: 4rem;
+  line-height: 0.9;
+  margin: 0.1rem 0.6rem 0 0;
+  color: var(--cacao);
+  font-weight: 500;
+}
+.a-xp-grid .col p { font-size: 0.95rem; line-height: 1.6; color: var(--espresso); margin-bottom: 1rem; }
+.a-xp-grid .col .more {
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cacao);
+  border-bottom: 1px solid var(--cacao);
+  padding-bottom: 2px;
+  font-weight: 500;
+}
+
+/* Projets — type "chantiers" magazine */
+.a-projets {
+  background: var(--ivoire);
+  padding: 6rem var(--gutter);
+}
+.a-projets-inner { max-width: var(--max); margin: 0 auto; }
+.a-projets .label {
+  font-family: var(--serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--caramel);
+  margin-bottom: 1rem;
+}
+.a-projets h2 {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin-bottom: 4rem;
+}
+.a-projets-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+.a-projet-card .cover {
+  aspect-ratio: 4/3;
+  background: linear-gradient(135deg, var(--mocha), var(--caramel));
+  margin-bottom: 1rem;
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+}
+.a-projet-card:nth-child(2) .cover { background: linear-gradient(135deg, var(--cacao), var(--mocha)); }
+.a-projet-card:nth-child(3) .cover { background: linear-gradient(135deg, var(--caramel), var(--sable)); }
+.a-projet-card .cover .num {
+  position: absolute;
+  top: 1rem; left: 1rem;
+  font-family: var(--serif);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  color: var(--creme);
+  text-transform: uppercase;
+}
+.a-projet-card .meta {
+  font-family: var(--serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--caramel);
+  margin-bottom: 0.4rem;
+}
+.a-projet-card h3 {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.4rem;
+  line-height: 1.2;
+}
+.a-projet-card p { font-size: 0.85rem; color: var(--mocha); line-height: 1.55; }
+
+/* Articles "kiosque" */
+.a-articles { padding: 6rem var(--gutter); max-width: var(--max); margin: 0 auto; }
+.a-articles .label {
+  font-family: var(--serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--caramel);
+  margin-bottom: 1rem;
+}
+.a-articles h2 {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+}
+.a-articles .lead { font-style: italic; color: var(--mocha); margin-bottom: 3rem; max-width: 50ch; }
+.a-articles-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 2.5rem;
+  border-top: 1px solid var(--cacao);
+  padding-top: 2.5rem;
+}
+.a-art-feat .img {
+  aspect-ratio: 16/10;
+  background: linear-gradient(135deg, var(--espresso), var(--caramel));
+  margin-bottom: 1.2rem;
+  border-radius: 2px;
+}
+.a-art-feat .src,
+.a-art-side .src {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--caramel);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+.a-art-feat h3 {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+  margin-bottom: 0.8rem;
+}
+.a-art-feat p { color: var(--espresso); line-height: 1.6; max-width: 55ch; }
+.a-art-side {
+  border-top: 1px solid var(--sable);
+  padding-top: 1.2rem;
+  margin-bottom: 1.6rem;
+}
+.a-art-side h3 {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  margin-bottom: 0.5rem;
+  line-height: 1.25;
+}
+.a-art-side .date { font-size: 0.8rem; color: var(--mocha); }
+
+/* Skills */
+.a-skills {
+  background: var(--cacao);
+  color: var(--creme);
+  padding: 5rem var(--gutter);
+}
+.a-skills-inner { max-width: var(--max); margin: 0 auto; }
+.a-skills .label {
+  font-family: var(--serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--caramel);
+  margin-bottom: 1rem;
+}
+.a-skills h2 {
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 500;
+  margin-bottom: 3rem;
+  letter-spacing: -0.01em;
+}
+.a-skills-rows { display: grid; gap: 2rem; }
+.a-skills-row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 2rem;
+  align-items: start;
+  border-top: 1px solid rgba(245, 235, 220, 0.18);
+  padding-top: 1.5rem;
+}
+.a-skills-row .cat {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 500;
+  font-style: italic;
+  color: var(--sable);
+}
+.a-skills-row .tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.2rem;
+}
+.a-skills-row .tag {
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  color: var(--creme);
+  position: relative;
+  padding-right: 1.2rem;
+}
+.a-skills-row .tag:not(:last-child)::after {
+  content: "·";
+  position: absolute;
+  right: 0.3rem;
+  color: var(--caramel);
+}
+
+/* Footer */
+.a-footer {
+  background: var(--creme);
+  border-top: 1px solid var(--cacao);
+  padding: 4rem var(--gutter) 2rem;
+}
+.a-footer-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem;
+  align-items: end;
+}
+.a-footer .col h4 {
+  font-family: var(--serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--mocha);
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+.a-footer .col p, .a-footer .col a { font-size: 0.9rem; color: var(--cacao); line-height: 1.7; }
+.a-footer .center { text-align: center; }
+.a-footer .center .logo { width: 64px; margin: 0 auto 1rem; }
+.a-footer .center .signature {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--mocha);
+}
+.a-footer .right { text-align: right; }
+.a-footer .credit {
+  text-align: center;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mocha);
+  margin-top: 3rem;
+  border-top: 1px solid var(--sable);
+  padding-top: 1.5rem;
+}
+
+/* =========================================================
+   PROPOSITION B — "L'ATELIER" (Papeterie / Blocs)
+   Aplats colorés visibles, layout en mosaïque, vibe carte de visite.
+   ========================================================= */
+#prop-b {
+  background: var(--ivoire);
+  color: var(--cacao);
+  font-family: var(--sans);
+}
+.b-nav {
+  position: relative;
+  padding: 1.5rem var(--gutter);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: var(--max);
+  margin: 0 auto;
+}
+.b-nav .logo-wrap {
+  display: flex; align-items: center; gap: 0.8rem;
+}
+.b-nav .logo-wrap img { width: 38px; }
+.b-nav .logo-wrap .name {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+.b-nav ul { display: flex; gap: 2rem; list-style: none; }
+.b-nav ul a {
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--cacao);
+  position: relative;
+}
+.b-nav ul a::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -4px;
+  width: 0; height: 1px;
+  background: var(--caramel);
+  transition: width 0.3s ease;
+}
+.b-nav ul a:hover::after { width: 100%; }
+
+/* Hero en blocs (mosaïque) */
+.b-hero {
+  padding: 1rem var(--gutter) 3rem;
+  max-width: var(--max);
+  margin: 0 auto;
+}
+.b-hero-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: 280px 200px;
+  gap: 1rem;
+}
+.b-block {
+  border-radius: 4px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+.b-block.intro {
+  grid-row: 1 / 3;
+  background: var(--cacao);
+  color: var(--creme);
+  padding: 2.2rem;
+}
+.b-block.intro .kicker {
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--caramel);
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+.b-block.intro h1 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+}
+.b-block.intro h1 .accent {
+  font-style: italic;
+  color: var(--sable);
+}
+.b-block.intro p {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--sable);
+  margin-bottom: 1.5rem;
+  max-width: 40ch;
+}
+.b-block.intro .cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.7rem 1.2rem;
+  background: var(--creme);
+  color: var(--cacao);
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 500;
+  border-radius: 999px;
+  align-self: flex-start;
+  transition: transform 0.2s ease;
+}
+.b-block.intro .cta:hover { transform: translateY(-1px); }
+.b-block.swatch-caramel { background: var(--caramel); color: var(--cacao); }
+.b-block.swatch-sable { background: var(--sable); color: var(--cacao); }
+.b-block.swatch-creme { background: var(--creme); color: var(--cacao); border: 1px solid var(--sable); }
+.b-block.swatch-mocha { background: var(--mocha); color: var(--creme); }
+.b-block .stat {
+  font-family: var(--serif);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.b-block .big {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 2.4rem;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.b-block .arch-bg {
+  position: absolute;
+  bottom: -20px; right: -20px;
+  width: 120px;
+  opacity: 0.18;
+  pointer-events: none;
+}
+.b-block .label-tag {
+  font-family: var(--serif);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+/* XP — 2 cartes côte à côte (recto/verso) */
+.b-xp {
+  padding: 4rem var(--gutter);
+  max-width: var(--max);
+  margin: 0 auto;
+}
+.b-section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--sable);
+  padding-bottom: 1rem;
+}
+.b-section-head h2 {
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+.b-section-head .num {
+  font-family: var(--serif);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--caramel);
+}
+.b-cards-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.b-card {
+  background: var(--creme);
+  border-radius: 6px;
+  padding: 2rem;
+  position: relative;
+  border: 1px solid var(--sable);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-height: 260px;
+}
+.b-card.flipped {
+  background: var(--cacao);
+  color: var(--creme);
+  border-color: var(--cacao);
+}
+.b-card .role {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--caramel);
+  font-weight: 500;
+}
+.b-card h3 {
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.b-card p {
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+.b-card.flipped p { color: var(--sable); }
+.b-card .link {
+  margin-top: auto;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 500;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+  align-self: flex-start;
+}
+.b-card .corner {
+  position: absolute;
+  top: 1.2rem; right: 1.2rem;
+  font-family: var(--serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+/* Projets — cartes en arche */
+.b-projets {
+  background: var(--creme);
+  padding: 4rem var(--gutter);
+}
+.b-projets-inner { max-width: var(--max); margin: 0 auto; }
+.b-projets-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.b-arch-card {
+  background: var(--ivoire);
+  border-radius: 200px 200px 6px 6px;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--sable);
+  transition: transform 0.25s ease;
+}
+.b-arch-card:hover { transform: translateY(-4px); }
+.b-arch-card .top {
+  height: 220px;
+  background: linear-gradient(135deg, var(--mocha), var(--caramel));
+  border-radius: 200px 200px 0 0;
+  position: relative;
+  overflow: hidden;
+}
+.b-arch-card:nth-child(2) .top { background: linear-gradient(135deg, var(--cacao), var(--mocha)); }
+.b-arch-card:nth-child(3) .top { background: linear-gradient(135deg, var(--caramel), var(--sable)); }
+.b-arch-card .top .num {
+  position: absolute;
+  top: 1.2rem; right: 1.2rem;
+  font-family: var(--serif);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  color: var(--creme);
+  text-transform: uppercase;
+}
+.b-arch-card .body { padding: 1.5rem; }
+.b-arch-card h3 {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  margin-bottom: 0.4rem;
+}
+.b-arch-card p { font-size: 0.85rem; color: var(--mocha); line-height: 1.5; }
+.b-arch-card .tags {
+  display: flex; gap: 0.4rem; flex-wrap: wrap;
+  margin-top: 0.8rem;
+}
+.b-arch-card .tag-pill {
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--sable);
+  color: var(--cacao);
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-weight: 500;
+}
+
+/* Articles ticker en blocs alternés */
+.b-articles {
+  padding: 4rem var(--gutter);
+  max-width: var(--max);
+  margin: 0 auto;
+}
+.b-articles-list {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--sable);
+}
+.b-art-row {
+  display: grid;
+  grid-template-columns: 80px 100px 1fr 200px 80px;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 1.2rem 0;
+  border-bottom: 1px solid var(--sable);
+  transition: background 0.2s ease;
+}
+.b-art-row:hover { background: var(--creme); }
+.b-art-row .date {
+  font-family: var(--serif);
+  font-size: 0.78rem;
+  color: var(--mocha);
+  letter-spacing: 0.04em;
+}
+.b-art-row .src {
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--caramel);
+  font-weight: 500;
+}
+.b-art-row h3 {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+.b-art-row .topic {
+  font-size: 0.78rem;
+  color: var(--mocha);
+  font-style: italic;
+}
+.b-art-row .arrow {
+  text-align: right;
+  color: var(--caramel);
+  font-family: var(--serif);
+}
+
+/* Skills — badges */
+.b-skills {
+  background: var(--cacao);
+  color: var(--creme);
+  padding: 4rem var(--gutter);
+}
+.b-skills-inner { max-width: var(--max); margin: 0 auto; }
+.b-skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 2rem;
+}
+.b-skill-block {
+  background: var(--espresso);
+  border-radius: 6px;
+  padding: 1.5rem;
+}
+.b-skill-block h3 {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--sable);
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+.b-skill-block .badges { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.b-skill-block .badge {
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  background: var(--cacao);
+  color: var(--sable);
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid var(--mocha);
+}
+
+/* Footer carte de visite */
+.b-footer {
+  background: var(--ivoire);
+  padding: 4rem var(--gutter) 2rem;
+}
+.b-footer-inner {
+  max-width: 700px;
+  margin: 0 auto;
+  background: var(--cacao);
+  color: var(--creme);
+  border-radius: 8px;
+  padding: 2rem 2.5rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+.b-footer-inner img { width: 90px; }
+.b-footer-inner h4 {
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+}
+.b-footer-inner .role {
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--caramel);
+  margin-bottom: 1rem;
+}
+.b-footer-inner .links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+.b-footer-inner .links a {
+  font-size: 0.85rem;
+  color: var(--sable);
+  border-bottom: 1px solid var(--mocha);
+  padding-bottom: 1px;
+}
+.b-footer .credit {
+  text-align: center;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mocha);
+  margin-top: 2rem;
+}
+
+/* =========================================================
+   PROPOSITION C — "STUDIO NOCTURNE" (Sombre cinétique)
+   Fond cacao, hero immersif, marquee, animations subtiles.
+   ========================================================= */
+#prop-c {
+  background: var(--cacao);
+  color: var(--creme);
+}
+.c-nav {
+  position: relative;
+  padding: 1.6rem var(--gutter);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: var(--max);
+  margin: 0 auto;
+}
+.c-nav .brand { display: flex; align-items: center; gap: 0.7rem; }
+.c-nav .brand img { width: 32px; }
+.c-nav .brand .text {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  letter-spacing: -0.005em;
+  font-weight: 500;
+}
+.c-nav .brand .text .small {
+  font-family: var(--sans);
+  display: block;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--caramel);
+  font-weight: 500;
+  margin-top: 2px;
+}
+.c-nav ul { display: flex; gap: 2rem; list-style: none; }
+.c-nav ul a {
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--sable);
+  font-weight: 500;
+  position: relative;
+}
+.c-nav ul a:hover { color: var(--creme); }
+.c-nav .contact-btn {
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  background: var(--caramel);
+  color: var(--cacao);
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+.c-nav .contact-btn:hover { background: var(--sable); }
+
+/* Hero immersif */
+.c-hero {
+  position: relative;
+  min-height: 88vh;
+  padding: 4rem var(--gutter) 6rem;
+  max-width: var(--max);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+.c-hero .bg-arch {
+  position: absolute;
+  right: -10%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 80vh;
+  max-width: 720px;
+  opacity: 0.16;
+  pointer-events: none;
+  filter: brightness(2.5);
+}
+.c-hero .kicker {
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--caramel);
+  margin-bottom: 2rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.c-hero .kicker .pulse {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--caramel);
+  animation: pulse 1.6s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.4); }
+}
+.c-hero h1 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(3rem, 7.5vw, 7rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  margin-bottom: 2rem;
+  max-width: 14ch;
+  position: relative;
+  z-index: 2;
+}
+.c-hero h1 .word-cycle {
+  font-style: italic;
+  color: var(--caramel);
+  display: inline-block;
+  position: relative;
+}
+.c-hero h1 .word-cycle::after {
+  content: ".";
+  color: var(--caramel);
+}
+.c-hero .lead {
+  font-family: var(--sans);
+  font-size: 1.15rem;
+  line-height: 1.55;
+  color: var(--sable);
+  max-width: 52ch;
+  margin-bottom: 2.5rem;
+  position: relative;
+  z-index: 2;
+}
+.c-hero .ctas {
+  display: flex;
+  gap: 1rem;
+  position: relative;
+  z-index: 2;
+}
+.c-hero .btn {
+  padding: 1rem 1.6rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: transform 0.2s ease, background 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.c-hero .btn-primary { background: var(--creme); color: var(--cacao); }
+.c-hero .btn-secondary { background: transparent; color: var(--creme); border: 1px solid var(--mocha); }
+.c-hero .btn:hover { transform: translateY(-2px); }
+.c-hero .btn-primary:hover { background: var(--caramel); }
+.c-hero .btn-secondary:hover { border-color: var(--caramel); color: var(--caramel); }
+
+/* Marquee */
+.c-marquee {
+  background: var(--espresso);
+  border-top: 1px solid rgba(168, 134, 94, 0.2);
+  border-bottom: 1px solid rgba(168, 134, 94, 0.2);
+  overflow: hidden;
+  padding: 1.4rem 0;
+  position: relative;
+}
+.c-marquee-track {
+  display: flex;
+  gap: 3rem;
+  animation: marquee 30s linear infinite;
+  white-space: nowrap;
+  width: max-content;
+}
+.c-marquee-track span {
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  font-style: italic;
+  color: var(--sable);
+  font-weight: 400;
+}
+.c-marquee-track .sep {
+  color: var(--caramel);
+  font-style: normal;
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* XP split */
+.c-xp {
+  padding: 6rem var(--gutter);
+  max-width: var(--max);
+  margin: 0 auto;
+}
+.c-section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin-bottom: 3rem;
+}
+.c-section-head h2 {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.c-section-head h2 em { font-style: italic; color: var(--caramel); }
+.c-section-head .meta {
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--caramel);
+  font-weight: 500;
+}
+.c-xp-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--mocha);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.c-xp-side {
+  background: var(--espresso);
+  padding: 2.5rem;
+  position: relative;
+  transition: background 0.3s ease;
+  cursor: pointer;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.c-xp-side:hover { background: #4a3220; }
+.c-xp-side .num {
+  font-family: var(--serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--caramel);
+  margin-bottom: 1.5rem;
+}
+.c-xp-side h3 {
+  font-family: var(--serif);
+  font-size: 2.2rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  margin-bottom: 0.8rem;
+}
+.c-xp-side h3 em { font-style: italic; color: var(--caramel); }
+.c-xp-side p {
+  color: var(--sable);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  max-width: 38ch;
+}
+.c-xp-side .link {
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--caramel);
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.c-xp-side .link::after {
+  content: "→";
+  transition: transform 0.2s ease;
+}
+.c-xp-side:hover .link::after { transform: translateX(4px); }
+
+/* Projets — grid sombre */
+.c-projets {
+  padding: 6rem var(--gutter);
+  max-width: var(--max);
+  margin: 0 auto;
+}
+.c-projets-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.c-proj-card {
+  background: var(--espresso);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.25s ease, background 0.25s ease;
+  cursor: pointer;
+}
+.c-proj-card:hover { transform: translateY(-6px); background: #4a3220; }
+.c-proj-card .cover {
+  aspect-ratio: 4/3;
+  background: linear-gradient(135deg, var(--mocha), var(--caramel));
+  position: relative;
+  overflow: hidden;
+}
+.c-proj-card:nth-child(2) .cover { background: linear-gradient(135deg, var(--cacao), var(--mocha)); }
+.c-proj-card:nth-child(3) .cover { background: linear-gradient(135deg, var(--caramel), var(--sable)); }
+.c-proj-card .cover .num {
+  position: absolute;
+  top: 1rem; left: 1rem;
+  font-family: var(--serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  color: var(--creme);
+  text-transform: uppercase;
+}
+.c-proj-card .cover .stack {
+  position: absolute;
+  bottom: 1rem; left: 1rem;
+  display: flex; gap: 0.4rem;
+}
+.c-proj-card .cover .stack span {
+  background: rgba(45,31,20,0.6);
+  color: var(--creme);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
+}
+.c-proj-card .body { padding: 1.5rem; }
+.c-proj-card h3 {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  margin-bottom: 0.4rem;
+}
+.c-proj-card p { font-size: 0.85rem; color: var(--sable); line-height: 1.5; }
+.c-proj-card .meta {
+  margin-top: 1rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--caramel);
+}
+
+/* Articles carousel */
+.c-articles {
+  background: var(--espresso);
+  padding: 6rem var(--gutter);
+}
+.c-articles-inner { max-width: var(--max); margin: 0 auto; }
+.c-articles-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.2rem;
+  margin-top: 2rem;
+}
+.c-art-card {
+  background: var(--cacao);
+  border-radius: 6px;
+  overflow: hidden;
+  transition: transform 0.25s ease;
+  cursor: pointer;
+}
+.c-art-card:hover { transform: translateY(-4px); }
+.c-art-card .img {
+  aspect-ratio: 16/10;
+  background: linear-gradient(135deg, var(--mocha), var(--caramel));
+}
+.c-art-card:nth-child(2) .img { background: linear-gradient(135deg, var(--espresso), var(--mocha)); }
+.c-art-card:nth-child(3) .img { background: linear-gradient(135deg, var(--caramel), var(--sable)); }
+.c-art-card:nth-child(4) .img { background: linear-gradient(135deg, var(--cacao), var(--caramel)); }
+.c-art-card .body { padding: 1.2rem; }
+.c-art-card .src {
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--caramel);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+.c-art-card h3 {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.3;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.005em;
+}
+.c-art-card .date { font-size: 0.78rem; color: var(--sable); }
+
+/* Skills pills */
+.c-skills {
+  padding: 6rem var(--gutter);
+  max-width: var(--max);
+  margin: 0 auto;
+}
+.c-skills-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 2rem;
+}
+.c-pill {
+  background: var(--espresso);
+  color: var(--sable);
+  padding: 0.7rem 1.2rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: 1px solid var(--mocha);
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+.c-pill:hover {
+  background: var(--caramel);
+  color: var(--cacao);
+  transform: translateY(-2px);
+}
+.c-pill.featured {
+  background: var(--caramel);
+  color: var(--cacao);
+  border-color: var(--caramel);
+}
+
+/* Footer signature mail */
+.c-footer {
+  background: var(--cacao);
+  border-top: 1px solid var(--espresso);
+  padding: 4rem var(--gutter) 2rem;
+}
+.c-footer-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 2rem;
+  align-items: center;
+  background: var(--espresso);
+  border-radius: 12px;
+  padding: 2rem;
+}
+.c-footer-inner img { width: 64px; }
+.c-footer-inner h4 {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+}
+.c-footer-inner .role {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--caramel);
+  margin-bottom: 0.7rem;
+}
+.c-footer-inner .links {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--sable);
+}
+.c-footer-inner .links a:hover { color: var(--caramel); }
+.c-footer-inner .cta {
+  background: var(--caramel);
+  color: var(--cacao);
+  padding: 1rem 1.6rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.c-footer .credit {
+  text-align: center;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mocha);
+  margin-top: 2rem;
+}
+
+/* =========================================================
+   RESPONSIVE — minimal pour démo
+   ========================================================= */
+@media (max-width: 900px) {
+  .a-hero,
+  .a-xp-grid,
+  .a-projets-grid,
+  .a-articles-grid,
+  .b-hero-grid,
+  .b-cards-pair,
+  .b-projets-grid,
+  .b-skills-grid,
+  .c-xp-split,
+  .c-projets-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+  .c-articles-grid { grid-template-columns: repeat(2, 1fr); }
+  .a-summary-grid { grid-template-columns: repeat(2, 1fr); }
+  .a-skills-row { grid-template-columns: 1fr; }
+  .a-footer-inner { grid-template-columns: 1fr; text-align: center; }
+  .a-footer .right { text-align: center; }
+  .a-art-feat h3 { font-size: 1.4rem; }
+  .b-art-row { grid-template-columns: 1fr; gap: 0.4rem; }
+  .b-footer-inner { grid-template-columns: 1fr; text-align: center; }
+  .c-nav ul, .b-nav ul { display: none; }
+  .c-footer-inner { grid-template-columns: 1fr; text-align: center; }
+
+  /* Masthead prop A : stack vertical et centré */
+  .a-masthead {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+    text-align: center;
+    padding-top: 4rem;
+  }
+  .a-masthead .meta-l, .a-masthead .meta-r { text-align: center; font-size: 0.65rem; }
+  .a-masthead .logo { margin: 0 auto; width: 48px; }
+  .a-wordmark { font-size: 1.4rem; padding-top: 0.5rem; }
+  .a-wordmark em { display: block; margin-top: 0.3rem; font-size: 0.85rem; }
+
+  /* Nav prop A : scroll horizontal sur mobile */
+  .a-nav { padding: 0.7rem var(--gutter); }
+  .a-nav ul {
+    gap: 1.2rem;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .a-nav ul::-webkit-scrollbar { display: none; }
+  .a-nav a { font-size: 0.7rem; white-space: nowrap; }
+
+  /* Hero prop A : padding réduit, lead pas en italique italic */
+  .a-hero { padding: 2.5rem var(--gutter) 3rem; gap: 2rem; }
+  .a-hero h1 { font-size: clamp(2rem, 7.2vw, 3rem); margin-bottom: 1.2rem; }
+  .a-hero .lead { font-size: 1rem; }
+  .a-hero-art { aspect-ratio: 5/4; }
+
+  /* Sommaire mobile */
+  .a-sommaire { padding: 2.5rem var(--gutter); }
+  .a-summary-grid { gap: 1.5rem; }
+  .a-summary-grid .item .num { font-size: 1.8rem; }
+  .a-summary-grid .item .title { font-size: 1.15rem; }
+
+  /* XP / Projets / Articles / Skills mobile */
+  .a-xp, .a-projets, .a-articles { padding: 3.5rem var(--gutter); }
+  .a-xp h2, .a-projets h2, .a-articles h2 { font-size: 1.8rem; margin-bottom: 2rem; }
+  .a-xp-grid { padding-top: 2rem; gap: 2.5rem; }
+  .a-articles-grid { gap: 2rem; padding-top: 2rem; }
+  .a-art-feat .img { aspect-ratio: 4/3; }
+  .a-skills { padding: 3.5rem var(--gutter); }
+  .a-skills h2 { font-size: 1.5rem; margin-bottom: 2rem; }
+
+  /* Footer mobile */
+  .a-footer { padding: 3rem var(--gutter) 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== SWITCHER ===================== -->
+<nav class="switcher" aria-label="Switcher de proposition">
+  <button class="prop-btn" data-target="prop-a" aria-current="true">
+    <span class="dot" style="background:#A8865E;"></span><span class="label">A · Édition</span>
+  </button>
+  <button class="prop-btn" data-target="prop-b">
+    <span class="dot" style="background:#C4A687;"></span><span class="label">B · Atelier</span>
+  </button>
+  <button class="prop-btn" data-target="prop-c">
+    <span class="dot" style="background:#F5EBDC;"></span><span class="label">C · Studio</span>
+  </button>
+  <span class="sep" aria-hidden="true"></span>
+  <button class="view-btn" data-view="mobile" aria-pressed="false" title="Aperçu mobile">
+    <span class="label">Mobile</span>
+  </button>
+</nav>
+
+<section id="mobile-view" aria-label="Aperçu mobile">
+  <div class="mobile-view-meta">
+    <span class="label" id="mobile-view-label">Aperçu mobile · Proposition A</span>
+    <span>414 × 868 px · iPhone 14 Pro Max</span>
+  </div>
+  <div class="phone-frame">
+    <iframe src="about:blank" title="Aperçu mobile"></iframe>
+  </div>
+</section>
+
+<!-- ============================================================
+     PROPOSITION A — "ÉDITION MAI 2026"
+     ============================================================ -->
+<main id="prop-a" class="proposal is-active">
+
+  <header class="a-masthead">
+    <div class="meta-l">Édition 01 · Mai 2026</div>
+    <img class="logo" src="../images/brand/logo-mh-principal.png" alt="Monogramme MH" />
+    <div class="meta-r">N° 24 · maximilienherr.fr</div>
+    <div class="a-wordmark">Maximilien Herr <em style="font-style:italic;color:var(--mocha);">— Software Engineer &amp; Tech Journalist</em></div>
+  </header>
+
+  <nav class="a-nav" aria-label="Navigation principale">
+    <ul>
+      <li><a href="#" data-mock-link>Accueil</a></li>
+      <li><a href="#" data-mock-link>Numérique Responsable</a></li>
+      <li><a href="#" data-mock-link>Articles</a></li>
+      <li><a href="#" data-mock-link>Blog</a></li>
+      <li><a href="#" data-mock-link>Projets</a></li>
+      <li><a href="#" data-mock-link>Contact</a></li>
+    </ul>
+    <a href="#" class="nav-cta" data-mock-link>MON CV</a>
+  </nav>
+
+  <section class="a-hero">
+    <div>
+      <span class="num">01 · L'éditorial</span>
+      <h1>Je sais <span class="word-cycle" id="word-a">concevoir</span><br/><span style="color:var(--mocha);">et je sais en raconter</span><br/><span style="color:var(--mocha);">l'histoire.</span></h1>
+      <p class="lead">
+        Je conçois des logiciels et je raconte l'industrie qui les fabrique.
+        Deux mains, deux rythmes, un seul fil conducteur — celui de la clarté.
+      </p>
+    </div>
+    <div class="a-hero-art" aria-hidden="true">
+      <img class="arch" src="../images/brand/logo-mh-blanc.png" alt="" />
+    </div>
+  </section>
+
+  <section class="a-sommaire">
+    <h2>Au sommaire de cette édition</h2>
+    <div class="a-summary-grid">
+      <div class="item">
+        <span class="num">01</span>
+        <h3 class="title">Le code</h3>
+        <p>Six ans à concevoir des architectures, des APIs, des interfaces propres.</p>
+      </div>
+      <div class="item">
+        <span class="num">02</span>
+        <h3 class="title">La plume</h3>
+        <p>Cinq ans de journalisme tech à Frandroid, Droidsoft, Le Café du Geek.</p>
+      </div>
+      <div class="item">
+        <span class="num">03</span>
+        <h3 class="title">Les chantiers</h3>
+        <p>Projets en cours, expérimentations, livrables.</p>
+      </div>
+      <div class="item">
+        <span class="num">04</span>
+        <h3 class="title">Les rubriques</h3>
+        <p>Compétences, parcours, prises de parole.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="a-xp" id="a-xp">
+    <div class="label">02 · Deux expertises</div>
+    <h2>Concevoir, puis <em>raconter</em> ce qui a été conçu.</h2>
+    <div class="a-xp-grid">
+      <article class="col">
+        <div class="role">L'ingénieur</div>
+        <h3>Software Engineer</h3>
+        <p><span class="dropcap">L</span>e métier d'ingénieur logiciel, je l'aborde comme un éditeur aborde un manuscrit&nbsp;: avec rigueur, sens du rythme, et l'obsession de retirer ce qui n'est pas essentiel. Mes terrains de jeu&nbsp;: le web (Next.js, TypeScript), le logiciel (C++, C#), et tout ce qui touche au temps réel.</p>
+        <p>Stages, projets d'école, expériences indépendantes — chacun a creusé une compétence différente.</p>
+        <a href="#" class="more">Lire le CV complet →</a>
+      </article>
+      <article class="col">
+        <div class="role">Le journaliste</div>
+        <h3>Tech Journalist</h3>
+        <p><span class="dropcap">D</span>epuis 2020, j'écris pour des médias tech français. Tests de produits, dossiers de fond, interviews d'industriels — l'exercice m'apprend chaque jour à formuler des idées techniques avec une langue accessible, sans la trahir.</p>
+        <p>Parmi mes terrains de jeu&nbsp;: Frandroid, Droidsoft, Le Café du Geek.</p>
+        <a href="#" class="more">Lire mes articles →</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="a-projets" id="a-projets">
+    <div class="a-projets-inner">
+      <div class="label">03 · Réalisations</div>
+      <h2>Mes projets.</h2>
+      <div class="a-projets-grid">
+        <article class="a-projet-card">
+          <div class="cover"><span class="num">N° 01</span></div>
+          <div class="meta">2026 · Web · TypeScript</div>
+          <h3>Portfolio Next.js</h3>
+          <p>Refonte complète de mon site personnel sous Next 14, avec audit nocturne et CMS local.</p>
+        </article>
+        <article class="a-projet-card">
+          <div class="cover"><span class="num">N° 02</span></div>
+          <div class="meta">2025 · Logiciel · C++</div>
+          <h3>Moteur 3D temps réel</h3>
+          <p>Projet d'école en équipe&nbsp;: rendu Vulkan, scene-graph, éditeur intégré.</p>
+        </article>
+        <article class="a-projet-card">
+          <div class="cover"><span class="num">N° 03</span></div>
+          <div class="meta">2025 · IA · Python</div>
+          <h3>Pipeline OSINT</h3>
+          <p>Outil d'agrégation et de scoring d'articles de presse avec embeddings et résumé automatique.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="a-articles" id="a-articles">
+    <div class="label">04 · Sur le kiosque</div>
+    <h2>Mes derniers articles parus.</h2>
+    <p class="lead">Sélection issue de Frandroid, Droidsoft et Le Café du Geek — le ticker live est branché à mes RSS.</p>
+    <div class="a-articles-grid">
+      <article class="a-art-feat">
+        <div class="img"></div>
+        <div class="src">Frandroid · 02 mai 2026</div>
+        <h3>Comment Apple discute encore avec ses fournisseurs européens, sept ans après le procès Qualcomm.</h3>
+        <p>Décryptage en deux volets sur les coulisses des accords stratégiques — focus sur les acteurs de la chaîne d'approvisionnement, et un retour historique sur 2019.</p>
+      </article>
+      <div>
+        <article class="a-art-side">
+          <div class="src">Droidsoft · 28 avr.</div>
+          <h3>Test du Pixel 9a&nbsp;: l'entrée de gamme qui assume sa singularité</h3>
+          <span class="date">Test produit</span>
+        </article>
+        <article class="a-art-side">
+          <div class="src">Le Café du Geek · 22 avr.</div>
+          <h3>Steam Deck OLED&nbsp;: l'interview Valve qu'on attendait depuis le lancement</h3>
+          <span class="date">Interview</span>
+        </article>
+        <article class="a-art-side">
+          <div class="src">Frandroid · 18 avr.</div>
+          <h3>Pourquoi les opérateurs français traînent encore sur la 5G SA</h3>
+          <span class="date">Décryptage</span>
+        </article>
+      </div>
+      <div>
+        <article class="a-art-side">
+          <div class="src">Droidsoft · 12 avr.</div>
+          <h3>Galaxy S25 Ultra&nbsp;: deux mois plus tard, le vrai bilan logiciel</h3>
+          <span class="date">Long format</span>
+        </article>
+        <article class="a-art-side">
+          <div class="src">Le Café du Geek · 05 avr.</div>
+          <h3>Chronique&nbsp;: ce que la sortie de Pebble nous dit de l'état du wearable</h3>
+          <span class="date">Chronique</span>
+        </article>
+        <article class="a-art-side">
+          <div class="src">Frandroid · 28 mars</div>
+          <h3>Disney+ et la guerre du streaming&nbsp;: un point d'étape</h3>
+          <span class="date">Analyse</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="a-skills" id="a-skills">
+    <div class="a-skills-inner">
+      <div class="label">05 · L'atelier</div>
+      <h2>Outils, langages, terrains.</h2>
+      <div class="a-skills-rows">
+        <div class="a-skills-row">
+          <div class="cat">Web</div>
+          <div class="tags">
+            <span class="tag">TypeScript</span><span class="tag">Next.js</span><span class="tag">React</span><span class="tag">Node</span><span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">PostgreSQL</span>
+          </div>
+        </div>
+        <div class="a-skills-row">
+          <div class="cat">Logiciel</div>
+          <div class="tags">
+            <span class="tag">C</span><span class="tag">C++</span><span class="tag">C#</span><span class="tag">Python</span><span class="tag">Visual Studio</span>
+          </div>
+        </div>
+        <div class="a-skills-row">
+          <div class="cat">3D &amp; Jeu vidéo</div>
+          <div class="tags">
+            <span class="tag">Unity</span><span class="tag">Unreal Engine</span><span class="tag">Blender</span>
+          </div>
+        </div>
+        <div class="a-skills-row">
+          <div class="cat">Plume</div>
+          <div class="tags">
+            <span class="tag">Test produit</span><span class="tag">Décryptage</span><span class="tag">Interview</span><span class="tag">Long format</span><span class="tag">Édition</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="a-footer" id="a-contact">
+    <div class="a-footer-inner">
+      <div class="col">
+        <h4>Suivre l'édition</h4>
+        <p><a href="#">linkedin.com/in/maximilien-herr</a></p>
+        <p><a href="#">github.com/MaximilienHe</a></p>
+      </div>
+      <div class="col center">
+        <img class="logo" src="../images/brand/logo-mh-principal.png" alt="Monogramme MH" />
+        <div class="signature">"Concevoir, puis raconter."</div>
+      </div>
+      <div class="col right">
+        <h4>Contact</h4>
+        <p><a href="mailto:maximilienherr@gmail.com">maximilienherr@gmail.com</a></p>
+        <p>maximilienherr.fr</p>
+      </div>
+    </div>
+    <div class="credit">Édition 01 · Mai 2026 · Imprimé sur papier crème</div>
+  </footer>
+</main>
+
+<!-- ============================================================
+     PROPOSITION B — "L'ATELIER"
+     ============================================================ -->
+<main id="prop-b" class="proposal">
+
+  <nav class="b-nav">
+    <div class="logo-wrap">
+      <img src="../images/brand/logo-mh-principal.png" alt="Monogramme MH" />
+      <span class="name">Maximilien Herr</span>
+    </div>
+    <ul>
+      <li><a href="#">Projets</a></li>
+      <li><a href="#">Articles</a></li>
+      <li><a href="#">CV</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section class="b-hero">
+    <div class="b-hero-grid">
+      <div class="b-block intro">
+        <div>
+          <div class="kicker">Software Engineer · Tech Journalist</div>
+          <h1>Hello, je suis <span class="accent">Maximilien.</span></h1>
+          <p>Je conçois des produits logiciels et j'écris sur l'industrie tech. Mon atelier se partage entre le clavier et la rédaction.</p>
+        </div>
+        <a href="#" class="cta">Voir l'atelier →</a>
+        <img class="arch-bg" src="../images/brand/logo-mh-blanc.png" alt="" />
+      </div>
+      <div class="b-block swatch-caramel">
+        <div class="label-tag">Code</div>
+        <div>
+          <div class="big">06</div>
+          <div class="stat">années · TypeScript &amp; C++</div>
+        </div>
+      </div>
+      <div class="b-block swatch-creme">
+        <div class="label-tag">Plume</div>
+        <div>
+          <div class="big">05</div>
+          <div class="stat">années · 800+ articles</div>
+        </div>
+      </div>
+      <div class="b-block swatch-sable">
+        <div class="label-tag">À l'écoute</div>
+        <div>
+          <div class="big">2026</div>
+          <div class="stat">missions · collaborations</div>
+        </div>
+      </div>
+      <div class="b-block swatch-mocha">
+        <div class="label-tag">Localisation</div>
+        <div>
+          <div class="big">FR</div>
+          <div class="stat">Paris · remote possible</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="b-xp">
+    <div class="b-section-head">
+      <h2>Deux <em style="font-style:italic;color:var(--caramel);">métiers</em>, un seul fil.</h2>
+      <span class="num">— 02 / Expertises</span>
+    </div>
+    <div class="b-cards-pair">
+      <article class="b-card">
+        <span class="corner">Recto</span>
+        <div class="role">Le code</div>
+        <h3>Software Engineer</h3>
+        <p>Je conçois des architectures propres, des APIs claires, et des interfaces qui ne demandent pas d'effort à l'utilisateur. Web, logiciel, temps réel.</p>
+        <a href="#" class="link">Plus de détails sur mon CV →</a>
+      </article>
+      <article class="b-card flipped">
+        <span class="corner" style="color:var(--sable);">Verso</span>
+        <div class="role">La plume</div>
+        <h3>Tech Journalist</h3>
+        <p>Depuis 2020, j'écris pour des médias tech français. Test, enquête, interview — j'aime traduire une idée technique sans la trahir.</p>
+        <a href="#" class="link">Lire quelques articles →</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="b-projets">
+    <div class="b-projets-inner">
+      <div class="b-section-head">
+        <h2>Les chantiers de l'atelier.</h2>
+        <span class="num">— 03 / Projets</span>
+      </div>
+      <div class="b-projets-grid">
+        <article class="b-arch-card">
+          <div class="top"><span class="num">N° 01</span></div>
+          <div class="body">
+            <h3>Portfolio Next.js</h3>
+            <p>Refonte complète sous Next 14, audit nocturne et CMS local.</p>
+            <div class="tags">
+              <span class="tag-pill">Next.js</span><span class="tag-pill">TypeScript</span>
+            </div>
+          </div>
+        </article>
+        <article class="b-arch-card">
+          <div class="top"><span class="num">N° 02</span></div>
+          <div class="body">
+            <h3>Moteur 3D temps réel</h3>
+            <p>Projet d'école&nbsp;: rendu Vulkan, scene-graph, éditeur intégré.</p>
+            <div class="tags">
+              <span class="tag-pill">C++</span><span class="tag-pill">Vulkan</span>
+            </div>
+          </div>
+        </article>
+        <article class="b-arch-card">
+          <div class="top"><span class="num">N° 03</span></div>
+          <div class="body">
+            <h3>Pipeline OSINT</h3>
+            <p>Agrégation &amp; scoring d'articles avec embeddings et résumé automatique.</p>
+            <div class="tags">
+              <span class="tag-pill">Python</span><span class="tag-pill">LLM</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="b-articles">
+    <div class="b-section-head">
+      <h2>Le ticker — derniers articles publiés.</h2>
+      <span class="num">— 04 / Plume</span>
+    </div>
+    <div class="b-articles-list">
+      <a href="#" class="b-art-row">
+        <span class="date">02.05.26</span>
+        <span class="src">Frandroid</span>
+        <h3>Comment Apple discute encore avec ses fournisseurs européens</h3>
+        <span class="topic">Décryptage · Industrie</span>
+        <span class="arrow">→</span>
+      </a>
+      <a href="#" class="b-art-row">
+        <span class="date">28.04.26</span>
+        <span class="src">Droidsoft</span>
+        <h3>Test du Pixel 9a&nbsp;: l'entrée de gamme qui assume sa singularité</h3>
+        <span class="topic">Test · Mobile</span>
+        <span class="arrow">→</span>
+      </a>
+      <a href="#" class="b-art-row">
+        <span class="date">22.04.26</span>
+        <span class="src">Le Café du Geek</span>
+        <h3>Steam Deck OLED&nbsp;: l'interview Valve qu'on attendait</h3>
+        <span class="topic">Interview · Gaming</span>
+        <span class="arrow">→</span>
+      </a>
+      <a href="#" class="b-art-row">
+        <span class="date">18.04.26</span>
+        <span class="src">Frandroid</span>
+        <h3>Pourquoi les opérateurs français traînent sur la 5G SA</h3>
+        <span class="topic">Décryptage · Télécoms</span>
+        <span class="arrow">→</span>
+      </a>
+      <a href="#" class="b-art-row">
+        <span class="date">12.04.26</span>
+        <span class="src">Droidsoft</span>
+        <h3>Galaxy S25 Ultra&nbsp;: le vrai bilan logiciel à deux mois</h3>
+        <span class="topic">Long format · Mobile</span>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="b-skills">
+    <div class="b-skills-inner">
+      <div class="b-section-head" style="border-color: var(--mocha);">
+        <h2 style="color:var(--creme);">L'inventaire de l'atelier.</h2>
+        <span class="num">— 05 / Outils</span>
+      </div>
+      <div class="b-skills-grid">
+        <div class="b-skill-block">
+          <h3>Web</h3>
+          <div class="badges">
+            <span class="badge">TypeScript</span>
+            <span class="badge">Next.js</span>
+            <span class="badge">React</span>
+            <span class="badge">Node</span>
+            <span class="badge">PHP</span>
+            <span class="badge">MySQL</span>
+          </div>
+        </div>
+        <div class="b-skill-block">
+          <h3>Logiciel</h3>
+          <div class="badges">
+            <span class="badge">C++</span>
+            <span class="badge">C#</span>
+            <span class="badge">C</span>
+            <span class="badge">Python</span>
+          </div>
+        </div>
+        <div class="b-skill-block">
+          <h3>3D &amp; Jeu</h3>
+          <div class="badges">
+            <span class="badge">Unity</span>
+            <span class="badge">Unreal</span>
+            <span class="badge">Blender</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="b-footer">
+    <div class="b-footer-inner">
+      <img src="../images/brand/logo-mh-blanc.png" alt="Monogramme MH" />
+      <div>
+        <h4>Maximilien Herr</h4>
+        <div class="role">Software Engineer</div>
+        <div class="links">
+          <a href="mailto:maximilienherr@gmail.com">maximilienherr@gmail.com</a>
+          <a href="#">linkedin</a>
+          <a href="#">github</a>
+        </div>
+      </div>
+    </div>
+    <div class="credit">L'atelier · Maximilien Herr · 2026</div>
+  </footer>
+</main>
+
+<!-- ============================================================
+     PROPOSITION C — "STUDIO NOCTURNE"
+     ============================================================ -->
+<main id="prop-c" class="proposal">
+
+  <nav class="c-nav">
+    <div class="brand">
+      <img src="../images/brand/logo-mh-blanc.png" alt="Monogramme MH" />
+      <div class="text">
+        Maximilien Herr
+        <span class="small">Software Engineer · Tech Journalist</span>
+      </div>
+    </div>
+    <ul>
+      <li><a href="#">Projets</a></li>
+      <li><a href="#">Articles</a></li>
+      <li><a href="#">CV</a></li>
+    </ul>
+    <a href="#" class="contact-btn">Contact</a>
+  </nav>
+
+  <section class="c-hero">
+    <img class="bg-arch" src="../images/brand/logo-mh-blanc.png" alt="" />
+    <div class="kicker"><span class="pulse"></span> Édition 01 · Mai 2026</div>
+    <h1>
+      Je sais <span class="word-cycle" id="word">concevoir</span><br/>
+      <span style="color:var(--sable);font-style:normal;">et je sais en raconter l'histoire.</span>
+    </h1>
+    <p class="lead">
+      Software Engineer le jour, journaliste tech le soir. J'architecture des produits, et je raconte ceux des autres pour Frandroid, Droidsoft, Le Café du Geek.
+    </p>
+    <div class="ctas">
+      <a href="#" class="btn btn-primary">Voir les projets →</a>
+      <a href="#" class="btn btn-secondary">Lire les articles</a>
+    </div>
+  </section>
+
+  <div class="c-marquee" aria-hidden="true">
+    <div class="c-marquee-track">
+      <span>Concevoir</span><span class="sep">✦</span>
+      <span>Apprendre</span><span class="sep">✦</span>
+      <span>Réaliser</span><span class="sep">✦</span>
+      <span>Expliquer</span><span class="sep">✦</span>
+      <span>Comprendre</span><span class="sep">✦</span>
+      <span>Raconter</span><span class="sep">✦</span>
+      <span>Concevoir</span><span class="sep">✦</span>
+      <span>Apprendre</span><span class="sep">✦</span>
+      <span>Réaliser</span><span class="sep">✦</span>
+      <span>Expliquer</span><span class="sep">✦</span>
+      <span>Comprendre</span><span class="sep">✦</span>
+      <span>Raconter</span><span class="sep">✦</span>
+    </div>
+  </div>
+
+  <section class="c-xp">
+    <div class="c-section-head">
+      <h2>Deux mains, deux <em>rythmes</em>.</h2>
+      <span class="meta">— 02 / Expertises</span>
+    </div>
+    <div class="c-xp-split">
+      <article class="c-xp-side">
+        <div>
+          <div class="num">01 — Le code</div>
+          <h3>Software <em>Engineer</em></h3>
+          <p>Six ans à concevoir des architectures propres, des APIs claires, des interfaces qui ne demandent pas d'effort. Web, logiciel, temps réel.</p>
+        </div>
+        <a href="#" class="link">Voir le CV</a>
+      </article>
+      <article class="c-xp-side">
+        <div>
+          <div class="num">02 — La plume</div>
+          <h3>Tech <em>Journalist</em></h3>
+          <p>Cinq ans à écrire pour des médias tech français. Test produit, enquête, interview, long format — la clarté avant tout.</p>
+        </div>
+        <a href="#" class="link">Lire les articles</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="c-projets">
+    <div class="c-section-head">
+      <h2>Les <em>chantiers</em> en cours.</h2>
+      <span class="meta">— 03 / Projets</span>
+    </div>
+    <div class="c-projets-grid">
+      <article class="c-proj-card">
+        <div class="cover">
+          <span class="num">N° 01</span>
+          <div class="stack"><span>Next.js</span><span>TS</span></div>
+        </div>
+        <div class="body">
+          <h3>Portfolio Next.js</h3>
+          <p>Refonte complète sous Next 14, audit nocturne et CMS local.</p>
+          <div class="meta">2026 · Web</div>
+        </div>
+      </article>
+      <article class="c-proj-card">
+        <div class="cover">
+          <span class="num">N° 02</span>
+          <div class="stack"><span>C++</span><span>Vulkan</span></div>
+        </div>
+        <div class="body">
+          <h3>Moteur 3D temps réel</h3>
+          <p>Projet d'école&nbsp;: rendu Vulkan, scene-graph, éditeur intégré.</p>
+          <div class="meta">2025 · Logiciel</div>
+        </div>
+      </article>
+      <article class="c-proj-card">
+        <div class="cover">
+          <span class="num">N° 03</span>
+          <div class="stack"><span>Python</span><span>LLM</span></div>
+        </div>
+        <div class="body">
+          <h3>Pipeline OSINT</h3>
+          <p>Agrégation et scoring d'articles avec embeddings et résumé auto.</p>
+          <div class="meta">2025 · IA</div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="c-articles">
+    <div class="c-articles-inner">
+      <div class="c-section-head">
+        <h2>Le <em>ticker</em> — derniers articles.</h2>
+        <span class="meta">— 04 / Plume · Live RSS</span>
+      </div>
+      <div class="c-articles-grid">
+        <article class="c-art-card">
+          <div class="img"></div>
+          <div class="body">
+            <div class="src">Frandroid</div>
+            <h3>Comment Apple discute encore avec ses fournisseurs européens</h3>
+            <div class="date">02 mai 2026</div>
+          </div>
+        </article>
+        <article class="c-art-card">
+          <div class="img"></div>
+          <div class="body">
+            <div class="src">Droidsoft</div>
+            <h3>Test du Pixel 9a&nbsp;: l'entrée de gamme qui assume</h3>
+            <div class="date">28 avril 2026</div>
+          </div>
+        </article>
+        <article class="c-art-card">
+          <div class="img"></div>
+          <div class="body">
+            <div class="src">Le Café du Geek</div>
+            <h3>Steam Deck OLED&nbsp;: l'interview Valve attendue</h3>
+            <div class="date">22 avril 2026</div>
+          </div>
+        </article>
+        <article class="c-art-card">
+          <div class="img"></div>
+          <div class="body">
+            <div class="src">Frandroid</div>
+            <h3>Pourquoi les opérateurs français traînent sur la 5G SA</h3>
+            <div class="date">18 avril 2026</div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="c-skills">
+    <div class="c-section-head">
+      <h2>L'<em>inventaire</em>.</h2>
+      <span class="meta">— 05 / Stack</span>
+    </div>
+    <div class="c-skills-cloud">
+      <span class="c-pill featured">TypeScript</span>
+      <span class="c-pill featured">Next.js</span>
+      <span class="c-pill">React</span>
+      <span class="c-pill">Node</span>
+      <span class="c-pill">PHP</span>
+      <span class="c-pill">MySQL</span>
+      <span class="c-pill">PostgreSQL</span>
+      <span class="c-pill featured">C++</span>
+      <span class="c-pill">C#</span>
+      <span class="c-pill">C</span>
+      <span class="c-pill">Python</span>
+      <span class="c-pill">Unity</span>
+      <span class="c-pill">Unreal</span>
+      <span class="c-pill">Blender</span>
+      <span class="c-pill">Git</span>
+      <span class="c-pill">Docker</span>
+      <span class="c-pill featured">Édition · Plume</span>
+    </div>
+  </section>
+
+  <footer class="c-footer">
+    <div class="c-footer-inner">
+      <img src="../images/brand/logo-mh-blanc.png" alt="Monogramme MH" />
+      <div>
+        <h4>On en discute&nbsp;?</h4>
+        <div class="role">Maximilien Herr · Software Engineer</div>
+        <div class="links">
+          <a href="mailto:maximilienherr@gmail.com">maximilienherr@gmail.com</a>
+          <a href="#">LinkedIn</a>
+          <a href="#">GitHub</a>
+        </div>
+      </div>
+      <a href="mailto:maximilienherr@gmail.com" class="cta">Écrire →</a>
+    </div>
+    <div class="credit">© 2026 Maximilien Herr · Charte graphique Édition 01</div>
+  </footer>
+</main>
+
+<script>
+  // Liens factices (wireframe : aucune nav réelle entre pages)
+  document.querySelectorAll('[data-mock-link]').forEach((a) => {
+    a.addEventListener('click', (e) => e.preventDefault());
+  });
+
+  // Frame mode (mobile preview iframe target) — détecte ?frame=mobile&prop=X
+  const params = new URLSearchParams(location.search);
+  const isFrame = params.get('frame') === 'mobile';
+  const proposals = document.querySelectorAll('.proposal');
+
+  if (isFrame) {
+    document.body.classList.add('frame-mobile');
+    const targetProp = 'prop-' + (params.get('prop') || 'a');
+    proposals.forEach((p) => p.classList.toggle('is-active', p.id === targetProp));
+  }
+
+  // Switcher (proposition A/B/C)
+  const propButtons = document.querySelectorAll('.switcher .prop-btn');
+  const viewBtn = document.querySelector('.switcher .view-btn');
+  const mobileLabel = document.getElementById('mobile-view-label');
+  const mobileIframe = document.querySelector('#mobile-view iframe');
+  const propLabels = { 'prop-a': 'Proposition A · Édition', 'prop-b': 'Proposition B · Atelier', 'prop-c': 'Proposition C · Studio' };
+  let mobileMode = false;
+
+  function refreshMobileIframe() {
+    if (!mobileIframe || !mobileLabel) return;
+    const active = document.querySelector('.proposal.is-active')?.id || 'prop-a';
+    const propKey = active.replace('prop-', '');
+    mobileIframe.src = `?frame=mobile&prop=${propKey}`;
+    mobileLabel.textContent = 'Aperçu mobile · ' + (propLabels[active] || 'Proposition');
+  }
+
+  propButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.target;
+      propButtons.forEach((b) => b.removeAttribute('aria-current'));
+      btn.setAttribute('aria-current', 'true');
+      proposals.forEach((p) => p.classList.toggle('is-active', p.id === target));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      try { history.replaceState(null, '', '#' + target); } catch (e) {}
+      if (mobileMode) refreshMobileIframe();
+    });
+  });
+
+  viewBtn?.addEventListener('click', () => {
+    mobileMode = !mobileMode;
+    document.body.classList.toggle('view-mobile', mobileMode);
+    viewBtn.setAttribute('aria-pressed', String(mobileMode));
+    if (mobileMode) {
+      refreshMobileIframe();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  });
+
+  // Open from URL hash if present (and not in frame mode)
+  if (!isFrame) {
+    const hash = window.location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) {
+      document.querySelector(`.switcher .prop-btn[data-target="${hash}"]`)?.click();
+    }
+  }
+
+  // Cycling words in hero (prop A + prop C)
+  const words = ['concevoir', 'apprendre', 'réaliser', 'expliquer', 'comprendre', 'raconter'];
+  const wordEls = ['word-a', 'word'].map((id) => document.getElementById(id)).filter(Boolean);
+  wordEls.forEach((el) => { el.style.transition = 'opacity 0.22s ease'; });
+  let i = 0;
+  setInterval(() => {
+    i = (i + 1) % words.length;
+    wordEls.forEach((el) => {
+      el.style.opacity = '0';
+      setTimeout(() => {
+        el.textContent = words[i];
+        el.style.opacity = '1';
+      }, 220);
+    });
+  }, 2400);
+</script>
+
+</body>
+</html>

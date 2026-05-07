@@ -16,10 +16,10 @@ const TYPE_LABELS: Record<string, string> = {
 };
 
 const TYPE_COLORS: Record<string, string> = {
-  page: "#b87333",
-  projet: "#5a8a5e",
-  blog: "#6b7db3",
-  article: "#b35a5a",
+  page: "#A8865E",
+  projet: "#6B4F35",
+  blog: "#3D2817",
+  article: "#2D1F14",
 };
 
 function toInternalPath(url: string): string | null {

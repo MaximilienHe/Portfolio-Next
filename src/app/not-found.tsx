@@ -10,54 +10,77 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <main
-      style={{
-        minHeight: "60vh",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        textAlign: "center",
-        padding: "4rem 1rem",
-        gap: "1.5rem",
-      }}
-    >
-      <h1 style={{ fontSize: "clamp(2.5rem, 6vw, 4rem)", margin: 0 }}>404</h1>
-      <p style={{ fontSize: "1.1rem", color: "#555", maxWidth: 480, margin: 0 }}>
-        Cette page n&apos;existe pas ou a été déplacée.
-        <br />
-        Vous pouvez revenir à l&apos;accueil ou explorer les sections ci-dessous.
-      </p>
-
-      <nav
+    <section className="page not-found">
+      <div
         style={{
+          textAlign: "center",
+          paddingTop: "3rem",
+          paddingBottom: "3rem",
           display: "flex",
-          flexWrap: "wrap",
-          gap: "12px",
-          justifyContent: "center",
-          marginTop: "1rem",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "1.5rem",
         }}
-        aria-label="Navigation principale"
       >
-        <Link href="/" className="button">
-          Accueil
-        </Link>
-        <Link href="/projets" className="button">
-          Projets
-        </Link>
-        <Link href="/cv" className="button">
-          CV
-        </Link>
-        <Link href="/articles" className="button">
-          Articles
-        </Link>
-        <Link href="/blog" className="button">
-          Blog
-        </Link>
-        <Link href="/contact" className="button">
-          Contact
-        </Link>
-      </nav>
-    </main>
+        <span className="kicker">Erreur · 404</span>
+        <h1
+          style={{
+            fontSize: "clamp(3.5rem, 10vw, 7rem)",
+            lineHeight: 1,
+            margin: 0,
+            fontFamily: "var(--font-serif)",
+            fontStyle: "italic",
+            color: "var(--caramel)",
+          }}
+        >
+          404
+        </h1>
+        <p
+          style={{
+            fontFamily: "var(--font-serif)",
+            fontStyle: "italic",
+            fontSize: "1.2rem",
+            color: "var(--mocha)",
+            maxWidth: "50ch",
+            margin: 0,
+          }}
+        >
+          La page que vous cherchez n&apos;a pas été imprimée dans cette
+          édition.
+          <br />
+          Revenez à l&apos;accueil ou parcourez les rubriques.
+        </p>
+
+        <nav
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "0.7rem",
+            justifyContent: "center",
+            marginTop: "1.5rem",
+          }}
+          aria-label="Navigation de secours"
+        >
+          <Link href="/" className="button">
+            Accueil
+          </Link>
+          <Link href="/projets" className="button button-ghost">
+            Projets
+          </Link>
+          <Link href="/articles" className="button button-ghost">
+            Articles
+          </Link>
+          <Link href="/blog" className="button button-ghost">
+            Blog
+          </Link>
+          <Link href="/cv" className="button button-ghost">
+            CV
+          </Link>
+          <Link href="/contact" className="button button-ghost">
+            Contact
+          </Link>
+        </nav>
+      </div>
+    </section>
   );
 }

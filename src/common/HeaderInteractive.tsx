@@ -11,14 +11,15 @@ const SearchBar = dynamic(
     loading: () => (
       <Link href="/recherche" className="search-trigger" aria-label="Aller à la recherche">
         <svg
-          width="18"
-          height="18"
+          width="16"
+          height="16"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
+          aria-hidden="true"
         >
           <circle cx="11" cy="11" r="8" />
           <line x1="21" y1="21" x2="16.65" y2="16.65" />
@@ -33,6 +34,9 @@ type HeaderInteractiveProps = {
   brand: ReactNode;
   children: ReactNode;
 };
+
+const ISSUE_NUMBER = "N° 01";
+const EDITION_LABEL = "Édition · Mai 2026";
 
 export function HeaderInteractive({ brand, children }: HeaderInteractiveProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -75,15 +79,24 @@ export function HeaderInteractive({ brand, children }: HeaderInteractiveProps) {
 
   return (
     <header className="header">
+      <div className="masthead">
+        <span className="meta-left">{EDITION_LABEL}</span>
+        {brand}
+        <span className="meta-right">{ISSUE_NUMBER} · maximilienherr.fr</span>
+      </div>
       <nav
         ref={navRef}
         className={`nav ${isOpen ? "nav--open" : ""}`}
         aria-label="Navigation principale"
       >
-        <div className="nav-header">
-          <div className="nav-title">{brand}</div>
+        <div
+          className={`nav-links ${isOpen ? "is-open" : ""}`}
+          onClick={handleNavItemClick}
+        >
+          {children}
         </div>
-        <div className="nav-btn">
+        <div className="nav-actions">
+          <SearchBar />
           <button
             type="button"
             aria-label={isOpen ? "Fermer le menu" : "Ouvrir le menu"}
@@ -95,11 +108,6 @@ export function HeaderInteractive({ brand, children }: HeaderInteractiveProps) {
             <span></span>
             <span></span>
           </button>
-        </div>
-
-        <div className={`nav-links ${isOpen ? "is-open" : ""}`} onClick={handleNavItemClick}>
-          {children}
-          <SearchBar />
         </div>
       </nav>
     </header>

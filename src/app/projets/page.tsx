@@ -99,17 +99,12 @@ export default function Projets() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(listJsonLd) }}
       />
       <section className="projets">
-        <h1 style={{ marginBottom: "1vh" }}>Projets techniques sélectionnés</h1>
-        <p
-          style={{
-            textAlign: "center",
-            marginBottom: "5vh",
-            margin: "0 4vw 5vh 4vw",
-          }}
-        >
-          Cette sélection couvre plusieurs contextes: web, logiciel, data, embarqué.
-          Chaque page projet détaille la stack, le périmètre, les compromis et les
-          résultats pour garder un niveau de lecture concret.
+        <span className="kicker">Rubrique · Réalisations</span>
+        <h1>Projets techniques sélectionnés</h1>
+        <p>
+          Cette sélection couvre plusieurs contextes : web, logiciel, data,
+          embarqué. Chaque page projet détaille la stack, le périmètre, les
+          compromis et les résultats pour garder un niveau de lecture concret.
         </p>
 
         {projects.map((project, idx) => (
