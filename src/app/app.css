@@ -1524,17 +1524,17 @@ section {
     padding: 0.7rem 1.3rem !important;
   }
 
-  /* Menu OUVERT : X close button positionné au bas-gauche, à côté de MON CV */
+  /* Menu OUVERT : MON CV en bas-gauche, X close en bas-droite, alignés */
   .nav-links.is-open ~ .nav-actions {
     position: absolute;
-    left: var(--gutter);
-    bottom: 0.8rem;
+    right: var(--gutter);
+    bottom: 1.4rem; /* aligne sur le bas de MON CV (nav padding 0.6rem + nav-links padding 0.8rem) */
     margin: 0;
     padding: 0;
     gap: 0;
   }
   .nav-links.is-open > a.nav-cta {
-    margin-left: 56px;
+    margin-left: 0;
   }
 
   .nav-actions {
