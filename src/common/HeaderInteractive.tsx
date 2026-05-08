@@ -33,12 +33,16 @@ const SearchBar = dynamic(
 type HeaderInteractiveProps = {
   brand: ReactNode;
   children: ReactNode;
+  editionLabel: string;
+  issueLabel?: string;
 };
 
-const ISSUE_NUMBER = "N° 01";
-const EDITION_LABEL = "Édition · Mai 2026";
-
-export function HeaderInteractive({ brand, children }: HeaderInteractiveProps) {
+export function HeaderInteractive({
+  brand,
+  children,
+  editionLabel,
+  issueLabel = "N° 01",
+}: HeaderInteractiveProps) {
   const [isOpen, setIsOpen] = useState(false);
   const navRef = useRef<HTMLElement | null>(null);
 
@@ -80,9 +84,9 @@ export function HeaderInteractive({ brand, children }: HeaderInteractiveProps) {
   return (
     <header className="header">
       <div className="masthead">
-        <span className="meta-left">{EDITION_LABEL}</span>
+        <span className="meta-left">{editionLabel}</span>
         {brand}
-        <span className="meta-right">{ISSUE_NUMBER} · maximilienherr.fr</span>
+        <span className="meta-right">{issueLabel} · maximilienherr.fr</span>
       </div>
       <nav
         ref={navRef}
