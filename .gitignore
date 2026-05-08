@@ -46,3 +46,6 @@ public/cv-generated.pdf
 # local temp files
 tmp_*
 *.tmp
+
+# Front Matter CMS local cache
+.frontmatter/
