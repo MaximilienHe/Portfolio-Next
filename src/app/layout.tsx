@@ -1,23 +1,31 @@
 // src/app/layout.tsx
 import type { Metadata } from "next";
-import { Lora, Poppins } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import "./app.css";
 import Header from "@/common/header";
 import Footer from "@/common/footer";
 import { DEFAULT_OG_IMAGE, SITE_URL } from "@/lib/seo";
 
-const lora = Lora({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
+// Self-hosted fonts (latin subset). Évite tout fetch réseau pendant le build
+// — nécessaire pour les builds Docker offline / arm64 sous qemu.
+const lora = localFont({
+  src: [
+    { path: "../assets/fonts/Lora-Variable.woff2", weight: "400 600", style: "normal" },
+    { path: "../assets/fonts/Lora-Italic.woff2", weight: "400", style: "italic" },
+  ],
   variable: "--font-lora",
   display: "swap",
 });
 
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+const poppins = localFont({
+  src: [
+    { path: "../assets/fonts/Poppins-300.woff2", weight: "300", style: "normal" },
+    { path: "../assets/fonts/Poppins-400.woff2", weight: "400", style: "normal" },
+    { path: "../assets/fonts/Poppins-500.woff2", weight: "500", style: "normal" },
+    { path: "../assets/fonts/Poppins-600.woff2", weight: "600", style: "normal" },
+    { path: "../assets/fonts/Poppins-700.woff2", weight: "700", style: "normal" },
+  ],
   variable: "--font-poppins",
   display: "swap",
 });
