@@ -9,7 +9,9 @@
     "prebuild": "tsx scripts/generate-cv.ts && node scripts/generate-version.mjs",
     "hooks:enable": "git config core.hooksPath .githooks",
     "dev": "next dev",
+    "dev:tina": "tinacms dev -c \"next dev\"",
     "build": "next build",
+    "build:tina": "tinacms build && next build",
     "start": "next start",
     "export": "next build",
     "purge:app-css": "node scripts/purge-app-css.mjs",
@@ -31,6 +33,8 @@
     "sharp": "^0.34.5"
   },
   "devDependencies": {
+    "@tinacms/cli": "^1.10.0",
+    "tinacms": "^2.8.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

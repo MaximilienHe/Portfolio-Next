@@ -46,3 +46,7 @@ public/cv-generated.pdf
 # local temp files
 tmp_*
 *.tmp
+
+# Tina CMS
+tina/__generated__/
+public/admin/

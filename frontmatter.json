@@ -1,0 +1,81 @@
+{
+  "$schema": "https://frontmatter.codes/frontmatter.schema.json",
+  "frontMatter.framework.id": "next.js",
+  "frontMatter.preview.host": "http://localhost:3000",
+  "frontMatter.content.publicFolder": "public",
+  "frontMatter.content.pageFolders": [
+    {
+      "title": "Blog",
+      "path": "[[workspace]]/content/blog",
+      "contentTypes": ["blogPost"],
+      "previewPath": "/blog"
+    },
+    {
+      "title": "Projets",
+      "path": "[[workspace]]/content/projets",
+      "contentTypes": ["projetEntry"],
+      "previewPath": "/projets"
+    }
+  ],
+  "frontMatter.taxonomy.contentTypes": [
+    {
+      "name": "blogPost",
+      "pageBundle": false,
+      "clearEmpty": true,
+      "fields": [
+        { "title": "Titre", "name": "title", "type": "string", "single": true, "required": true },
+        { "title": "Description (intro courte)", "name": "description", "type": "string", "required": true },
+        { "title": "Titre SEO", "name": "seoTitle", "type": "string", "single": true },
+        { "title": "Description SEO (~155 car.)", "name": "seoDescription", "type": "string" },
+        { "title": "Date de publication", "name": "date", "type": "datetime", "default": "{{now}}", "isPublishDate": true, "required": true },
+        { "title": "Date de mise à jour", "name": "updated", "type": "datetime", "isModifiedDate": true },
+        { "title": "Tags", "name": "tags", "type": "tags" },
+        { "title": "Image de couverture", "name": "cover", "type": "image", "isPreviewImage": true, "multiple": false },
+        { "title": "URL canonique", "name": "canonical", "type": "string", "single": true },
+        { "title": "Brouillon", "name": "draft", "type": "draft", "default": true },
+        { "title": "Exclure de l'index (noindex)", "name": "noindex", "type": "boolean", "default": false },
+        { "title": "FAQ", "name": "faq", "type": "block", "fieldGroup": ["faqItem"] }
+      ]
+    },
+    {
+      "name": "projetEntry",
+      "pageBundle": false,
+      "clearEmpty": true,
+      "fields": [
+        { "title": "Titre", "name": "title", "type": "string", "single": true, "required": true },
+        { "title": "Description", "name": "description", "type": "string", "required": true },
+        { "title": "Titre SEO", "name": "seoTitle", "type": "string", "single": true },
+        { "title": "Description SEO", "name": "seoDescription", "type": "string" },
+        { "title": "Date", "name": "date", "type": "datetime", "default": "{{now}}", "isPublishDate": true, "required": true },
+        { "title": "Mise à jour", "name": "updated", "type": "datetime", "isModifiedDate": true },
+        { "title": "Tags", "name": "tags", "type": "tags" },
+        { "title": "Cover", "name": "cover", "type": "image", "isPreviewImage": true, "multiple": false },
+        { "title": "URL canonique", "name": "canonical", "type": "string", "single": true },
+        { "title": "Logos (chemins publics)", "name": "logos", "type": "list" },
+        { "title": "Priorité (tri)", "name": "priority", "type": "number" },
+        { "title": "Brouillon", "name": "draft", "type": "draft", "default": false },
+        { "title": "noindex", "name": "noindex", "type": "boolean", "default": false }
+      ]
+    }
+  ],
+  "frontMatter.taxonomy.fieldGroups": [
+    {
+      "id": "faqItem",
+      "labelField": "question",
+      "fields": [
+        { "title": "Question", "name": "question", "type": "string", "single": true },
+        { "title": "Réponse", "name": "answer", "type": "string" }
+      ]
+    }
+  ],
+  "frontMatter.taxonomy.tags": [],
+  "frontMatter.media.supportedMimeTypes": [
+    "image/jpeg",
+    "image/png",
+    "image/webp",
+    "image/avif",
+    "image/svg+xml",
+    "image/gif"
+  ],
+  "frontMatter.dashboard.openOnStart": false
+}
