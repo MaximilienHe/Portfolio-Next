@@ -58,7 +58,10 @@ export const metadata: Metadata = {
     images: [DEFAULT_OG_IMAGE],
   },
   alternates: { canonical: "/" },
-  icons: { icon: "/favicon.ico" },
+  // Les icônes sont prises automatiquement depuis :
+  //   - public/favicon.ico (legacy /favicon.ico)
+  //   - src/app/icon.png   → <link rel="icon">
+  //   - src/app/apple-icon.png → <link rel="apple-touch-icon">
 };
 
 const personSchema = {
