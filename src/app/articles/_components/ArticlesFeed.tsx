@@ -52,6 +52,17 @@ function normalizeCoverSrc(src?: string | null): string | null {
   return v;
 }
 
+/**
+ * Tri global par date décroissante. Indispensable au scroll infini : chaque
+ * source pagine indépendamment, donc le lot d'une page peut contenir des
+ * articles plus récents que la fin de la page précédente (ex. le 15e DroidSoft
+ * est plus récent que le 8e LCDG). On re-trie tout l'historique accumulé à
+ * chaque merge pour garder une chronologie correcte.
+ */
+function byDateDesc(a: FeedArticle, b: FeedArticle): number {
+  return new Date(b.date).getTime() - new Date(a.date).getTime();
+}
+
 function useColumnCount(): number {
   const [cols, setCols] = useState(3);
   useEffect(() => {
@@ -179,7 +190,10 @@ export default function ArticlesFeed({
       if (fresh.length === 0 && !data.hasMore) {
         setHasMore(false);
       } else {
-        setArticles((prev) => [...prev, ...fresh]);
+        // Re-tri global : on ne se contente pas d'append, sinon un article
+        // récent d'une source paginée se retrouverait sous des articles plus
+        // vieux d'une autre source déjà affichés.
+        setArticles((prev) => [...prev, ...fresh].sort(byDateDesc));
         setPage(nextPage);
         setHasMore(data.hasMore);
       }
