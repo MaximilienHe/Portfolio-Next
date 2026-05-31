@@ -1,4 +1,4 @@
-/* /src/app/articles/style.css — Kiosque unifié, scroll infini, masonry léger */
+/* /src/app/articles/style.css — Kiosque unifié : masonry naturelle, scroll infini */
 
 .articlesPage {
   width: 100%;
@@ -40,14 +40,14 @@
 }
 
 /* ============================================================
-   Filtres par source — chips colorés à la couleur du média
+   Filtres par source — chips à la couleur de chaque média
    ============================================================ */
 
 .kiosque-filters {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin: 0 0 2rem;
+  margin: 0 0 2.5rem;
 }
 
 .filter-chip {
@@ -92,74 +92,28 @@
 }
 
 /* ============================================================
-   Grille kiosque — 3 colonnes, masonry léger via grid spans + dense
+   Item de base — pas de fond ni bordure (comme la home),
+   juste cover arrondie + texte sur le fond crème
    ============================================================ */
-
-.kiosque {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-auto-rows: minmax(260px, auto);
-  grid-auto-flow: dense;
-  gap: 1.5rem;
-  width: 100%;
-}
-
-/* 4 colonnes au-dessus de 1600px pour respirer sur grands écrans */
-@media (min-width: 1600px) {
-  .kiosque {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    grid-auto-rows: minmax(280px, auto);
-  }
-}
 
 .kiosque-item {
   display: flex;
   flex-direction: column;
+  gap: 0.55rem;
   text-decoration: none !important;
   color: var(--cacao);
-  background: var(--ivoire);
-  border: 1px solid var(--rule-soft);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  transition:
-    transform 0.22s ease,
-    box-shadow 0.22s ease,
-    border-color 0.22s ease;
+  transition: transform 0.2s ease;
 }
-.kiosque-item:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 16px 36px -12px rgba(45, 31, 20, 0.22);
-  border-color: var(--caramel);
-}
+.kiosque-item:hover { transform: translateY(-3px); }
 
-/* Variantes de taille */
-.kiosque-item.is-featured {
-  grid-column: span 2;
-  grid-row: span 2;
-}
-.kiosque-item.is-wide {
-  grid-column: span 2;
-}
-.kiosque-item.is-tall {
-  grid-row: span 2;
-}
-
-/* Cover */
 .kiosque-cover {
   position: relative;
   width: 100%;
-  flex-shrink: 0;
-  background: linear-gradient(135deg, var(--mocha), var(--caramel));
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-sm);
   overflow: hidden;
+  background: linear-gradient(135deg, var(--mocha), var(--caramel));
 }
-.kiosque-item.is-normal .kiosque-cover { aspect-ratio: 16/10; }
-.kiosque-item.is-wide .kiosque-cover { aspect-ratio: 21/9; }
-.kiosque-item.is-tall .kiosque-cover { flex: 1 1 auto; min-height: 220px; }
-.kiosque-item.is-featured .kiosque-cover {
-  flex: 1 1 auto;
-  min-height: 280px;
-}
-
 .kiosque-cover-placeholder {
   position: absolute;
   inset: 0;
@@ -169,8 +123,8 @@
 /* Chip "source" — overlay haut-gauche, couleur de chaque média */
 .source-chip {
   position: absolute;
-  top: 0.75rem;
-  left: 0.75rem;
+  top: 0.7rem;
+  left: 0.7rem;
   font-family: var(--font-sans);
   font-size: 0.6rem;
   letter-spacing: 0.18em;
@@ -192,38 +146,29 @@
   border: 1px solid rgba(76, 180, 144, 0.45);
 }
 
-/* Body */
 .kiosque-body {
-  padding: 1rem 1.1rem 1.2rem;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-  flex: 1 1 auto;
+  gap: 0.35rem;
   min-width: 0;
 }
-
+.kiosque-date {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--caramel);
+  font-weight: 500;
+}
 .kiosque-title {
   font-family: var(--font-serif);
   font-weight: 500;
+  font-size: 1.05rem;
   letter-spacing: -0.005em;
   color: var(--cacao);
   margin: 0;
-  line-height: 1.25;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  line-height: 1.28;
 }
-.kiosque-item.is-normal .kiosque-title { font-size: 1rem; -webkit-line-clamp: 3; }
-.kiosque-item.is-wide .kiosque-title { font-size: 1.2rem; -webkit-line-clamp: 2; }
-.kiosque-item.is-tall .kiosque-title { font-size: 1.15rem; -webkit-line-clamp: 4; }
-.kiosque-item.is-featured .kiosque-title {
-  font-size: 1.7rem;
-  letter-spacing: -0.015em;
-  line-height: 1.15;
-  -webkit-line-clamp: 4;
-}
-
 .kiosque-excerpt {
   font-family: var(--font-sans);
   font-size: 0.88rem;
@@ -231,22 +176,52 @@
   line-height: 1.55;
   margin: 0;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-.kiosque-item.is-featured .kiosque-excerpt { -webkit-line-clamp: 4; font-size: 0.96rem; }
-.kiosque-item.is-tall .kiosque-excerpt { -webkit-line-clamp: 3; }
-.kiosque-item.is-wide .kiosque-excerpt { -webkit-line-clamp: 2; }
 
-.kiosque-date {
-  margin: 0.2rem 0 0;
-  font-family: var(--font-sans);
-  font-size: 0.7rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--caramel);
-  font-weight: 500;
+/* ============================================================
+   Featured — hero horizontal en tête (cover + texte)
+   ============================================================ */
+
+.kiosque-item.is-featured {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  margin-bottom: 2.5rem;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.kiosque-item.is-featured .kiosque-cover {
+  aspect-ratio: 16 / 10;
+}
+.kiosque-item.is-featured .kiosque-title {
+  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+}
+.kiosque-item.is-featured .kiosque-excerpt {
+  font-size: 1rem;
+  -webkit-line-clamp: 5;
+}
+
+/* ============================================================
+   Masonry — colonnes flex, items à hauteur naturelle (pas de void)
+   ============================================================ */
+
+.kiosque-columns {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+.kiosque-col {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 /* ============================================================
@@ -255,11 +230,8 @@
 
 .kiosque-item.is-skeleton {
   pointer-events: none;
-  border-color: var(--rule-soft);
-  background: var(--ivoire);
 }
 .kiosque-item.is-skeleton .kiosque-cover {
-  aspect-ratio: 16/10;
   background: linear-gradient(135deg, var(--sable), var(--ivoire), var(--sable));
   background-size: 200% 100%;
   animation: kiosque-shimmer 1.4s linear infinite;
@@ -271,9 +243,9 @@
   background-size: 200% 100%;
   animation: kiosque-shimmer 1.4s linear infinite;
 }
-.kiosque-item.is-skeleton .sk-title { width: 80%; height: 18px; }
+.kiosque-item.is-skeleton .sk-meta { width: 35%; height: 10px; }
+.kiosque-item.is-skeleton .sk-title { width: 85%; height: 18px; }
 .kiosque-item.is-skeleton .sk-excerpt { width: 95%; }
-.kiosque-item.is-skeleton .sk-meta { width: 40%; height: 10px; margin-top: 0.4rem; }
 
 @keyframes kiosque-shimmer {
   0% { background-position: 100% 0; }
@@ -318,24 +290,21 @@
   .articlesPage .page-title { font-size: clamp(2rem, 7vw, 2.8rem); }
   .articlesPage .page-sub { font-size: 1rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; }
 
-  .kiosque-filters { gap: 0.35rem; }
-  .filter-chip {
-    font-size: 0.65rem;
-    padding: 0.45rem 0.85rem;
-  }
+  .kiosque-filters { gap: 0.35rem; margin-bottom: 2rem; }
+  .filter-chip { font-size: 0.65rem; padding: 0.45rem 0.85rem; }
 
-  .kiosque {
+  /* Featured repasse en vertical */
+  .kiosque-item.is-featured {
     grid-template-columns: 1fr;
-    grid-auto-rows: auto;
-    gap: 1.25rem;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
   }
-  /* En mobile on désactive les spans pour rester en colonne unique */
-  .kiosque-item.is-featured,
-  .kiosque-item.is-wide,
-  .kiosque-item.is-tall {
-    grid-column: auto;
-    grid-row: auto;
-  }
-  .kiosque-item .kiosque-cover { aspect-ratio: 16/9 !important; min-height: 0; }
-  .kiosque-item.is-featured .kiosque-title { font-size: 1.3rem; }
+  .kiosque-item.is-featured .kiosque-cover { aspect-ratio: 16/9; }
+  .kiosque-item.is-featured .kiosque-excerpt { -webkit-line-clamp: 3; }
+
+  /* Colonnes empilées : une seule colonne sur mobile */
+  .kiosque-columns { flex-direction: column; gap: 2rem; }
+  /* Ratios variés neutralisés sur mobile pour rester homogène */
+  .kiosque-col .kiosque-cover { aspect-ratio: 16/9 !important; }
 }

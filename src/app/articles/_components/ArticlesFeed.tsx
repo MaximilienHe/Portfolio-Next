@@ -1,8 +1,8 @@
 "use client";
 // src/app/articles/_components/ArticlesFeed.tsx
-// Flux unifié "kiosque" : tous les articles dans la même grille, source en chip,
-// tailles variables (featured / wide / tall / normal) pour un visuel magazine,
-// scroll infini via IntersectionObserver, filtre client-side par source.
+// Flux unifié "kiosque" : tous les articles mélangés, source en chip coloré,
+// masonry à hauteurs naturelles (distribution en colonnes côté JS, stable au
+// scroll infini — pas de reflow), featured en tête, filtre par source.
 
 import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -19,8 +19,6 @@ export type FeedArticle = {
   excerpt?: string | null;
 };
 
-type Variant = "featured" | "wide" | "tall" | "normal";
-
 const SOURCE_FILTERS: { label: string; value: "all" | Source; key: string }[] = [
   { label: "Tous", value: "all", key: "all" },
   { label: "Frandroid", value: "Frandroid", key: "frandroid" },
@@ -34,18 +32,12 @@ function sourceClass(source: Source): string {
   return "is-lcdg";
 }
 
-/**
- * Détermine la taille de chaque card selon son index dans la liste visible.
- * Pattern déterministe : featured en tête, wide/tall sprinklés tous les 9 items.
- * Quand le filtre change, le pattern se réapplique sur la liste filtrée — c'est
- * voulu : le 1er article visible est toujours mis en avant.
- */
-function variantForIndex(i: number): Variant {
-  if (i === 0) return "featured";
-  const m = i % 9;
-  if (m === 3) return "wide";
-  if (m === 7) return "tall";
-  return "normal";
+/** Variation douce du ratio de couverture pour un rythme vertical naturel. */
+function coverAspect(i: number): string {
+  const m = i % 6;
+  if (m === 1) return "3 / 4"; // portrait, plus haut
+  if (m === 4) return "16 / 9"; // paysage, plus court
+  return "4 / 3"; // standard
 }
 
 function isExternalUrl(src?: string | null): boolean {
@@ -58,6 +50,22 @@ function normalizeCoverSrc(src?: string | null): string | null {
   if (!v) return null;
   if (v.startsWith("//")) return `https:${v}`;
   return v;
+}
+
+function useColumnCount(): number {
+  const [cols, setCols] = useState(3);
+  useEffect(() => {
+    const compute = () => {
+      const w = window.innerWidth;
+      if (w <= 900) setCols(1);
+      else if (w >= 1600) setCols(4);
+      else setCols(3);
+    };
+    compute();
+    window.addEventListener("resize", compute);
+    return () => window.removeEventListener("resize", compute);
+  }, []);
+  return cols;
 }
 
 type ApiResponse = {
@@ -74,6 +82,67 @@ type Props = {
   perSource: number;
 };
 
+type CardProps = {
+  article: FeedArticle;
+  index: number;
+  eager?: boolean;
+  featured?: boolean;
+};
+
+function ArticleCard({ article, index, eager, featured }: CardProps) {
+  const coverSrc = normalizeCoverSrc(article.cover);
+  const isExternalCover = isExternalUrl(coverSrc);
+  return (
+    <a
+      href={article.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`kiosque-item${featured ? " is-featured" : ""}`}
+      aria-label={`${article.title} — ${article.source}`}
+    >
+      <div
+        className="kiosque-cover"
+        style={featured ? undefined : { aspectRatio: coverAspect(index) }}
+      >
+        <span className={`source-chip ${sourceClass(article.source)}`}>
+          {article.source}
+        </span>
+        {coverSrc ? (
+          <Image
+            src={coverSrc}
+            alt=""
+            fill
+            sizes={
+              featured
+                ? "(max-width: 900px) 100vw, 55vw"
+                : "(max-width: 900px) 100vw, 33vw"
+            }
+            style={{ objectFit: "cover" }}
+            unoptimized={isExternalCover}
+            loading={eager ? "eager" : "lazy"}
+            decoding="async"
+          />
+        ) : (
+          <div className="kiosque-cover-placeholder" aria-hidden />
+        )}
+      </div>
+      <div className="kiosque-body">
+        <span className="kiosque-date">
+          {new Date(article.date).toLocaleDateString("fr-FR", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+          })}
+        </span>
+        <h3 className="kiosque-title">{article.title}</h3>
+        {article.excerpt ? (
+          <p className="kiosque-excerpt">{article.excerpt}</p>
+        ) : null}
+      </div>
+    </a>
+  );
+}
+
 export default function ArticlesFeed({
   initial,
   initialPage,
@@ -88,6 +157,7 @@ export default function ArticlesFeed({
   const [filter, setFilter] = useState<"all" | Source>("all");
   const seenIds = useRef<Set<string>>(new Set(initial.map((a) => a.id)));
   const sentinelRef = useRef<HTMLDivElement | null>(null);
+  const numColumns = useColumnCount();
 
   const loadMore = useCallback(async () => {
     if (isLoading || !hasMore) return;
@@ -120,18 +190,15 @@ export default function ArticlesFeed({
     }
   }, [isLoading, hasMore, page, perSource]);
 
-  // IntersectionObserver sur la sentinelle de fin de liste
   useEffect(() => {
     if (!hasMore) return;
     const sentinel = sentinelRef.current;
     if (!sentinel) return;
-
     const obs = new IntersectionObserver(
       (entries) => {
-        const entry = entries[0];
-        if (entry?.isIntersecting) loadMore();
+        if (entries[0]?.isIntersecting) loadMore();
       },
-      { rootMargin: "400px 0px" },
+      { rootMargin: "600px 0px" },
     );
     obs.observe(sentinel);
     return () => obs.disconnect();
@@ -142,9 +209,29 @@ export default function ArticlesFeed({
     return articles.filter((a) => a.source === filter);
   }, [articles, filter]);
 
+  const featured = visible[0];
+  const rest = useMemo(() => visible.slice(1), [visible]);
+
+  // Distribution masonry stable : l'article i va toujours dans la colonne
+  // i % numColumns → pas de reflow des items existants au scroll infini.
+  const columns = useMemo(() => {
+    const cols: { article: FeedArticle; index: number }[][] = Array.from(
+      { length: numColumns },
+      () => [],
+    );
+    rest.forEach((article, i) => {
+      cols[i % numColumns].push({ article, index: i });
+    });
+    return cols;
+  }, [rest, numColumns]);
+
   return (
     <>
-      <div className="kiosque-filters" role="tablist" aria-label="Filtrer par média">
+      <div
+        className="kiosque-filters"
+        role="tablist"
+        aria-label="Filtrer par média"
+      >
         {SOURCE_FILTERS.map((f) => {
           const isActive = filter === f.value;
           return (
@@ -168,81 +255,42 @@ export default function ArticlesFeed({
         aria-busy={isLoading}
         aria-label="Flux unifié des articles publiés"
       >
-        {visible.map((a, i) => {
-          const variant = variantForIndex(i);
-          const coverSrc = normalizeCoverSrc(a.cover);
-          const isExternalCover = isExternalUrl(coverSrc);
-          return (
-            <a
-              key={a.id}
-              href={a.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`kiosque-item is-${variant}`}
-              aria-label={`${a.title} — ${a.source}`}
-            >
-              <div className="kiosque-cover">
-                <span className={`source-chip ${sourceClass(a.source)}`}>
-                  {a.source}
-                </span>
-                {coverSrc ? (
-                  <Image
-                    src={coverSrc}
-                    alt=""
-                    fill
-                    sizes={
-                      variant === "featured"
-                        ? "(max-width: 900px) 100vw, 66vw"
-                        : variant === "wide"
-                          ? "(max-width: 900px) 100vw, 50vw"
-                          : "(max-width: 900px) 100vw, 33vw"
-                    }
-                    style={{ objectFit: "cover" }}
-                    unoptimized={isExternalCover}
-                    loading={i < 6 ? "eager" : "lazy"}
-                    decoding="async"
-                  />
-                ) : (
-                  <div className="kiosque-cover-placeholder" aria-hidden />
-                )}
-              </div>
-              <div className="kiosque-body">
-                <h3 className="kiosque-title">{a.title}</h3>
-                {a.excerpt ? (
-                  <p className="kiosque-excerpt">{a.excerpt}</p>
-                ) : null}
-                <p className="kiosque-date">
-                  {new Date(a.date).toLocaleDateString("fr-FR", {
-                    day: "2-digit",
-                    month: "short",
-                    year: "numeric",
-                  })}
-                </p>
-              </div>
-            </a>
-          );
-        })}
+        {featured ? (
+          <ArticleCard article={featured} index={0} eager featured />
+        ) : null}
 
-        {/* Skeleton placeholders pendant le fetch */}
-        {isLoading
-          ? Array.from({ length: 3 }).map((_, i) => (
-              <div
-                key={`sk-${i}`}
-                className="kiosque-item is-normal is-skeleton"
-                aria-hidden
-              >
-                <div className="kiosque-cover" />
-                <div className="kiosque-body">
-                  <div className="sk-line sk-title" />
-                  <div className="sk-line sk-excerpt" />
-                  <div className="sk-line sk-meta" />
-                </div>
-              </div>
-            ))
-          : null}
+        <div className="kiosque-columns" data-cols={numColumns}>
+          {columns.map((col, ci) => (
+            <div className="kiosque-col" key={ci}>
+              {col.map(({ article, index }) => (
+                <ArticleCard
+                  key={article.id}
+                  article={article}
+                  index={index}
+                  eager={index < 5}
+                />
+              ))}
+              {/* Skeletons répartis sur les colonnes pendant le fetch */}
+              {isLoading && ci < 3
+                ? (
+                    <div className="kiosque-item is-skeleton" aria-hidden>
+                      <div
+                        className="kiosque-cover"
+                        style={{ aspectRatio: coverAspect(ci + 1) }}
+                      />
+                      <div className="kiosque-body">
+                        <div className="sk-line sk-meta" />
+                        <div className="sk-line sk-title" />
+                        <div className="sk-line sk-excerpt" />
+                      </div>
+                    </div>
+                  )
+                : null}
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* Sentinelle observée pour déclencher loadMore */}
       <div ref={sentinelRef} aria-hidden style={{ height: 1 }} />
 
       {error ? (
