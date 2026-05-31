@@ -206,9 +206,10 @@ function pickWpCover(p: WpPost, base: string): string | null {
 async function getWpPostsByAuthor(
   base: string,
   authorId: number,
-  perPage = 10
+  perPage = 10,
+  page = 1,
 ): Promise<Article[]> {
-  const url = `${base}/wp-json/wp/v2/posts?author=${authorId}&per_page=${perPage}&orderby=date&order=desc&${WP_PARAMS}`;
+  const url = `${base}/wp-json/wp/v2/posts?author=${authorId}&per_page=${perPage}&page=${page}&orderby=date&order=desc&${WP_PARAMS}`;
   const posts = await fetchJson<WpPost[]>(url);
   const source: Article["source"] =
     base.includes("droidsoft") ? "DroidSoft" : "Le Café du Geek";
@@ -311,12 +312,16 @@ export async function getAllLatestArticles(opts?: {
   perLcdg?: number;
   perFrandroid?: number;
   maxTotal?: number;
+  /** Page WordPress à récupérer pour les sources paginables (DroidSoft/LCDG).
+   *  Frandroid étant un RSS non paginable, seule page === 1 renvoie ses items. */
+  page?: number;
 }): Promise<Article[]> {
   const {
     perDroidsoft = 8,
     perLcdg = 8,
     perFrandroid = 8,
     maxTotal = 20,
+    page = 1,
   } = opts || {};
 
   // Résolution des IDs auteurs WP au besoin
@@ -345,7 +350,8 @@ export async function getAllLatestArticles(opts?: {
     ? getWpPostsByAuthor(
         CONFIG.droidsoft.base,
         droidsoftAuthorId,
-        perDroidsoft
+        perDroidsoft,
+        page,
       ).catch((error) => {
         console.warn("[fetchArticles] droidsoft fetch failed:", error);
         return [] as Article[];
@@ -353,7 +359,7 @@ export async function getAllLatestArticles(opts?: {
     : Promise.resolve([] as Article[]);
 
   const lcdgPromise = lcdgAuthorId
-    ? getWpPostsByAuthor(CONFIG.lcdg.base, lcdgAuthorId, perLcdg).catch(
+    ? getWpPostsByAuthor(CONFIG.lcdg.base, lcdgAuthorId, perLcdg, page).catch(
         (error) => {
           console.warn("[fetchArticles] lcdg fetch failed:", error);
           return [] as Article[];
@@ -361,10 +367,14 @@ export async function getAllLatestArticles(opts?: {
       )
     : Promise.resolve([] as Article[]);
 
-  const frandroidPromise = getFrandroidArticles(perFrandroid).catch((error) => {
-    console.warn("[fetchArticles] frandroid fetch failed:", error);
-    return [] as Article[];
-  });
+  // Frandroid RSS n'est pas paginable : seul page === 1 renvoie ses items.
+  const frandroidPromise =
+    page === 1
+      ? getFrandroidArticles(perFrandroid).catch((error) => {
+          console.warn("[fetchArticles] frandroid fetch failed:", error);
+          return [] as Article[];
+        })
+      : Promise.resolve([] as Article[]);
 
   const [ds, lc, fr] = await Promise.all([
     droidsoftPromise,
