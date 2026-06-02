@@ -1,8 +1,14 @@
 "use client";
 // src/app/articles/_components/ArticlesFeed.tsx
-// Flux unifié "kiosque" : tous les articles mélangés, source en chip coloré,
-// masonry à hauteurs naturelles (distribution en colonnes côté JS, stable au
-// scroll infini — pas de reflow), featured en tête, filtre par source.
+// Flux unifié "kiosque" : cartes image avec titre + date en overlay, masonry
+// 3 colonnes (round-robin → ordre de lecture préservé), source en chip coloré.
+//
+// Scroll infini sans à-coups :
+//   - `shown`  : liste AFFICHÉE, append-only → les items déjà visibles ne
+//                bougent jamais (pas de reflow / décalage d'écran).
+//   - `pending`: buffer trié par date, pioché pour révéler la suite (instantané).
+//   - Le buffer se recharge en arrière-plan (fetch réseau) bien avant d'être
+//     vide → on ne tombe quasi jamais sur le skeleton.
 
 import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -26,24 +32,49 @@ const SOURCE_FILTERS: { label: string; value: "all" | Source; key: string }[] = 
   { label: "Le Café du Geek", value: "Le Café du Geek", key: "lcdg" },
 ];
 
+const INITIAL_SHOWN = 12;
+const REVEAL_CHUNK = 6;
+const REFILL_THRESHOLD = 18; // recharge le buffer dès qu'il passe sous ce seuil
+
 function sourceClass(source: Source): string {
   if (source === "Frandroid") return "is-frandroid";
   if (source === "DroidSoft") return "is-droidsoft";
   return "is-lcdg";
 }
 
-/** Variation douce du ratio de couverture pour un rythme vertical naturel. */
+function byDateDesc(a: FeedArticle, b: FeedArticle): number {
+  return new Date(b.date).getTime() - new Date(a.date).getTime();
+}
+
+/** Ratio de couverture, variation portrait douce pour un rythme masonry naturel. */
 function coverAspect(i: number): string {
-  const m = i % 6;
-  if (m === 1) return "3 / 4"; // portrait, plus haut
-  if (m === 4) return "16 / 9"; // paysage, plus court
-  return "4 / 3"; // standard
+  const m = i % 5;
+  if (m === 0) return "3 / 4";
+  if (m === 3) return "1 / 1";
+  return "4 / 5";
+}
+
+/** Date relative façon média ("il y a 2 jours"), avec repli sur date absolue. */
+function relativeDate(iso: string): string {
+  const then = new Date(iso).getTime();
+  const diffMs = Date.now() - then;
+  const h = Math.floor(diffMs / 3_600_000);
+  if (h < 1) return "à l'instant";
+  if (h < 24) return `il y a ${h} h`;
+  const d = Math.floor(h / 24);
+  if (d < 7) return `il y a ${d} jour${d > 1 ? "s" : ""}`;
+  const w = Math.floor(d / 7);
+  if (w < 5) return `il y a ${w} semaine${w > 1 ? "s" : ""}`;
+  return new Date(iso).toLocaleDateString("fr-FR", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
 }
 
 function isExternalUrl(src?: string | null): boolean {
   return typeof src === "string" && /^https?:\/\//i.test(src);
 }
-
 function normalizeCoverSrc(src?: string | null): string | null {
   if (!src) return null;
   const v = src.trim();
@@ -52,23 +83,13 @@ function normalizeCoverSrc(src?: string | null): string | null {
   return v;
 }
 
-/**
- * Tri global par date décroissante. Indispensable au scroll infini : chaque
- * source pagine indépendamment, donc le lot d'une page peut contenir des
- * articles plus récents que la fin de la page précédente (ex. le 15e DroidSoft
- * est plus récent que le 8e LCDG). On re-trie tout l'historique accumulé à
- * chaque merge pour garder une chronologie correcte.
- */
-function byDateDesc(a: FeedArticle, b: FeedArticle): number {
-  return new Date(b.date).getTime() - new Date(a.date).getTime();
-}
-
 function useColumnCount(): number {
   const [cols, setCols] = useState(3);
   useEffect(() => {
     const compute = () => {
       const w = window.innerWidth;
-      if (w <= 900) setCols(1);
+      if (w <= 700) setCols(1);
+      else if (w <= 1100) setCols(2);
       else if (w >= 1600) setCols(4);
       else setCols(3);
     };
@@ -86,21 +107,15 @@ type ApiResponse = {
   perSource: number;
 };
 
-type Props = {
-  initial: FeedArticle[];
-  initialPage: number;
-  initialHasMore: boolean;
-  perSource: number;
-};
-
-type CardProps = {
+function ArticleCard({
+  article,
+  index,
+  eager,
+}: {
   article: FeedArticle;
   index: number;
   eager?: boolean;
-  featured?: boolean;
-};
-
-function ArticleCard({ article, index, eager, featured }: CardProps) {
+}) {
   const coverSrc = normalizeCoverSrc(article.cover);
   const isExternalCover = isExternalUrl(coverSrc);
   return (
@@ -108,51 +123,44 @@ function ArticleCard({ article, index, eager, featured }: CardProps) {
       href={article.url}
       target="_blank"
       rel="noopener noreferrer"
-      className={`kiosque-item${featured ? " is-featured" : ""}`}
+      className="kcard"
       aria-label={`${article.title} — ${article.source}`}
     >
-      <div
-        className="kiosque-cover"
-        style={featured ? undefined : { aspectRatio: coverAspect(index) }}
-      >
-        <span className={`source-chip ${sourceClass(article.source)}`}>
-          {article.source}
-        </span>
+      <div className="kcard-media" style={{ aspectRatio: coverAspect(index) }}>
         {coverSrc ? (
           <Image
             src={coverSrc}
             alt=""
             fill
-            sizes={
-              featured
-                ? "(max-width: 900px) 100vw, 55vw"
-                : "(max-width: 900px) 100vw, 33vw"
-            }
+            sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw"
             style={{ objectFit: "cover" }}
             unoptimized={isExternalCover}
             loading={eager ? "eager" : "lazy"}
             decoding="async"
           />
         ) : (
-          <div className="kiosque-cover-placeholder" aria-hidden />
+          <div className="kcard-placeholder" aria-hidden />
         )}
-      </div>
-      <div className="kiosque-body">
-        <span className="kiosque-date">
-          {new Date(article.date).toLocaleDateString("fr-FR", {
-            day: "2-digit",
-            month: "short",
-            year: "numeric",
-          })}
+        <span className={`source-chip ${sourceClass(article.source)}`}>
+          {article.source}
         </span>
-        <h3 className="kiosque-title">{article.title}</h3>
-        {article.excerpt ? (
-          <p className="kiosque-excerpt">{article.excerpt}</p>
-        ) : null}
+        <div className="kcard-overlay">
+          <span className="kcard-date" suppressHydrationWarning>
+            {relativeDate(article.date)}
+          </span>
+          <h3 className="kcard-title">{article.title}</h3>
+        </div>
       </div>
     </a>
   );
 }
+
+type Props = {
+  initial: FeedArticle[];
+  initialPage: number;
+  initialHasMore: boolean;
+  perSource: number;
+};
 
 export default function ArticlesFeed({
   initial,
@@ -160,21 +168,36 @@ export default function ArticlesFeed({
   initialHasMore,
   perSource,
 }: Props) {
-  const [articles, setArticles] = useState<FeedArticle[]>(initial);
+  // `buffer` = tout ce qui est chargé, trié par date. `revealedCount` = combien
+  // sont affichés. Le PRÉFIXE affiché (buffer[0..revealedCount]) est gelé : on
+  // ne re-trie que la queue lors d'un refill → aucun item visible ne bouge.
+  const [buffer, setBuffer] = useState<FeedArticle[]>(() => initial);
+  const [revealedCount, setRevealedCount] = useState(() =>
+    Math.min(INITIAL_SHOWN, initial.length),
+  );
   const [page, setPage] = useState(initialPage);
   const [hasMore, setHasMore] = useState(initialHasMore);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [isFetching, setIsFetching] = useState(false);
   const [filter, setFilter] = useState<"all" | Source>("all");
   const seenIds = useRef<Set<string>>(new Set(initial.map((a) => a.id)));
   const sentinelRef = useRef<HTMLDivElement | null>(null);
   const numColumns = useColumnCount();
 
-  const loadMore = useCallback(async () => {
-    if (isLoading || !hasMore) return;
-    setIsLoading(true);
-    setError(null);
-    const nextPage = page + 1;
+  const bufferRef = useRef(buffer);
+  bufferRef.current = buffer;
+  const revealedCountRef = useRef(revealedCount);
+  revealedCountRef.current = revealedCount;
+  const fetchStateRef = useRef({ isFetching, hasMore, page });
+  fetchStateRef.current = { isFetching, hasMore, page };
+
+  const pendingCount = Math.max(0, buffer.length - revealedCount);
+
+  // Recharge réseau : on n'ajoute/retri QUE la queue (au-delà du préfixe gelé).
+  const refill = useCallback(async () => {
+    const s = fetchStateRef.current;
+    if (s.isFetching || !s.hasMore) return;
+    setIsFetching(true);
+    const nextPage = s.page + 1;
     try {
       const res = await fetch(
         `/api/latest-articles?page=${nextPage}&perSource=${perSource}`,
@@ -187,57 +210,70 @@ export default function ArticlesFeed({
         seenIds.current.add(a.id);
         return true;
       });
-      if (fresh.length === 0 && !data.hasMore) {
-        setHasMore(false);
-      } else {
-        // Re-tri global : on ne se contente pas d'append, sinon un article
-        // récent d'une source paginée se retrouverait sous des articles plus
-        // vieux d'une autre source déjà affichés.
-        setArticles((prev) => [...prev, ...fresh].sort(byDateDesc));
-        setPage(nextPage);
-        setHasMore(data.hasMore);
-      }
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Erreur réseau");
+      setBuffer((prev) => {
+        const rc = revealedCountRef.current;
+        const head = prev.slice(0, rc); // affiché → gelé
+        const tail = [...prev.slice(rc), ...fresh].sort(byDateDesc);
+        return [...head, ...tail];
+      });
+      setPage(nextPage);
+      setHasMore(data.hasMore);
+    } catch {
+      // on garde hasMore=true pour réessayer au prochain trigger
     } finally {
-      setIsLoading(false);
+      setIsFetching(false);
     }
-  }, [isLoading, hasMore, page, perSource]);
+  }, [perSource]);
 
+  // Révèle un nouveau lot (append-only : on avance juste le curseur).
+  const revealMore = useCallback(() => {
+    setRevealedCount((c) => Math.min(c + REVEAL_CHUNK, bufferRef.current.length));
+  }, []);
+
+  // Préchargement proactif : dès que le buffer restant passe sous le seuil,
+  // on recharge en fond → l'utilisateur ne voit quasi jamais le skeleton.
   useEffect(() => {
-    if (!hasMore) return;
+    if (pendingCount < REFILL_THRESHOLD && hasMore && !isFetching) {
+      refill();
+    }
+  }, [pendingCount, hasMore, isFetching, refill]);
+
+  // Observer large (1200px) : révèle bien avant d'atteindre le bas. La
+  // révélation pioche dans le buffer déjà chargé → pas d'attente.
+  useEffect(() => {
     const sentinel = sentinelRef.current;
     if (!sentinel) return;
     const obs = new IntersectionObserver(
       (entries) => {
-        if (entries[0]?.isIntersecting) loadMore();
+        if (entries[0]?.isIntersecting) revealMore();
       },
-      { rootMargin: "600px 0px" },
+      { rootMargin: "1200px 0px" },
     );
     obs.observe(sentinel);
     return () => obs.disconnect();
-  }, [hasMore, loadMore]);
+  }, [revealMore]);
 
   const visible = useMemo(() => {
-    if (filter === "all") return articles;
-    return articles.filter((a) => a.source === filter);
-  }, [articles, filter]);
+    const shown = buffer.slice(0, revealedCount);
+    if (filter === "all") return shown;
+    return shown.filter((a) => a.source === filter);
+  }, [buffer, revealedCount, filter]);
 
-  const featured = visible[0];
-  const rest = useMemo(() => visible.slice(1), [visible]);
-
-  // Distribution masonry stable : l'article i va toujours dans la colonne
-  // i % numColumns → pas de reflow des items existants au scroll infini.
+  // Distribution masonry round-robin (ordre de lecture préservé, stable car
+  // `visible` ne fait que grandir par la fin tant qu'on ne change pas de filtre).
   const columns = useMemo(() => {
     const cols: { article: FeedArticle; index: number }[][] = Array.from(
       { length: numColumns },
       () => [],
     );
-    rest.forEach((article, i) => {
+    visible.forEach((article, i) => {
       cols[i % numColumns].push({ article, index: i });
     });
     return cols;
-  }, [rest, numColumns]);
+  }, [visible, numColumns]);
+
+  const bufferEmptyButFetching =
+    isFetching && pendingCount === 0 && filter === "all";
 
   return (
     <>
@@ -264,71 +300,42 @@ export default function ArticlesFeed({
       </div>
 
       <div
-        className="kiosque"
+        className="kiosque-columns"
         role="feed"
-        aria-busy={isLoading}
+        aria-busy={isFetching}
         aria-label="Flux unifié des articles publiés"
+        data-cols={numColumns}
       >
-        {featured ? (
-          <ArticleCard article={featured} index={0} eager featured />
-        ) : null}
-
-        <div className="kiosque-columns" data-cols={numColumns}>
-          {columns.map((col, ci) => (
-            <div className="kiosque-col" key={ci}>
-              {col.map(({ article, index }) => (
-                <ArticleCard
-                  key={article.id}
-                  article={article}
-                  index={index}
-                  eager={index < 5}
-                />
-              ))}
-              {/* Skeletons répartis sur les colonnes pendant le fetch */}
-              {isLoading && ci < 3
-                ? (
-                    <div className="kiosque-item is-skeleton" aria-hidden>
-                      <div
-                        className="kiosque-cover"
-                        style={{ aspectRatio: coverAspect(ci + 1) }}
-                      />
-                      <div className="kiosque-body">
-                        <div className="sk-line sk-meta" />
-                        <div className="sk-line sk-title" />
-                        <div className="sk-line sk-excerpt" />
-                      </div>
-                    </div>
-                  )
-                : null}
-            </div>
-          ))}
-        </div>
+        {columns.map((col, ci) => (
+          <div className="kiosque-col" key={ci}>
+            {col.map(({ article, index }) => (
+              <ArticleCard
+                key={article.id}
+                article={article}
+                index={index}
+                eager={index < 6}
+              />
+            ))}
+          </div>
+        ))}
       </div>
 
       <div ref={sentinelRef} aria-hidden style={{ height: 1 }} />
 
-      {error ? (
-        <p className="kiosque-error" role="alert">
-          Petit raté en récupérant la suite ({error}).{" "}
-          <button
-            type="button"
-            className="kiosque-retry"
-            onClick={() => loadMore()}
-          >
-            Réessayer
-          </button>
+      {bufferEmptyButFetching ? (
+        <p className="kiosque-loading" role="status">
+          <span className="kiosque-spinner" aria-hidden /> Chargement…
         </p>
       ) : null}
 
-      {!hasMore && !isLoading && visible.length > 0 ? (
+      {!hasMore && pendingCount === 0 && visible.length > 0 ? (
         <p className="kiosque-end" role="status">
           Vous êtes au bout du fil — {visible.length} article
-          {visible.length > 1 ? "s" : ""} affiché
           {visible.length > 1 ? "s" : ""}.
         </p>
       ) : null}
 
-      {!isLoading && visible.length === 0 ? (
+      {visible.length === 0 ? (
         <p className="kiosque-empty" role="status">
           Aucun article ne correspond à ce filtre pour l&apos;instant.
         </p>

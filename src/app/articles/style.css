@@ -1,4 +1,4 @@
-/* /src/app/articles/style.css — Kiosque unifié : masonry naturelle, scroll infini */
+/* /src/app/articles/style.css — Kiosque : cartes image overlay, masonry colonnes */
 
 .articlesPage {
   width: 100%;
@@ -92,32 +92,90 @@
 }
 
 /* ============================================================
-   Item de base — pas de fond ni bordure (comme la home),
-   juste cover arrondie + texte sur le fond crème
+   Masonry — colonnes flex, items à hauteur naturelle (round-robin)
    ============================================================ */
 
-.kiosque-item {
+.kiosque-columns {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+}
+.kiosque-col {
+  flex: 1 1 0;
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
-  text-decoration: none !important;
-  color: var(--cacao);
-  transition: transform 0.2s ease;
+  gap: 1.25rem;
 }
-.kiosque-item:hover { transform: translateY(-3px); }
 
-.kiosque-cover {
+/* ============================================================
+   Carte article — image plein cadre, titre + date en overlay
+   ============================================================ */
+
+.kcard {
+  position: relative;
+  display: block;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  text-decoration: none !important;
+  background: var(--mocha);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.kcard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 36px -12px rgba(45, 31, 20, 0.32);
+}
+
+.kcard-media {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;
-  border-radius: var(--radius-sm);
-  overflow: hidden;
+  /* aspect-ratio fourni en inline-style par carte */
   background: linear-gradient(135deg, var(--mocha), var(--caramel));
 }
-.kiosque-cover-placeholder {
+.kcard-placeholder {
   position: absolute;
   inset: 0;
   background: linear-gradient(135deg, var(--mocha), var(--caramel));
+}
+
+.kcard-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1rem 1.1rem;
+  background: linear-gradient(
+    to top,
+    rgba(28, 19, 11, 0.92) 0%,
+    rgba(28, 19, 11, 0.62) 34%,
+    rgba(28, 19, 11, 0.05) 66%,
+    rgba(28, 19, 11, 0) 100%
+  );
+}
+
+.kcard-date {
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sable);
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+}
+.kcard-title {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 1.05rem;
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+  color: var(--creme);
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
 }
 
 /* Chip "source" — overlay haut-gauche, couleur de chaque média */
@@ -135,7 +193,7 @@
   color: #ffffff;
   z-index: 2;
   backdrop-filter: blur(8px);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.28);
   white-space: nowrap;
 }
 .source-chip.is-frandroid { background: rgba(108, 76, 246, 0.94); }
@@ -143,122 +201,16 @@
 .source-chip.is-lcdg {
   background: rgba(44, 47, 52, 0.94);
   color: #4cb490;
-  border: 1px solid rgba(76, 180, 144, 0.45);
-}
-
-.kiosque-body {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  min-width: 0;
-}
-.kiosque-date {
-  font-family: var(--font-sans);
-  font-size: 0.7rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--caramel);
-  font-weight: 500;
-}
-.kiosque-title {
-  font-family: var(--font-serif);
-  font-weight: 500;
-  font-size: 1.05rem;
-  letter-spacing: -0.005em;
-  color: var(--cacao);
-  margin: 0;
-  line-height: 1.28;
-}
-.kiosque-excerpt {
-  font-family: var(--font-sans);
-  font-size: 0.88rem;
-  color: var(--espresso);
-  line-height: 1.55;
-  margin: 0;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  border: 1px solid rgba(76, 180, 144, 0.5);
 }
 
 /* ============================================================
-   Featured — hero horizontal en tête (cover + texte)
+   Feedback bas de page
    ============================================================ */
 
-.kiosque-item.is-featured {
-  display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  gap: 2rem;
-  align-items: center;
-  margin-bottom: 2.5rem;
-  padding-bottom: 2.5rem;
-  border-bottom: 1px solid var(--rule-soft);
-}
-.kiosque-item.is-featured .kiosque-cover {
-  aspect-ratio: 16 / 10;
-}
-.kiosque-item.is-featured .kiosque-title {
-  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
-  letter-spacing: -0.015em;
-  line-height: 1.15;
-}
-.kiosque-item.is-featured .kiosque-excerpt {
-  font-size: 1rem;
-  -webkit-line-clamp: 5;
-}
-
-/* ============================================================
-   Masonry — colonnes flex, items à hauteur naturelle (pas de void)
-   ============================================================ */
-
-.kiosque-columns {
-  display: flex;
-  gap: 1.5rem;
-  align-items: flex-start;
-}
-.kiosque-col {
-  flex: 1 1 0;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-/* ============================================================
-   Skeleton & feedback
-   ============================================================ */
-
-.kiosque-item.is-skeleton {
-  pointer-events: none;
-}
-.kiosque-item.is-skeleton .kiosque-cover {
-  background: linear-gradient(135deg, var(--sable), var(--ivoire), var(--sable));
-  background-size: 200% 100%;
-  animation: kiosque-shimmer 1.4s linear infinite;
-}
-.kiosque-item.is-skeleton .sk-line {
-  height: 14px;
-  border-radius: 4px;
-  background: linear-gradient(135deg, var(--sable), var(--ivoire), var(--sable));
-  background-size: 200% 100%;
-  animation: kiosque-shimmer 1.4s linear infinite;
-}
-.kiosque-item.is-skeleton .sk-meta { width: 35%; height: 10px; }
-.kiosque-item.is-skeleton .sk-title { width: 85%; height: 18px; }
-.kiosque-item.is-skeleton .sk-excerpt { width: 95%; }
-
-@keyframes kiosque-shimmer {
-  0% { background-position: 100% 0; }
-  100% { background-position: -100% 0; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .kiosque-item.is-skeleton .kiosque-cover,
-  .kiosque-item.is-skeleton .sk-line { animation: none; }
-}
-
+.kiosque-loading,
 .kiosque-end,
-.kiosque-empty,
-.kiosque-error {
+.kiosque-empty {
   text-align: center;
   font-family: var(--font-serif);
   font-style: italic;
@@ -266,45 +218,44 @@
   margin: 3rem 0 0;
   font-size: 0.95rem;
 }
-.kiosque-error { color: #b85c00; }
-.kiosque-retry {
-  border: 1px solid var(--cacao);
-  background: transparent;
-  font-family: var(--font-sans);
-  font-size: 0.75rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  padding: 0.4rem 0.9rem;
-  border-radius: 999px;
-  cursor: pointer;
-  margin-left: 0.5rem;
-  color: var(--cacao);
+.kiosque-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
 }
-.kiosque-retry:hover { background: var(--cacao); color: var(--creme); }
+.kiosque-spinner {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--rule-soft);
+  border-top-color: var(--caramel);
+  animation: kiosque-spin 0.8s linear infinite;
+}
+@keyframes kiosque-spin {
+  to { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .kiosque-spinner { animation: none; }
+}
 
 /* ============================================================
    Responsive
    ============================================================ */
 
+@media (max-width: 1100px) {
+  .kiosque-columns { gap: 1rem; }
+  .kiosque-col { gap: 1rem; }
+}
+
 @media (max-width: 900px) {
   .articlesPage .page-title { font-size: clamp(2rem, 7vw, 2.8rem); }
   .articlesPage .page-sub { font-size: 1rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; }
-
   .kiosque-filters { gap: 0.35rem; margin-bottom: 2rem; }
   .filter-chip { font-size: 0.65rem; padding: 0.45rem 0.85rem; }
+}
 
-  /* Featured repasse en vertical */
-  .kiosque-item.is-featured {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    padding-bottom: 2rem;
-  }
-  .kiosque-item.is-featured .kiosque-cover { aspect-ratio: 16/9; }
-  .kiosque-item.is-featured .kiosque-excerpt { -webkit-line-clamp: 3; }
-
-  /* Colonnes empilées : une seule colonne sur mobile */
-  .kiosque-columns { flex-direction: column; gap: 2rem; }
-  /* Ratios variés neutralisés sur mobile pour rester homogène */
-  .kiosque-col .kiosque-cover { aspect-ratio: 16/9 !important; }
+@media (max-width: 700px) {
+  .kiosque-columns { flex-direction: column; gap: 1.25rem; }
+  .kcard-title { font-size: 1.1rem; }
 }
