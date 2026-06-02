@@ -46,14 +46,6 @@ function byDateDesc(a: FeedArticle, b: FeedArticle): number {
   return new Date(b.date).getTime() - new Date(a.date).getTime();
 }
 
-/** Ratio de couverture, variation portrait douce pour un rythme masonry naturel. */
-function coverAspect(i: number): string {
-  const m = i % 5;
-  if (m === 0) return "3 / 4";
-  if (m === 3) return "1 / 1";
-  return "4 / 5";
-}
-
 /** Date relative façon média ("il y a 2 jours"), avec repli sur date absolue. */
 function relativeDate(iso: string): string {
   const then = new Date(iso).getTime();
@@ -109,12 +101,12 @@ type ApiResponse = {
 
 function ArticleCard({
   article,
-  index,
   eager,
+  featured,
 }: {
   article: FeedArticle;
-  index: number;
   eager?: boolean;
+  featured?: boolean;
 }) {
   const coverSrc = normalizeCoverSrc(article.cover);
   const isExternalCover = isExternalUrl(coverSrc);
@@ -123,16 +115,20 @@ function ArticleCard({
       href={article.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="kcard"
+      className={`kcard${featured ? " is-featured" : ""}`}
       aria-label={`${article.title} — ${article.source}`}
     >
-      <div className="kcard-media" style={{ aspectRatio: coverAspect(index) }}>
+      <div className="kcard-media">
         {coverSrc ? (
           <Image
             src={coverSrc}
             alt=""
             fill
-            sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw"
+            sizes={
+              featured
+                ? "(max-width: 900px) 100vw, 55vw"
+                : "(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw"
+            }
             style={{ objectFit: "cover" }}
             unoptimized={isExternalCover}
             loading={eager ? "eager" : "lazy"}
@@ -144,12 +140,15 @@ function ArticleCard({
         <span className={`source-chip ${sourceClass(article.source)}`}>
           {article.source}
         </span>
-        <div className="kcard-overlay">
-          <span className="kcard-date" suppressHydrationWarning>
-            {relativeDate(article.date)}
-          </span>
-          <h3 className="kcard-title">{article.title}</h3>
-        </div>
+      </div>
+      <div className="kcard-detail">
+        <span className="kcard-date" suppressHydrationWarning>
+          {relativeDate(article.date)}
+        </span>
+        <h3 className="kcard-title">{article.title}</h3>
+        {article.excerpt ? (
+          <p className="kcard-excerpt">{article.excerpt}</p>
+        ) : null}
       </div>
     </a>
   );
@@ -259,18 +258,20 @@ export default function ArticlesFeed({
     return shown.filter((a) => a.source === filter);
   }, [buffer, revealedCount, filter]);
 
+  // Le plus récent passe en featured (mis en avant en haut), le reste alimente
+  // la masonry en colonnes.
+  const featured = visible[0];
+  const rest = useMemo(() => visible.slice(1), [visible]);
+
   // Distribution masonry round-robin (ordre de lecture préservé, stable car
-  // `visible` ne fait que grandir par la fin tant qu'on ne change pas de filtre).
+  // `rest` ne fait que grandir par la fin tant qu'on ne change pas de filtre).
   const columns = useMemo(() => {
-    const cols: { article: FeedArticle; index: number }[][] = Array.from(
-      { length: numColumns },
-      () => [],
-    );
-    visible.forEach((article, i) => {
-      cols[i % numColumns].push({ article, index: i });
+    const cols: FeedArticle[][] = Array.from({ length: numColumns }, () => []);
+    rest.forEach((article, i) => {
+      cols[i % numColumns].push(article);
     });
     return cols;
-  }, [visible, numColumns]);
+  }, [rest, numColumns]);
 
   const bufferEmptyButFetching =
     isFetching && pendingCount === 0 && filter === "all";
@@ -300,24 +301,27 @@ export default function ArticlesFeed({
       </div>
 
       <div
-        className="kiosque-columns"
         role="feed"
         aria-busy={isFetching}
         aria-label="Flux unifié des articles publiés"
-        data-cols={numColumns}
       >
-        {columns.map((col, ci) => (
-          <div className="kiosque-col" key={ci}>
-            {col.map(({ article, index }) => (
-              <ArticleCard
-                key={article.id}
-                article={article}
-                index={index}
-                eager={index < 6}
-              />
-            ))}
-          </div>
-        ))}
+        {featured ? (
+          <ArticleCard article={featured} featured eager />
+        ) : null}
+
+        <div className="kiosque-columns" data-cols={numColumns}>
+          {columns.map((col, ci) => (
+            <div className="kiosque-col" key={ci}>
+              {col.map((article, i) => (
+                <ArticleCard
+                  key={article.id}
+                  article={article}
+                  eager={i === 0}
+                />
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
 
       <div ref={sentinelRef} aria-hidden style={{ height: 1 }} />

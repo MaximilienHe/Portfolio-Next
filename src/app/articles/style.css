@@ -109,27 +109,25 @@
 }
 
 /* ============================================================
-   Carte article — image plein cadre, titre + date en overlay
+   Carte article — design identique à la home (cover + texte dessous)
    ============================================================ */
 
 .kcard {
-  position: relative;
-  display: block;
-  border-radius: var(--radius-md);
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
   text-decoration: none !important;
-  background: var(--mocha);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  color: var(--cacao);
+  transition: transform 0.2s ease;
 }
-.kcard:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 16px 36px -12px rgba(45, 31, 20, 0.32);
-}
+.kcard:hover { transform: translateY(-3px); }
 
 .kcard-media {
   position: relative;
   width: 100%;
-  /* aspect-ratio fourni en inline-style par carte */
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
   background: linear-gradient(135deg, var(--mocha), var(--caramel));
 }
 .kcard-placeholder {
@@ -138,44 +136,64 @@
   background: linear-gradient(135deg, var(--mocha), var(--caramel));
 }
 
-.kcard-overlay {
-  position: absolute;
-  inset: 0;
+.kcard-detail {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  padding: 1rem 1.1rem;
-  background: linear-gradient(
-    to top,
-    rgba(28, 19, 11, 0.92) 0%,
-    rgba(28, 19, 11, 0.62) 34%,
-    rgba(28, 19, 11, 0.05) 66%,
-    rgba(28, 19, 11, 0) 100%
-  );
+  gap: 0.3rem;
 }
-
 .kcard-date {
   font-family: var(--font-sans);
-  font-size: 0.68rem;
-  letter-spacing: 0.14em;
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--sable);
-  margin-bottom: 0.4rem;
+  color: var(--caramel);
   font-weight: 500;
 }
 .kcard-title {
   font-family: var(--font-serif);
   font-weight: 500;
   font-size: 1.05rem;
-  line-height: 1.25;
+  line-height: 1.28;
   letter-spacing: -0.005em;
-  color: var(--creme);
+  color: var(--cacao);
   margin: 0;
   display: -webkit-box;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
+}
+.kcard-excerpt {
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--espresso);
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Featured — mis en avant en haut, hero horizontal (cover + texte) */
+.kcard.is-featured {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  margin-bottom: 2.5rem;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.kcard.is-featured .kcard-media { aspect-ratio: 16 / 10; }
+.kcard.is-featured .kcard-title {
+  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  -webkit-line-clamp: 4;
+}
+.kcard.is-featured .kcard-excerpt {
+  font-size: 1rem;
+  -webkit-line-clamp: 4;
 }
 
 /* Chip "source" — overlay haut-gauche, couleur de chaque média */
@@ -255,7 +273,17 @@
   .filter-chip { font-size: 0.65rem; padding: 0.45rem 0.85rem; }
 }
 
+@media (max-width: 900px) {
+  /* Featured repasse en vertical */
+  .kcard.is-featured {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+  }
+  .kcard.is-featured .kcard-excerpt { -webkit-line-clamp: 3; }
+}
+
 @media (max-width: 700px) {
   .kiosque-columns { flex-direction: column; gap: 1.25rem; }
-  .kcard-title { font-size: 1.1rem; }
 }
